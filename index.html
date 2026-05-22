@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>系列全链路诊断看板</title>
+    <style>
+      :root {
+        --bg: #f4f2ed;
+        --paper: #fffcf4;
+        --ink: #1e2723;
+        --muted: #66706a;
+        --line: #d9d2c4;
+        --dark: #26332e;
+        --green: #1f7a4d;
+        --green-soft: #dcecdf;
+        --amber: #a86612;
+        --amber-soft: #f6e3bf;
+        --red: #b93d2f;
+        --red-soft: #f0d1ca;
+        --blue: #286f91;
+        --blue-soft: #d8e9ef;
+        --shadow: 0 18px 48px rgba(47, 45, 38, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(90deg, rgba(38, 51, 46, 0.04) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(38, 51, 46, 0.035) 1px, transparent 1px),
+          var(--bg);
+        background-size: 28px 28px;
+        color: var(--ink);
+        font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", sans-serif;
+        letter-spacing: 0;
+      }
+
+      button,
+      select {
+        font: inherit;
+      }
+
+      .shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 272px minmax(0, 1fr);
+      }
+
+      .side {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 24px 18px;
+        background: #202c28;
+        color: #f6f1e8;
+        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        overflow-y: auto;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: #f05b3d;
+        color: #fffaf0;
+        font-weight: 800;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 17px;
+      }
+
+      .brand span {
+        display: block;
+        margin-top: 4px;
+        color: rgba(246, 241, 232, 0.64);
+        font-size: 12px;
+      }
+
+      .nav {
+        display: grid;
+        gap: 8px;
+      }
+
+      .nav button {
+        text-align: left;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: rgba(246, 241, 232, 0.82);
+        cursor: pointer;
+      }
+
+      .nav button.active {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.18);
+        color: #fffaf0;
+      }
+
+      .main {
+        padding: 28px 32px 48px;
+        max-width: 1200px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+
+      .topbar h1 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .topbar p {
+        margin: 6px 0 0;
+        color: var(--muted);
+      }
+
+      .filters {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .filters select {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        min-width: 160px;
+      }
+
+      .score-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+
+      .score-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .score-card .label {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .score-card .value {
+        font-size: 34px;
+        font-weight: 700;
+        margin-top: 6px;
+      }
+
+      .score-card .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .status.ok {
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      .status.warn {
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .status.crit {
+        background: var(--red-soft);
+        color: var(--red);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .card h3 {
+        margin: 0 0 12px;
+        font-size: 16px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      th {
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .tag.ok {
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      .tag.warn {
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .tag.crit {
+        background: var(--red-soft);
+        color: var(--red);
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .section {
+        margin-top: 22px;
+      }
+
+      .empty {
+        color: var(--muted);
+        padding: 24px 0;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="side">
+        <div class="brand">
+          <div class="brand-mark">诊</div>
+          <div>
+            <strong>系列诊断</strong>
+            <span>全链路健康度看板</span>
+          </div>
+        </div>
+        <nav class="nav" id="nav">
+          <button class="active" data-page="overview">总览</button>
+          <button data-page="marketing">营销端</button>
+          <button data-page="search">搜索承接</button>
+          <button data-page="ec">EC承接</button>
+          <button data-page="reputation">口碑售后</button>
+        </nav>
+      </aside>
+
+      <main class="main" id="main">
+        <!-- 内容由 JS 动态渲染 -->
+      </main>
+    </div>
+
+    <script>
+      const state = {
+        page: "overview",
+        series: "吾跃系列",
+        period: "近7天",
+        compare: "前4周平均",
+      };
+
+      const seriesOptions = ["吾跃系列", "菲林系列", "轻氧系列"];
+      const periodOptions = ["近7天", "近14天", "近30天"];
+      const compareOptions = ["前4周平均", "上周期", "目标值"];
+
+      function $(sel) {
+        return document.querySelector(sel);
+      }
+
+      function renderFilters() {
+        return `
+          <div class="filters">
+            <select id="sel-series">
+              ${seriesOptions.map((s) => `<option ${s === state.series ? "selected" : ""}>${s}</option>`).join("")}
+            </select>
+            <select id="sel-period">
+              ${periodOptions.map((p) => `<option ${p === state.period ? "selected" : ""}>${p}</option>`).join("")}
+            </select>
+            <select id="sel-compare">
+              ${compareOptions.map((c) => `<option ${c === state.compare ? "selected" : ""}>${c}</option>`).join("")}
+            </select>
+          </div>
+        `;
+      }
+
+      function statusBadge(st) {
+        const map = {
+          ok: { cls: "ok", text: "正常" },
+          warn: { cls: "warn", text: "预警" },
+          crit: { cls: "crit", text: "异常" },
+        };
+        const m = map[st] || map.ok;
+        return `<span class="tag ${m.cls}">${m.text}</span>`;
+      }
+
+      function bigScoreCard(label, value, status) {
+        const map = { ok: "正常", warn: "预警", crit: "异常" };
+        return `
+          <div class="score-card">
+            <div class="label">${label}</div>
+            <div class="value">${value}</div>
+            <div class="status ${status}">${map[status]}</div>
+          </div>
+        `;
+      }
+
+      function renderOverview() {
+        const header = `
+          <div class="topbar">
+            <div>
+              <h1>总览</h1>
+              <p>快速了解系列全链路健康度与待处理问题</p>
+            </div>
+            ${renderFilters()}
+          </div>
+        `;
+
+        const scores = `
+          <div class="score-row">
+            ${bigScoreCard("全链路健康度", "72", "warn")}
+            ${bigScoreCard("营销端", "68", "warn")}
+            ${bigScoreCard("搜索承接", "78", "ok")}
+            ${bigScoreCard("EC承接", "65", "warn")}
+          </div>
+        `;
+
+        const top5 = `
+          <div class="card">
+            <h3>待处理问题 Top 5</h3>
+            <table>
+              <thead>
+                <tr><th>优先级</th><th>指标</th><th>状态</th><th>偏离</th><th>链路</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>内容曝光量</td><td>${statusBadge("crit")}</td><td class="muted">-18.4%</td><td>营销端</td></tr>
+                <tr><td>2</td><td>商品点击率</td><td>${statusBadge("crit")}</td><td class="muted">-2.3pp</td><td>EC承接</td></tr>
+                <tr><td>3</td><td>退货率</td><td>${statusBadge("warn")}</td><td class="muted">+0.7pp</td><td>口碑售后</td></tr>
+                <tr><td>4</td><td>新发布内容占比</td><td>${statusBadge("warn")}</td><td class="muted">-12%</td><td>营销端</td></tr>
+                <tr><td>5</td><td>搜索商品点击成交率</td><td>${statusBadge("warn")}</td><td class="muted">-1.2pp</td><td>搜索承接</td></tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+
+        const matrix = `
+          <div class="card section">
+            <h3>核心指标矩阵</h3>
+            <table>
+              <thead>
+                <tr><th>环节</th><th>关键指标</th><th>当前值</th><th>基准值</th><th>环比</th><th>状态</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>营销端</td><td>内容曝光量</td><td>1,240,000</td><td>1,520,000</td><td class="muted">-18.4%</td><td>${statusBadge("crit")}</td></tr>
+                <tr><td>营销端</td><td>有曝光内容数</td><td>86</td><td>92</td><td class="muted">-6.5%</td><td>${statusBadge("warn")}</td></tr>
+                <tr><td>搜索承接</td><td>产品词搜索量</td><td>45,200</td><td>41,800</td><td class="muted">+8.1%</td><td>${statusBadge("ok")}</td></tr>
+                <tr><td>EC承接</td><td>商品点击率</td><td>4.2%</td><td>6.5%</td><td class="muted">-2.3pp</td><td>${statusBadge("crit")}</td></tr>
+                <tr><td>口碑售后</td><td>退货率</td><td>12.3%</td><td>11.6%</td><td class="muted">+0.7pp</td><td>${statusBadge("warn")}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+
+        return header + scores + top5 + matrix;
+      }
+
+      function renderMarketing() {
+        return `
+          <div class="topbar">
+            <div>
+              <h1>营销端</h1>
+              <p>内容声量、投放效率与内容质量诊断</p>
+            </div>
+            ${renderFilters()}
+          </div>
+          <div class="score-row">
+            ${bigScoreCard("营销端健康度", "68", "warn")}
+            <div class="card"><div class="label">内容曝光量</div><div class="value">124万</div><div class="status crit">异常 -18.4%</div></div>
+            <div class="card"><div class="label">有曝光内容数</div><div class="value">86</div><div class="status warn">预警 -6.5%</div></div>
+            <div class="card"><div class="label">新发布内容占比</div><div class="value">12%</div><div class="status warn">预警 -12%</div></div>
+          </div>
+          <div class="card section">
+            <h3>诊断结论</h3>
+            <p>品牌/产品在抖音的声量不足或触达效率低。建议增加投流预算、增加达人合作数量、提高发布频次。</p>
+          </div>
+          <div class="card section">
+            <h3>内容数据明细</h3>
+            <div class="empty">数据加载中...</div>
+          </div>
+        `;
+      }
+
+      function renderSearch() {
+        return `
+          <div class="topbar">
+            <div>
+              <h1>搜索承接</h1>
+              <p>搜索心智形成与搜后转化效率</p>
+            </div>
+            ${renderFilters()}
+          </div>
+          <div class="score-row">
+            ${bigScoreCard("搜索承接健康度", "78", "ok")}
+            <div class="card"><div class="label">产品词搜索量</div><div class="value">4.5万</div><div class="status ok">正常 +8.1%</div></div>
+            <div class="card"><div class="label">搜索成交金额</div><div class="value">¥89,400</div><div class="status ok">正常 +5.2%</div></div>
+            <div class="card"><div class="label">搜索商品点击成交率</div><div class="value">8.4%</div><div class="status warn">预警 -1.2pp</div></div>
+          </div>
+          <div class="card section">
+            <h3>TOP20 产品搜索词监控</h3>
+            <div class="empty">数据加载中...</div>
+          </div>
+        `;
+      }
+
+      function renderEC() {
+        return `
+          <div class="topbar">
+            <div>
+              <h1>EC承接</h1>
+              <p>商品流量与转化漏斗分析</p>
+            </div>
+            ${renderFilters()}
+          </div>
+          <div class="score-row">
+            ${bigScoreCard("EC承接健康度", "65", "warn")}
+            <div class="card"><div class="label">商品曝光量</div><div class="value">320万</div><div class="status ok">正常 +2.1%</div></div>
+            <div class="card"><div class="label">商品点击率</div><div class="value">4.2%</div><div class="status crit">异常 -2.3pp</div></div>
+            <div class="card"><div class="label">支付转化率</div><div class="value">3.8%</div><div class="status warn">预警 -0.5pp</div></div>
+          </div>
+          <div class="card section">
+            <h3>转化漏斗分析</h3>
+            <div class="empty">数据加载中...</div>
+          </div>
+        `;
+      }
+
+      function renderReputation() {
+        return `
+          <div class="topbar">
+            <div>
+              <h1>口碑售后</h1>
+              <p>用户满意度与售后质量诊断</p>
+            </div>
+            ${renderFilters()}
+          </div>
+          <div class="score-row">
+            ${bigScoreCard("口碑售后健康度", "82", "ok")}
+            <div class="card"><div class="label">好评率</div><div class="value">94.2%</div><div class="status ok">正常 +0.3pp</div></div>
+            <div class="card"><div class="label">退货率</div><div class="value">12.3%</div><div class="status warn">预警 +0.7pp</div></div>
+            <div class="card"><div class="label">差评率</div><div class="value">2.1%</div><div class="status ok">正常 -0.2pp</div></div>
+          </div>
+          <div class="grid-2 section">
+            <div class="card">
+              <h3>差评原因分析</h3>
+              <div class="empty">数据加载中...</div>
+            </div>
+            <div class="card">
+              <h3>退货原因分析</h3>
+              <div class="empty">数据加载中...</div>
+            </div>
+          </div>
+        `;
+      }
+
+      function render() {
+        const main = $("#main");
+        if (state.page === "overview") main.innerHTML = renderOverview();
+        else if (state.page === "marketing") main.innerHTML = renderMarketing();
+        else if (state.page === "search") main.innerHTML = renderSearch();
+        else if (state.page === "ec") main.innerHTML = renderEC();
+        else if (state.page === "reputation") main.innerHTML = renderReputation();
+
+        // 绑定筛选器事件
+        $("#sel-series")?.addEventListener("change", (e) => {
+          state.series = e.target.value;
+          render();
+        });
+        $("#sel-period")?.addEventListener("change", (e) => {
+          state.period = e.target.value;
+          render();
+        });
+        $("#sel-compare")?.addEventListener("change", (e) => {
+          state.compare = e.target.value;
+          render();
+        });
+      }
+
+      // 导航切换
+      $("#nav").addEventListener("click", (e) => {
+        if (e.target.tagName === "BUTTON") {
+          $("#nav .active")?.classList.remove("active");
+          e.target.classList.add("active");
+          state.page = e.target.dataset.page;
+          render();
+        }
+      });
+
+      render();
+    </script>
+  </body>
+</html>
