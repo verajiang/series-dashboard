@@ -101,188 +101,921 @@
       }
 
       .nav button {
-        text-align: left;
-        padding: 12px 14px;
-        border-radius: 10px;
-        border: 1px solid transparent;
+        width: 100%;
+        min-height: 48px;
+        display: grid;
+        grid-template-columns: 26px 1fr auto;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
         background: transparent;
-        color: rgba(246, 241, 232, 0.82);
+        color: rgba(246, 241, 232, 0.72);
         cursor: pointer;
+        text-align: left;
       }
 
-      .nav button.active {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.18);
-        color: #fffaf0;
+      .nav button.active,
+      .nav button:hover {
+        background: #f6f1e8;
+        color: #202c28;
+      }
+
+      .nav small {
+        color: currentColor;
+        opacity: 0.62;
+      }
+
+      .side-note {
+        margin-top: 28px;
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        color: rgba(246, 241, 232, 0.68);
+        line-height: 1.6;
+        font-size: 12px;
       }
 
       .main {
-        padding: 28px 32px 48px;
-        max-width: 1200px;
-      }
-
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 22px;
-      }
-
-      .topbar h1 {
-        margin: 0;
-        font-size: 22px;
-      }
-
-      .topbar p {
-        margin: 6px 0 0;
-        color: var(--muted);
+        min-width: 0;
       }
 
       .filters {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-
-      .filters select {
-        padding: 10px 12px;
-        border-radius: 10px;
-        border: 1px solid var(--line);
-        background: var(--paper);
-        min-width: 160px;
-      }
-
-      .score-row {
+        position: sticky;
+        top: 0;
+        z-index: 20;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        margin-bottom: 22px;
+        grid-template-columns: minmax(280px, 1fr) repeat(3, minmax(150px, 190px));
+        align-items: end;
+        gap: 10px;
+        padding: 16px 24px;
+        background: rgba(244, 242, 237, 0.9);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(16px);
       }
 
-      .score-card {
-        background: var(--paper);
+      .top-title {
+        align-self: center;
+      }
+
+      .top-title strong {
+        display: block;
+        font-size: 20px;
+      }
+
+      .top-title span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .filter {
+        display: grid;
+        gap: 5px;
+      }
+
+      .filter label {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .filter select {
+        width: 100%;
+        height: 38px;
+        padding: 0 12px;
         border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 18px;
+        border-radius: 6px;
+        background: var(--paper);
+        color: var(--ink);
+      }
+
+      .content {
+        padding: 26px 28px 48px;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+        animation: rise 0.35s ease both;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 18px;
+        align-items: stretch;
+        margin-bottom: 18px;
+      }
+
+      .object-card {
+        min-height: 238px;
+        padding: 22px;
+        display: grid;
+        align-content: space-between;
+      }
+
+      .object-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .object-row {
+        display: grid;
+        grid-template-columns: 86px 1fr;
+        gap: 12px;
+        padding: 11px 0;
+        border-bottom: 1px solid #ece5d9;
+      }
+
+      .object-row:last-child {
+        border-bottom: 0;
+      }
+
+      .object-row span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .object-row b {
+        font-size: 15px;
+      }
+
+      .panel {
+        background: rgba(255, 252, 244, 0.92);
+        border: 1px solid var(--line);
+        border-radius: 8px;
         box-shadow: var(--shadow);
       }
 
-      .score-card .label {
-        color: var(--muted);
-        font-size: 13px;
+      .headline {
+        min-height: 238px;
+        padding: 26px;
+        display: grid;
+        align-content: space-between;
+        background:
+          linear-gradient(135deg, rgba(240, 91, 61, 0.12), transparent 42%),
+          var(--paper);
       }
 
-      .score-card .value {
-        font-size: 34px;
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--red);
+        font-size: 12px;
         font-weight: 700;
-        margin-top: 6px;
       }
 
-      .score-card .status {
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        max-width: 760px;
+        font-size: clamp(30px, 5vw, 62px);
+        line-height: 1.04;
+      }
+
+      h2 {
+        font-size: 21px;
+      }
+
+      h3 {
+        font-size: 15px;
+      }
+
+      .hero-copy {
+        max-width: 760px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .score {
+        padding: 22px;
+        display: grid;
+        gap: 16px;
+        align-content: space-between;
+      }
+
+      .score-number {
+        font-size: 66px;
+        line-height: 1;
+        font-weight: 800;
+      }
+
+      .score-number span {
+        font-size: 20px;
+        color: var(--muted);
+      }
+
+      .score-bars {
+        display: grid;
+        gap: 9px;
+      }
+
+      .score-bar {
+        display: grid;
+        grid-template-columns: 72px 1fr 36px;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .track {
+        height: 8px;
+        border-radius: 999px;
+        background: #ebe5d9;
+        overflow: hidden;
+      }
+
+      .fill {
+        height: 100%;
+        border-radius: inherit;
+        background: var(--green);
+      }
+
+      .fill.warn {
+        background: var(--amber);
+      }
+
+      .fill.bad {
+        background: var(--red);
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .stage-card {
+        min-height: 142px;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        cursor: pointer;
+        transition: transform 0.16s ease, box-shadow 0.16s ease;
+      }
+
+      .stage-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(47, 45, 38, 0.12);
+      }
+
+      .stage-card .topline,
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .badge {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        margin-top: 10px;
-        padding: 6px 10px;
+        justify-content: center;
+        min-width: 42px;
+        height: 24px;
+        padding: 0 9px;
         border-radius: 999px;
-        font-size: 13px;
-        font-weight: 600;
+        font-size: 12px;
+        font-weight: 700;
       }
 
-      .status.ok {
+      .ok {
         background: var(--green-soft);
         color: var(--green);
       }
 
-      .status.warn {
+      .warn {
         background: var(--amber-soft);
         color: var(--amber);
       }
 
-      .status.crit {
+      .bad {
         background: var(--red-soft);
         color: var(--red);
+      }
+
+      .stage-card p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 13px;
+      }
+
+      .section {
+        margin-top: 18px;
+        padding: 18px;
+      }
+
+      .section-head {
+        margin-bottom: 14px;
+      }
+
+      .section-head p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 13px;
       }
 
       .grid-2 {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 14px;
       }
 
-      .card {
-        background: var(--paper);
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .kpi {
+        min-height: 114px;
+        padding: 14px;
         border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 18px;
-        box-shadow: var(--shadow);
+        border-radius: 8px;
+        background: #fffdf8;
       }
 
-      .card h3 {
-        margin: 0 0 12px;
-        font-size: 16px;
+      .kpi label {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .kpi strong {
+        display: block;
+        margin-top: 12px;
+        font-size: 24px;
+      }
+
+      .kpi p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .issue-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .issue {
+        display: grid;
+        grid-template-columns: 38px 1fr 112px;
+        gap: 12px;
+        align-items: center;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
+        cursor: pointer;
+      }
+
+      .issue.active {
+        border-color: rgba(185, 61, 47, 0.55);
+        background: #fff6ef;
+        box-shadow: 0 10px 24px rgba(185, 61, 47, 0.1);
+      }
+
+      .rank {
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--dark);
+        color: #fffaf0;
+        font-weight: 800;
+      }
+
+      .issue strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      .issue span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
       }
 
       table {
         width: 100%;
+        min-width: 760px;
         border-collapse: collapse;
-        font-size: 14px;
+      }
+
+      .marketing-table table {
+        min-width: 1180px;
       }
 
       th,
       td {
+        padding: 11px 12px;
+        border-bottom: 1px solid #ece5d9;
         text-align: left;
-        padding: 12px 10px;
-        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+        font-size: 13px;
+      }
+
+      .marketing-table th,
+      .marketing-table td {
+        white-space: nowrap;
+      }
+
+      .marketing-table td:last-child,
+      .marketing-table th:last-child {
+        min-width: 220px;
+        white-space: normal;
+        line-height: 1.45;
       }
 
       th {
-        color: var(--muted);
-        font-weight: 600;
+        position: sticky;
+        top: 0;
+        background: #f5efe4;
+        color: #3d453f;
+        font-size: 12px;
+        font-weight: 800;
       }
 
       tr:last-child td {
-        border-bottom: none;
+        border-bottom: 0;
       }
 
-      .tag {
-        display: inline-flex;
+      .spark {
+        display: flex;
+        align-items: end;
+        gap: 5px;
+        height: 108px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
+      }
+
+      .spark i {
+        flex: 1;
+        min-width: 8px;
+        border-radius: 4px 4px 0 0;
+        background: var(--blue);
+      }
+
+      .spark i:nth-child(2n) {
+        background: var(--green);
+      }
+
+      .funnel {
+        display: grid;
+        gap: 9px;
+      }
+
+      .funnel-row {
+        display: grid;
+        grid-template-columns: 108px 1fr 72px;
+        gap: 10px;
         align-items: center;
-        gap: 6px;
-        padding: 4px 10px;
-        border-radius: 999px;
+      }
+
+      .funnel-block {
+        height: 34px;
+        border-radius: 6px;
+        background: var(--blue-soft);
+        overflow: hidden;
+      }
+
+      .funnel-block span {
+        display: block;
+        height: 100%;
+        background: var(--blue);
+      }
+
+      .action-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .diagnosis-card {
+        display: grid;
+        gap: 12px;
+      }
+
+      .diagnosis-meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .diagnosis-metric {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
+      }
+
+      .diagnosis-metric span {
+        display: block;
+        color: var(--muted);
         font-size: 12px;
-        font-weight: 600;
       }
 
-      .tag.ok {
-        background: var(--green-soft);
-        color: var(--green);
+      .diagnosis-metric b {
+        display: block;
+        margin-top: 6px;
+        font-size: 18px;
       }
 
-      .tag.warn {
-        background: var(--amber-soft);
-        color: var(--amber);
+      .action {
+        padding: 12px;
+        border-left: 4px solid var(--red);
+        background: #fffdf8;
+        border-radius: 6px;
       }
 
-      .tag.crit {
-        background: var(--red-soft);
-        color: var(--red);
+      .action strong {
+        display: block;
       }
 
-      .muted {
+      .action span {
+        display: block;
+        margin-top: 5px;
         color: var(--muted);
+        font-size: 12px;
       }
 
-      .section {
-        margin-top: 22px;
-      }
-
-      .empty {
+      .source-note {
         color: var(--muted);
-        padding: 24px 0;
-        text-align: center;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .detail-toggle {
+        height: 34px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fffdf8;
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .detail {
+        display: none;
+        margin-top: 12px;
+      }
+
+      .detail.open {
+        display: block;
+      }
+
+      .persona {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      .persona-box {
+        padding: 14px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: #fffdf8;
+      }
+
+      .persona-box b {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .persona-box span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .marketing-summary {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .judgement-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .judgement-list li {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .judgement-list b {
+        color: var(--ink);
+      }
+
+      .analysis-module {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.8fr);
+        gap: 14px;
+        align-items: stretch;
+      }
+
+      .trend-panel {
+        min-height: 240px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
+        display: grid;
+        align-content: space-between;
+        gap: 12px;
+      }
+
+      .trend-title {
+        display: grid;
+        gap: 10px;
+      }
+
+      .trend-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .trend-title strong {
+        font-size: 14px;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .legend i {
+        display: inline-block;
+        width: 10px;
+        height: 3px;
+        margin-right: 4px;
+        vertical-align: middle;
+        background: var(--blue);
+      }
+
+      .legend i.green {
+        background: var(--green);
+      }
+
+      .legend i.amber {
+        background: var(--amber);
+      }
+
+      .trend-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .trend-chip {
+        min-height: 24px;
+        padding: 4px 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fbf7ee;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .trend-chip.active {
+        border-color: var(--dark);
+        background: var(--dark);
+        color: #fffaf0;
+      }
+
+      .trend-svg {
+        width: 100%;
+        height: 156px;
+        overflow: visible;
+      }
+
+      .trend-svg .grid-line {
+        stroke: #e6dfd2;
+        stroke-width: 1;
+      }
+
+      .trend-svg .line-blue {
+        fill: none;
+        stroke: var(--blue);
+        stroke-width: 3;
+      }
+
+      .trend-svg .line-green {
+        fill: none;
+        stroke: var(--green);
+        stroke-width: 3;
+      }
+
+      .trend-svg .line-amber {
+        fill: none;
+        stroke: var(--amber);
+        stroke-width: 3;
+      }
+
+      .trend-caption {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .detail-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px;
+        border: 1px dashed #cfc5b4;
+        border-radius: 8px;
+        background: #fffdf8;
+      }
+
+      .detail-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .primary-button {
+        height: 36px;
+        padding: 0 13px;
+        border: 1px solid var(--dark);
+        border-radius: 6px;
+        background: var(--dark);
+        color: #fffaf0;
+        cursor: pointer;
+      }
+
+      .secondary-button {
+        height: 36px;
+        padding: 0 13px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fffdf8;
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .funnel-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .funnel-card {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
+      }
+
+      .funnel-card h3 {
+        margin-bottom: 12px;
+      }
+
+      .reason-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) 320px;
+        gap: 14px;
+      }
+
+      .pie-panel {
+        min-height: 260px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
+      }
+
+      .pie {
+        width: 160px;
+        height: 160px;
+        margin: 18px auto;
+        border-radius: 50%;
+        background: conic-gradient(var(--red) 0 34%, var(--amber) 34% 58%, var(--blue) 58% 78%, var(--green) 78% 100%);
+        box-shadow: inset 0 0 0 42px #fffdf8;
+      }
+
+      @media (max-width: 1120px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+
+        .side {
+          position: static;
+          height: auto;
+        }
+
+        .nav {
+          grid-template-columns: repeat(5, minmax(130px, 1fr));
+          overflow-x: auto;
+        }
+
+        .filters,
+        .status-grid,
+        .kpi-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .top-title {
+          grid-column: 1 / -1;
+        }
+
+        .hero,
+        .marketing-summary,
+        .analysis-module,
+        .funnel-grid,
+        .reason-layout,
+        .grid-2,
+        .diagnosis-meta,
+        .persona {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .content,
+        .filters {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+
+        .filters,
+        .status-grid,
+        .kpi-grid,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+
+        .issue {
+          grid-template-columns: 34px 1fr;
+        }
+
+        .issue .badge {
+          grid-column: 2;
+          justify-self: start;
+        }
+
+        h1 {
+          font-size: 34px;
+        }
       }
     </style>
   </head>
@@ -290,270 +1023,863 @@
     <div class="shell">
       <aside class="side">
         <div class="brand">
-          <div class="brand-mark">诊</div>
+          <div class="brand-mark">品</div>
           <div>
-            <strong>系列诊断</strong>
-            <span>全链路健康度看板</span>
+            <strong>系列诊断工作台</strong>
+            <span>营销 · 搜索 · 转化 · 售后</span>
           </div>
         </div>
-        <nav class="nav" id="nav">
-          <button class="active" data-page="overview">总览</button>
-          <button data-page="marketing">营销端</button>
-          <button data-page="search">搜索承接</button>
-          <button data-page="ec">EC承接</button>
-          <button data-page="reputation">口碑售后</button>
+        <nav class="nav" aria-label="看板导航">
+          <button class="active" data-page="overview"><span>01</span><b>总览</b><small>诊断</small></button>
+          <button data-page="marketing"><span>02</span><b>营销端</b><small>声量</small></button>
+          <button data-page="search"><span>03</span><b>搜索承接</b><small>心智</small></button>
+          <button data-page="ec"><span>04</span><b>EC承接</b><small>转化</small></button>
+          <button data-page="service"><span>05</span><b>口碑售后</b><small>体验</small></button>
         </nav>
+        <div class="side-note">异常指标可点击进入对应专题页。总览只保留判断和优先级，细分渠道、趋势和明细放在专题页。</div>
       </aside>
 
-      <main class="main" id="main">
-        <!-- 内容由 JS 动态渲染 -->
+      <main class="main">
+        <header class="filters">
+          <div class="top-title">
+            <strong id="pageTitle">系列全链路诊断总览</strong>
+            <span id="pageSubtitle">先看健康度与待处理问题，再进入专题下钻</span>
+          </div>
+          <div class="filter">
+            <label for="series">系列</label>
+            <select id="series">
+              <option>吾跃系列</option>
+              <option>菲林系列</option>
+              <option>赤兔系列</option>
+            </select>
+          </div>
+          <div class="filter">
+            <label for="period">时间范围</label>
+            <select id="period">
+              <option>近 7 天</option>
+              <option selected>近 30 天</option>
+              <option>近 90 天</option>
+            </select>
+          </div>
+          <div class="filter">
+            <label for="baseline">对比口径</label>
+            <select id="baseline">
+              <option selected>前 4 周平均值</option>
+              <option>上周期</option>
+              <option>目标值</option>
+            </select>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="page active" id="overview">
+            <div class="hero">
+              <div class="object-card panel">
+                <div>
+                  <p class="eyebrow">当前诊断对象</p>
+                  <h2>系列基础信息</h2>
+                </div>
+                <div class="object-list">
+                  <div class="object-row"><span>系列名称</span><b>吾跃系列</b></div>
+                  <div class="object-row"><span>商品数</span><b>36</b></div>
+                  <div class="object-row"><span>覆盖类目</span><b>跑鞋 / 运动生活</b></div>
+                </div>
+              </div>
+              <div class="score panel">
+                <div>
+                  <p class="eyebrow">全链路健康度评分</p>
+                  <div class="score-number">68<span>/100</span></div>
+                  <p class="hero-copy">主要风险集中在营销声量、搜索成交效率和商品点击效率。建议先处理前置链路的内容曝光，再检查搜索结果页与商品卡承接。</p>
+                </div>
+                <div class="score-bars">
+                  <div class="score-bar"><span>营销端</span><div class="track"><div class="fill bad" style="width: 46%"></div></div><b>46</b></div>
+                  <div class="score-bar"><span>搜索</span><div class="track"><div class="fill warn" style="width: 61%"></div></div><b>61</b></div>
+                  <div class="score-bar"><span>EC承接</span><div class="track"><div class="fill warn" style="width: 64%"></div></div><b>64</b></div>
+                  <div class="score-bar"><span>售后</span><div class="track"><div class="fill" style="width: 82%"></div></div><b>82</b></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="status-grid">
+              <article class="stage-card" data-jump="marketing">
+                <div class="topline"><h3>营销端</h3><span class="badge bad">异常</span></div>
+                <p>品牌/产品在抖音的声量不足或触达效率低，内容资产厚度不足。</p>
+              </article>
+              <article class="stage-card" data-jump="search">
+                <div class="topline"><h3>搜索心智承接</h3><span class="badge warn">预警</span></div>
+                <p>搜索流量未有效转化为成交，搜索结果页和商品承接需要排查。</p>
+              </article>
+              <article class="stage-card" data-jump="ec">
+                <div class="topline"><h3>EC 承接</h3><span class="badge warn">预警</span></div>
+                <p>商品卡吸引力不足，详情页信任或价格/优惠可能影响转化。</p>
+              </article>
+              <article class="stage-card" data-jump="service">
+                <div class="topline"><h3>口碑售后</h3><span class="badge ok">正常</span></div>
+                <p>售后暂未成为主要问题，持续跟踪退货原因和差评标签即可。</p>
+              </article>
+            </div>
+
+            <div class="grid-2">
+              <section class="section panel">
+                <div class="section-head">
+                  <div><h2>待处理问题 Top 5</h2><p>仅展示异常/预警，由核心指标矩阵筛出后排序</p></div>
+                </div>
+                <div class="issue-list" id="issueList"></div>
+              </section>
+
+              <section class="section panel">
+                <div class="section-head">
+                  <div><h2>选中问题诊断卡</h2><p>诊断结论和建议动作来自原表规则</p></div>
+                </div>
+                <div class="diagnosis-card" id="diagnosisCard"></div>
+              </section>
+            </div>
+
+            <section class="section panel">
+              <div class="section-head">
+                <div><h2>核心指标矩阵</h2><p>全链路体检底表；Top5 从异常/预警项中计算得出</p></div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>环节</th><th>关键指标</th><th>当前值</th><th>基准值</th><th>环比变化</th><th>状态</th><th>诊断结论</th><th>建议动作</th></tr></thead>
+                  <tbody id="overviewMatrix"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="section panel">
+              <div class="section-head"><div><h2>商品人群画像差异</h2><p>判断曝光、观看、搜索、购买是否来自同一类人群</p></div></div>
+              <div class="persona">
+                <div class="persona-box"><b>曝光人群</b><span>18-24 岁占比高，偏泛流量，价格敏感度更强。</span></div>
+                <div class="persona-box"><b>内容观看</b><span>运动兴趣标签集中，完播人群对舒适脚感更敏感。</span></div>
+                <div class="persona-box"><b>搜索人群</b><span>品牌词与产品词混合，主动意图强但权益对比明显。</span></div>
+                <div class="persona-box"><b>购买人群</b><span>25-34 岁占比更高，更关注尺码稳定和售后评价。</span></div>
+              </div>
+            </section>
+          </section>
+
+          <section class="page" id="marketing"></section>
+          <section class="page" id="search"></section>
+          <section class="page" id="ec"></section>
+          <section class="page" id="service"></section>
+        </div>
       </main>
     </div>
 
     <script>
-      const state = {
-        page: "overview",
-        series: "吾跃系列",
-        period: "近7天",
-        compare: "前4周平均",
+      const badge = {
+        正常: '<span class="badge ok">正常</span>',
+        预警: '<span class="badge warn">预警</span>',
+        异常: '<span class="badge bad">异常</span>',
       };
 
-      const seriesOptions = ["吾跃系列", "菲林系列", "轻氧系列"];
-      const periodOptions = ["近7天", "近14天", "近30天"];
-      const compareOptions = ["前4周平均", "上周期", "目标值"];
+      const matrix = [
+        ["营销端", "营销花费", "¥42.6万", "¥40.0万", "+6.8%", "正常", "投入可以支撑当前声量目标", "保持预算，继续观察渠道效率"],
+        ["营销端", "内容曝光量", "286万", "360万", "-18.4%", "异常", "品牌/产品在抖音的声量不足或触达效率低", "增加投流预算、增加达人合作数量、提高发布频次"],
+        ["营销端", "有曝光内容数", "126条", "168条", "-22.1%", "异常", "内容资产少，依赖少数爆文", "批量生产混剪、多账号分发，每周上新N条"],
+        ["营销端", "新发布内容占比", "24%", "32%", "-8.0pp", "预警", "内容老化，缺乏新鲜度", "制定内容日历强制周更、蹭热点话题快速出片"],
+        ["营销端", "篇均互动量", "412", "520", "-12.6%", "预警", "内容吸引力差，用户点赞/评论/转发的意愿低", "分析高互动竞品、重构内容钩子、增加引导CTA"],
+        ["搜索心智承接", "产品词搜索成交率", "2.8%", "3.6%", "-0.8pp", "预警", "搜索进店后转化差，商品页或价格缺乏竞争力", "优化产品主图/标题/价格/评论首屏/核心卖点"],
+        ["搜索心智承接", "产品词搜索GPMS", "653", "820", "-20.4%", "异常", "搜索流量价值低", "优化搜索结果页主图+优惠、投放搜索卡位"],
+        ["搜索心智承接", "内容触达搜索率", "0.42%", "0.58%", "-0.16pp", "预警", "看了内容的人不去搜索，内容种草力弱或引导缺失", "视频强化小蓝词配置，评论区官旗评论引导"],
+        ["EC承接", "商品点击率", "8.1%", "10.4%", "-2.3pp", "预警", "商品卡吸引力差（主图/价格/标题/销量）", "商品头图、标题优化；直播间话术引导商品点击或浏览购物车点击商品"],
+        ["EC承接", "商品购买率", "15.6%", "14.8%", "+0.8pp", "正常", "点击后的成交承接稳定", "保持权益、库存和详情页表达稳定"],
+        ["口碑售后", "退货率", "9.8%", "10.5%", "-0.7pp", "正常", "产品体验或描述不符问题暂未扩大", "继续按退货原因监控详情页描述和品控"],
+      ];
 
-      function $(sel) {
-        return document.querySelector(sel);
+      const issues = [
+        {
+          rank: 1,
+          page: "marketing",
+          title: "内容曝光不足",
+          metric: "内容曝光量",
+          current: "286万",
+          baseline: "360万",
+          change: "-18.4%",
+          status: "异常",
+          diagnosis: "品牌/产品在抖音的声量不足或触达效率低",
+          action: "增加投流预算、增加达人合作数量、提高发布频次",
+        },
+        {
+          rank: 2,
+          page: "marketing",
+          title: "有曝光内容数不足",
+          metric: "有曝光内容数",
+          current: "126条",
+          baseline: "168条",
+          change: "-22.1%",
+          status: "异常",
+          diagnosis: "内容资产少，依赖少数爆文",
+          action: "批量生产混剪、多账号分发，每周上新N条",
+        },
+        {
+          rank: 3,
+          page: "search",
+          title: "搜索流量价值低",
+          metric: "产品词搜索GPMS",
+          current: "653",
+          baseline: "820",
+          change: "-20.4%",
+          status: "异常",
+          diagnosis: "搜索流量价值低",
+          action: "优化搜索结果页主图+优惠、投放搜索卡位",
+        },
+        {
+          rank: 4,
+          page: "ec",
+          title: "商品点击率低",
+          metric: "商品点击率",
+          current: "8.1%",
+          baseline: "10.4%",
+          change: "-2.3pp",
+          status: "预警",
+          diagnosis: "商品卡吸引力差（主图/价格/标题/销量）",
+          action: "商品头图、标题优化；直播间话术引导商品点击或浏览购物车点击商品",
+        },
+        {
+          rank: 5,
+          page: "search",
+          title: "内容触达搜索率低",
+          metric: "内容触达搜索率",
+          current: "0.42%",
+          baseline: "0.58%",
+          change: "-0.16pp",
+          status: "预警",
+          diagnosis: "看了内容的人不去搜索，内容种草力弱或引导缺失",
+          action: "视频强化小蓝词配置，评论区官旗评论引导",
+        },
+      ];
+
+      const pages = {
+        marketing: {
+          title: "营销端",
+          subtitle: "从投入、曝光、质量、结构、老化逐层定位声量问题。",
+          kpis: [
+            ["营销花费", "¥42.6万", "+6.8%", "正常"],
+            ["内容曝光量", "286万", "-18.4%", "异常"],
+            ["有曝光内容数", "126条", "-22.1%", "异常"],
+            ["新发布内容占比", "24%", "-8.0pct", "预警"],
+            ["UGC占比", "18%", "-5.2pct", "预警"],
+            ["篇均曝光量", "2.27万", "+4.8%", "正常"],
+            ["篇均互动量", "412", "-12.6%", "预警"],
+          ],
+          sections: [
+            { title: "内容营销投资情况", desc: "看每一分钱花在哪个渠道，以及 ROI 是否达标。", type: "table", rows: [["内容热推", "¥12.4万", "29%", "¥32", "¥42.8万", "3.45", "正常"], ["种草通合约", "¥8.6万", "20%", "¥46", "¥18.1万", "2.10", "异常"], ["DOU+", "¥5.8万", "14%", "¥28", "¥13.4万", "2.31", "预警"], ["千川推商品", "¥15.8万", "37%", "¥35", "¥62.2万", "3.94", "正常"]], headers: ["渠道", "消耗金额", "占比", "CPM", "直接成交金额", "ROI", "状态"] },
+            { title: "内容结构与来源分析", desc: "区分内容不够多还是内容不够好。", type: "bars" },
+            { title: "内容质量", desc: "用篇均曝光和篇均互动判断分发效率。", type: "table", rows: [["企业号视频", "3.4万", "+12%", "720", "正常"], ["自然内容", "1.1万", "-18%", "260", "异常"], ["星图达人视频", "2.8万", "-6%", "540", "预警"], ["内容热推", "2.5万", "+4%", "480", "正常"]], headers: ["渠道", "篇均曝光", "环比", "篇均互动", "状态"] },
+            { title: "内容老化分析", desc: "防止靠旧内容维持曝光。", type: "bars" },
+          ],
+        },
+        search: {
+          title: "搜索心智承接",
+          subtitle: "诊断用户是否看后主动搜索，以及搜索后是否成交。",
+          kpis: [
+            ["产品词搜索次数", "1.2万", "+9.4%", "正常"],
+            ["看后搜搜索人数", "3,180", "-7.2%", "预警"],
+            ["直接搜搜索人数", "6,420", "+11.0%", "正常"],
+            ["搜索成交金额", "¥78.4万", "-3.1%", "预警"],
+            ["搜索客单价", "¥319", "+5.3%", "正常"],
+            ["搜索转化率", "2.8%", "-0.6pct", "预警"],
+            ["搜索 GPMS", "653", "-9.8%", "异常"],
+            ["内容触达搜索率", "0.42%", "-0.09pct", "预警"],
+          ],
+          sections: [
+            { title: "搜索趋势", desc: "同时看搜索次数与搜索成交金额。", type: "bars" },
+            { title: "本系列 vs 竞品搜索心智", desc: "判断心智强弱和转化价值。", type: "table", rows: [["产品词搜索次数", "1.2万", "1.5万", "9,800", "8,600", "预警"], ["搜索成交率", "2.8%", "3.4%", "2.9%", "2.6%", "预警"], ["搜索 GPMS", "653", "820", "604", "578", "异常"]], headers: ["诊断指标", "吾跃", "竞品一", "竞品二", "竞品三", "状态"] },
+            { title: "TOP20 产品搜索词监控", desc: "指导内容埋词和投放关键词策略。", type: "table", rows: [["李宁吾跃", "4,280", "+16%", "¥31.4万", "734", "正常"], ["吾跃跑鞋", "2,100", "-4%", "¥12.6万", "600", "预警"], ["轻量跑鞋", "1,840", "+11%", "¥8.7万", "473", "异常"], ["李宁运动鞋", "1,320", "+8%", "¥9.1万", "689", "正常"]], headers: ["搜索词", "搜索次数", "环比", "成交金额", "GPMS", "状态"] },
+            { title: "核心搜索引流触点", desc: "定位哪个渠道引导搜索效率下降。", type: "table", rows: [["千川短视频", "4,360", "36%", "0.52%", "¥24.1万", "正常"], ["企业号视频", "2,180", "18%", "0.36%", "¥9.4万", "预警"], ["自然内容", "1,520", "13%", "0.28%", "¥4.6万", "异常"], ["星图视频投放", "1,910", "16%", "0.44%", "¥11.2万", "预警"]], headers: ["触点", "搜索次数", "占比", "触达搜索率", "搜索成交金额", "状态"] },
+            { title: "搜后转化分析", desc: "定位搜索曝光、商品曝光、成交人数的卡点。", type: "funnel" },
+          ],
+        },
+        ec: {
+          title: "EC 承接",
+          subtitle: "精细化诊断流量转化效率，定位渠道和漏斗卡点。",
+          kpis: [
+            ["直播讲解时长", "186min", "-5.1%", "预警"],
+            ["商品曝光人数", "96.2万", "-9.2%", "预警"],
+            ["商品点击人数", "7.8万", "-18.1%", "异常"],
+            ["商品购买人数", "1.22万", "-8.6%", "预警"],
+            ["内容到商品曝光率", "33.6%", "+2.4pct", "正常"],
+            ["商品点击率", "8.1%", "-1.7pct", "预警"],
+            ["商品购买率", "15.6%", "+0.8pct", "正常"],
+            ["商品销售金额", "¥389万", "-6.5%", "预警"],
+          ],
+          sections: [
+            { title: "生意渠道贡献", desc: "一眼看出哪个带货方式拖累整体销售。", type: "table", rows: [["直播间", "¥196万", "-4.2%", "50%", "6,110", "¥321", "正常"], ["短视频", "¥91万", "-12.4%", "23%", "2,860", "¥318", "预警"], ["商品卡", "¥102万", "-5.8%", "27%", "3,230", "¥316", "预警"]], headers: ["渠道", "销售额", "环比", "占比", "销量", "件单价", "状态"] },
+            { title: "整体转化漏斗", desc: "曝光 → 点击 → 购买。", type: "funnel" },
+            { title: "分渠道漏斗", desc: "直播间、短视频、商品卡分别拆开看。", type: "table", rows: [["直播间", "42.1万", "4.2万", "6,110", "10.0%", "14.5%", "正常"], ["短视频", "31.4万", "2.1万", "2,860", "6.7%", "13.6%", "异常"], ["商品卡", "22.7万", "1.5万", "3,230", "6.6%", "21.5%", "预警"]], headers: ["渠道", "曝光人数", "点击人数", "购买人数", "点击率", "购买率", "状态"] },
+          ],
+        },
+        service: {
+          title: "口碑售后",
+          subtitle: "从评论和退货两个维度判断满意度与信任问题。",
+          kpis: [
+            ["评论数", "2,184", "+6.8%", "正常"],
+            ["好评率", "91.2%", "+1.1pct", "正常"],
+            ["差评率", "3.6%", "+0.4pct", "预警"],
+            ["销售金额", "¥389万", "-6.5%", "预警"],
+            ["退货金额", "¥38.1万", "+2.4%", "正常"],
+            ["退货率", "9.8%", "+0.4pct", "正常"],
+            ["发货前退货率", "3.2%", "-0.3pct", "正常"],
+            ["发货后退货率", "6.6%", "+0.7pct", "预警"],
+          ],
+          sections: [
+            { title: "差评原因分析", desc: "把不满意翻译成产品和运营可改进的问题。", type: "table", rows: [["尺码偏差", "86", "31%", "预警"], ["脚感不符预期", "62", "22%", "预警"], ["色差", "39", "14%", "正常"], ["物流慢", "28", "10%", "正常"]], headers: ["差评标签", "出现次数", "标签占比", "状态"] },
+            { title: "退货原因分析", desc: "量化退货损失，并定位用户、产品或服务问题。", type: "table", rows: [["产品问题", "尺码不合适", "3.1%", "¥12.4万", "286", "6.2%", "预警"], ["用户问题", "拍错/不想要", "2.4%", "¥9.2万", "214", "2.8%", "正常"], ["服务问题", "物流超时", "1.1%", "¥4.3万", "88", "1.4%", "正常"], ["描述问题", "图片与实物差异", "1.6%", "¥6.1万", "136", "2.1%", "预警"]], headers: ["原因分类", "具体原因", "退货率", "退货金额", "退货订单数", "发货后退货率", "状态"] },
+            { title: "建议动作", desc: "把评论和退货原因转成改进项。", type: "actions" },
+          ],
+        },
+      };
+
+      const overviewBody = document.querySelector("#overviewMatrix");
+      overviewBody.innerHTML = matrix.map((row) => `<tr>${row.map((cell, index) => `<td>${index === 5 ? badge[cell] : cell}</td>`).join("")}</tr>`).join("");
+
+      const issueList = document.querySelector("#issueList");
+      const diagnosisCard = document.querySelector("#diagnosisCard");
+
+      function renderIssues(activeRank = 1) {
+        issueList.innerHTML = issues.map((issue) => `
+          <div class="issue ${issue.rank === activeRank ? "active" : ""}" data-issue="${issue.rank}">
+            <div class="rank">${issue.rank}</div>
+            <div>
+              <strong>${issue.title}</strong>
+              <span>${issue.metric}：当前 ${issue.current} / 基准 ${issue.baseline} / ${issue.change}</span>
+            </div>
+            ${badge[issue.status]}
+          </div>
+        `).join("");
       }
 
-      function renderFilters() {
-        return `
-          <div class="filters">
-            <select id="sel-series">
-              ${seriesOptions.map((s) => `<option ${s === state.series ? "selected" : ""}>${s}</option>`).join("")}
-            </select>
-            <select id="sel-period">
-              ${periodOptions.map((p) => `<option ${p === state.period ? "selected" : ""}>${p}</option>`).join("")}
-            </select>
-            <select id="sel-compare">
-              ${compareOptions.map((c) => `<option ${c === state.compare ? "selected" : ""}>${c}</option>`).join("")}
-            </select>
+      function renderDiagnosis(rank = 1) {
+        const issue = issues.find((item) => item.rank === rank) || issues[0];
+        diagnosisCard.innerHTML = `
+          <div class="diagnosis-meta">
+            <div class="diagnosis-metric"><span>异常指标</span><b>${issue.metric}</b></div>
+            <div class="diagnosis-metric"><span>当前 vs 基准</span><b>${issue.current} / ${issue.baseline}</b></div>
           </div>
+          <div class="action"><strong>诊断结论</strong><span>${issue.diagnosis}</span></div>
+          <div class="action"><strong>建议动作</strong><span>${issue.action}</span></div>
+          <button class="detail-toggle" data-jump="${issue.page}">进入下钻</button>
+          <div class="source-note">诊断结论与建议动作来自数据分析师原表；页面只负责在对应指标异常/预警时触发展示。</div>
         `;
       }
 
-      function statusBadge(st) {
-        const map = {
-          ok: { cls: "ok", text: "正常" },
-          warn: { cls: "warn", text: "预警" },
-          crit: { cls: "crit", text: "异常" },
+      renderIssues();
+      renderDiagnosis();
+
+      function kpiCards(items) {
+        return `<div class="kpi-grid">${items.map(([name, value, change, status]) => `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>环比 ${change} · 基准：前 4 周均值</p></article>`).join("")}</div>`;
+      }
+
+      function tableBlock(section) {
+        return `<div class="table-wrap"><table><thead><tr>${section.headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${section.rows.map((row) => `<tr>${row.map((cell, i) => `<td>${i === row.length - 1 && badge[cell] ? badge[cell] : cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      }
+
+      function barsBlock() {
+        return `<div class="spark" aria-label="趋势图">${[48, 62, 54, 76, 44, 66, 58, 82, 70, 56, 64, 73].map((h) => `<i style="height:${h}%"></i>`).join("")}</div>`;
+      }
+
+      function funnelBlock() {
+        return `<div class="funnel">
+          <div class="funnel-row"><b>商品曝光</b><div class="funnel-block"><span style="width:100%"></span></div><span>96.2万</span></div>
+          <div class="funnel-row"><b>商品点击</b><div class="funnel-block"><span style="width:58%"></span></div><span>7.8万</span></div>
+          <div class="funnel-row"><b>商品购买</b><div class="funnel-block"><span style="width:31%"></span></div><span>1.22万</span></div>
+        </div>`;
+      }
+
+      function actionsBlock() {
+        return `<div class="action-list">
+          <div class="action"><strong>尺码预期管理</strong><span>详情页首屏增加尺码建议和脚型适配说明。</span></div>
+          <div class="action"><strong>客服前置确认</strong><span>对高退货尺码订单增加发货前确认话术。</span></div>
+          <div class="action"><strong>评价内容治理</strong><span>沉淀真实买家秀，提升搜索和商品页信任。</span></div>
+        </div>`;
+      }
+
+      const marketingKpis = [
+        ["营销花费", "¥42.6万", "¥40.0万", "+6.8%", "正常"],
+        ["内容曝光量", "286万", "360万", "-18.4%", "异常"],
+        ["有曝光内容数", "126条", "168条", "-22.1%", "异常"],
+        ["新发布内容占比", "24%", "32%", "-8.0pp", "预警"],
+        ["UGC占比", "18%", "24%", "-6.0pp", "预警"],
+        ["篇均曝光量", "2.27万", "2.14万", "+6.1%", "正常"],
+        ["篇均互动量", "412", "520", "-12.6%", "预警"],
+      ];
+
+      const investmentRows = [
+        ["内容热推", "¥12.4万", "+8.2%", "29%", "¥32", "¥42.8万", "3.45", "3.20", "正常", "保持投放，观察素材衰减"],
+        ["种草通合约", "¥8.6万", "+18.0%", "20%", "¥46", "¥18.1万", "2.10", "3.00", "异常", "ROI低于基准，建议减少或调整该渠道"],
+        ["DOU+", "¥5.8万", "-4.6%", "14%", "¥28", "¥13.4万", "2.31", "2.80", "预警", "复盘达人素材，筛出高互动内容再放大"],
+        ["千川推商品-短视频", "¥15.8万", "+5.5%", "37%", "¥35", "¥62.2万", "3.94", "3.50", "正常", "保持预算，继续优化成交素材"],
+      ];
+
+      const structureRows = [
+        ["企业号视频", "78万", "27%", "72万", "正常", "1.9万", "31%", "1.7万", "正常", "28", "22%", "24", "正常", "保持企业号稳定发布，复用高互动脚本"],
+        ["自然内容", "42万", "15%", "60万", "异常", "6,200", "10%", "9,800", "异常", "18", "14%", "30", "异常", "发起UGC话题挑战、激励用户投稿、置顶优质UGC"],
+        ["挑战赛", "26万", "9%", "34万", "预警", "4,800", "8%", "6,400", "预警", "9", "7%", "15", "预警", "补充挑战话题素材，提升参与入口曝光"],
+        ["星图达人视频", "66万", "23%", "78万", "预警", "1.4万", "23%", "1.5万", "正常", "31", "25%", "38", "预警", "增加达人合作数量，提高发布频次"],
+        ["内容热推", "74万", "26%", "70万", "正常", "1.7万", "28%", "1.6万", "正常", "40", "32%", "36", "正常", "保留高效素材，监控投放衰减"],
+      ];
+
+      const qualityRows = [
+        ["企业号视频", "2.79万", "+12.0%", "2.40万", "正常", "679", "+8.4%", "620", "正常", "继续复用高互动内容结构"],
+        ["自然内容", "2.33万", "-18.0%", "2.85万", "异常", "344", "-21.6%", "520", "异常", "优化前3秒完播率、修改标题/封面、增加利益点"],
+        ["挑战赛", "2.89万", "-6.2%", "3.10万", "预警", "533", "-8.5%", "610", "预警", "重构内容钩子，增加评论区互动引导"],
+        ["星图达人视频", "2.13万", "+4.7%", "2.05万", "正常", "452", "-3.1%", "500", "预警", "分析高互动竞品，调整达人脚本利益点"],
+        ["内容热推", "1.85万", "-9.8%", "2.10万", "预警", "425", "-13.4%", "490", "预警", "筛出高互动素材再放大，减少低互动素材消耗"],
+      ];
+
+      const agingRows = [
+        ["企业号视频", "28", "10", "36%", "32%", "正常", "保持周更节奏"],
+        ["自然内容", "18", "3", "17%", "28%", "异常", "制定内容日历强制周更、蹭热点话题快速出片"],
+        ["挑战赛", "9", "1", "11%", "25%", "异常", "补充挑战话题素材，提升新鲜度"],
+        ["星图达人视频", "31", "6", "19%", "28%", "预警", "增加达人合作数量，提高发布频次"],
+        ["内容热推", "40", "11", "28%", "30%", "正常", "保留高效素材，监控老化衰减"],
+      ];
+
+      const detailRows = [
+        ["企业号视频", "28", "10", "36%", "78万", "27%", "1.9万", "31%", "¥0", "-", "¥11.2万", "-"],
+        ["自然内容", "18", "3", "17%", "42万", "15%", "6,200", "10%", "¥0", "-", "¥4.8万", "-"],
+        ["挑战赛", "9", "1", "11%", "26万", "9%", "4,800", "8%", "¥2.1万", "¥38", "¥3.9万", "1.86"],
+        ["星图达人视频", "31", "6", "19%", "66万", "23%", "1.4万", "23%", "¥7.4万", "¥42", "¥18.6万", "2.51"],
+        ["内容热推", "40", "11", "28%", "74万", "26%", "1.7万", "28%", "¥12.4万", "¥32", "¥42.8万", "3.45"],
+        ["种草通合约", "22", "4", "18%", "38万", "13%", "7,900", "13%", "¥8.6万", "¥46", "¥18.1万", "2.10"],
+        ["DOU+", "16", "3", "19%", "31万", "11%", "5,800", "9%", "¥5.8万", "¥28", "¥13.4万", "2.31"],
+        ["千川推直播间-短视频", "19", "5", "26%", "44万", "15%", "9,300", "15%", "¥9.7万", "¥35", "¥31.5万", "3.25"],
+        ["千川推商品-短视频", "24", "7", "29%", "52万", "18%", "1.1万", "18%", "¥15.8万", "¥35", "¥62.2万", "3.94"],
+      ];
+
+      const searchKpis = [
+        ["产品词搜索次数", "1.2万", "1.1万", "+9.4%", "正常"],
+        ["看后搜搜索人数", "3,180", "3,780", "-15.9%", "预警"],
+        ["直接搜搜索人数", "6,420", "6,900", "-7.0%", "预警"],
+        ["产品词搜索成交金额", "¥78.4万", "¥86.0万", "-8.8%", "预警"],
+        ["产品词搜索客单价", "¥319", "¥305", "+4.6%", "正常"],
+        ["产品词搜索转化率", "2.8%", "3.6%", "-0.8pp", "预警"],
+        ["产品词搜索GPMS", "653", "820", "-20.4%", "异常"],
+        ["内容触达搜索率", "0.42%", "0.58%", "-0.16pp", "预警"],
+      ];
+
+      const competitorRows = [
+        ["搜索热度&转化", "搜索次数", "1.2万", "1.5万", "9,800", "8,600", "搜索热度弱于竞品一"],
+        ["搜索热度&转化", "搜索人数", "9,600", "1.1万", "8,100", "7,400", "主动搜索人群仍需扩大"],
+        ["搜索热度&转化", "搜索成交金额", "¥78.4万", "¥96.2万", "¥71.5万", "¥64.8万", "搜索成交金额落后头部竞品"],
+        ["搜索承接效率", "搜索成交客单价", "¥319", "¥306", "¥298", "¥302", "客单价具备优势"],
+        ["搜索承接效率", "搜索成交率", "2.8%", "3.4%", "2.9%", "2.6%", "搜索进店后转化偏弱"],
+        ["搜索承接效率", "搜索GPMS", "653", "820", "604", "578", "搜索流量价值低"],
+      ];
+
+      const searchTermRows = [
+        ["TOP1", "李宁吾跃", "4,280", "+16%", "3,420", "96", "¥31.4万", "+8.0%", "734"],
+        ["TOP2", "吾跃跑鞋", "2,100", "-4%", "1,760", "39", "¥12.6万", "-11.0%", "600"],
+        ["TOP3", "轻量跑鞋", "1,840", "+11%", "1,420", "28", "¥8.7万", "-5.2%", "473"],
+        ["TOP4", "李宁运动鞋", "1,320", "+8%", "1,080", "29", "¥9.1万", "+3.4%", "689"],
+        ["TOP5", "吾跃系列", "980", "-9%", "820", "15", "¥4.8万", "-18.0%", "490"],
+      ];
+
+      const touchpointRows = [
+        ["千川短视频（图文带货）", "4,360", "36%", "4,100", "正常", "0.52%", "0.48%", "正常", "¥24.1万", "¥22.0万", "正常", "3.1%", "3.0%", "正常"],
+        ["千川直播带货", "2,280", "19%", "2,800", "异常", "0.36%", "0.52%", "异常", "¥13.2万", "¥18.0万", "预警", "2.4%", "3.1%", "预警"],
+        ["企业号视频", "2,180", "18%", "2,600", "预警", "0.36%", "0.44%", "预警", "¥9.4万", "¥12.0万", "预警", "2.1%", "2.8%", "预警"],
+        ["自然内容", "1,520", "13%", "2,100", "异常", "0.28%", "0.42%", "异常", "¥4.6万", "¥8.0万", "异常", "1.9%", "2.7%", "异常"],
+        ["星图视频投放", "1,910", "16%", "2,200", "预警", "0.44%", "0.50%", "预警", "¥11.2万", "¥13.0万", "预警", "2.7%", "3.0%", "预警"],
+      ];
+
+      const searchConversionRows = [
+        ["整体-产品相关搜索", "86万", "100%", "92万", "预警", "2,460", "3,100", "预警", "18.4%", "20.0%", "预警", "13.4%", "15.0%", "预警"],
+        ["直播间-产品相关搜索", "31万", "36%", "34万", "预警", "910", "1,160", "预警", "16.8%", "19.0%", "预警", "12.9%", "15.2%", "预警"],
+        ["商品卡-产品相关搜索", "28万", "33%", "29万", "正常", "980", "1,020", "正常", "20.1%", "20.4%", "正常", "15.8%", "15.6%", "正常"],
+        ["短视频-产品相关搜索", "27万", "31%", "29万", "预警", "570", "920", "异常", "15.6%", "19.2%", "异常", "9.8%", "14.0%", "异常"],
+      ];
+
+      const ecKpis = [
+        ["直播间产品讲解时长", "186min", "196min", "-5.1%", "预警"],
+        ["商品曝光人数", "96.2万", "106万", "-9.2%", "预警"],
+        ["商品点击人数", "7.8万", "9.5万", "-18.1%", "异常"],
+        ["商品购买人数", "1.22万", "1.34万", "-8.6%", "预警"],
+        ["内容->商品曝光转化率", "33.6%", "31.2%", "+2.4pp", "正常"],
+        ["商品点击率", "8.1%", "10.4%", "-2.3pp", "预警"],
+        ["商品购买率", "15.6%", "14.8%", "+0.8pp", "正常"],
+        ["商品销售金额", "¥389万", "¥416万", "-6.5%", "预警"],
+      ];
+
+      const businessRows = [
+        ["销售渠道", "直播间", "¥196万", "-4.2%", "¥204万", "正常", "50%", "6,110", "¥321"],
+        ["销售渠道", "商品卡", "¥102万", "-5.8%", "¥108万", "预警", "27%", "3,230", "¥316"],
+        ["销售渠道", "短视频", "¥91万", "-12.4%", "¥104万", "异常", "23%", "2,860", "¥318"],
+        ["带货方式", "自营", "¥248万", "-3.5%", "¥257万", "正常", "64%", "7,920", "¥313"],
+        ["带货方式", "达人", "¥141万", "-11.8%", "¥160万", "预警", "36%", "4,280", "¥329"],
+      ];
+
+      const ecFunnelRows = [
+        ["整体转化漏斗", "商品曝光人数", "96.2万", "-9.2%", "106万", "预警"],
+        ["整体转化漏斗", "商品点击人数", "7.8万", "-18.1%", "9.5万", "异常"],
+        ["整体转化漏斗", "商品加购人数", "2.9万", "-11.0%", "3.3万", "预警"],
+        ["整体转化漏斗", "商品购买人数", "1.22万", "-8.6%", "1.34万", "预警"],
+        ["整体转化漏斗", "商品曝光点击率", "8.1%", "-2.3pp", "10.4%", "预警"],
+        ["整体转化漏斗", "商品点击加购率", "37.2%", "+2.0pp", "35.2%", "正常"],
+        ["整体转化漏斗", "商品点击购买率", "15.6%", "+0.8pp", "14.8%", "正常"],
+        ["商品卡曝光构成", "直播间商品曝光占比", "44%", "+1.0pp", "43%", "正常"],
+        ["商品卡曝光构成", "短视频商品曝光占比", "33%", "-3.0pp", "36%", "预警"],
+        ["商品卡曝光构成", "商品卡商品曝光占比", "23%", "+2.0pp", "21%", "正常"],
+      ];
+
+      const channelFunnels = [
+        { title: "直播间转化漏斗", rows: [["直播商品曝光人数", "42.1万", "-4.0%", "43.8万", "正常"], ["商品点击人数", "4.2万", "-8.7%", "4.6万", "预警"], ["商品加购人数", "1.6万", "-5.9%", "1.7万", "正常"], ["商品购买人数", "6,110", "-3.8%", "6,350", "正常"], ["直播间点击率", "10.0%", "-0.5pp", "10.5%", "正常"], ["直播间加购率", "38.1%", "+1.2pp", "36.9%", "正常"], ["直播间点击购买转化率", "14.5%", "+0.4pp", "14.1%", "正常"]] },
+        { title: "短视频转化漏斗", rows: [["短视频商品曝光人数", "31.4万", "-12.0%", "35.7万", "预警"], ["商品点击人数", "2.1万", "-25.0%", "2.8万", "异常"], ["商品加购人数", "7,900", "-18.6%", "9,700", "异常"], ["商品购买人数", "2,860", "-14.6%", "3,350", "预警"], ["短视频点击率", "6.7%", "-1.1pp", "7.8%", "异常"], ["短视频加购率", "37.6%", "+0.8pp", "36.8%", "正常"], ["短视频点击购买转化率", "13.6%", "+0.2pp", "13.4%", "正常"]] },
+        { title: "商品卡转化漏斗", rows: [["商品卡商品曝光人数", "22.7万", "-6.2%", "24.2万", "预警"], ["商品点击人数", "1.5万", "-11.8%", "1.7万", "预警"], ["商品加购人数", "5,300", "-7.0%", "5,700", "正常"], ["商品购买人数", "3,230", "-5.8%", "3,430", "正常"], ["商品卡点击率", "6.6%", "-0.4pp", "7.0%", "预警"], ["商品卡加购率", "35.3%", "+1.8pp", "33.5%", "正常"], ["商品卡点击购买转化率", "21.5%", "+1.3pp", "20.2%", "正常"]] },
+      ];
+
+      const returnCategoryRows = [
+        ["用户问题", "5.5%", "¥21.6万", "500", "442", "2.5%", "3.0%"],
+        ["服务问题", "2.8%", "¥11.0万", "238", "218", "0.6%", "2.2%"],
+      ];
+
+      const serviceKpis = [
+        ["评论", "评论数", "2,184", "+6.8%", "2,045", "正常", "用户愿意发声，评论供给充足"],
+        ["评论", "差评率", "3.6%", "+0.4pp", "3.2%", "预警", "用户满意度出现轻微风险"],
+        ["评论", "好评率", "91.2%", "+1.1pp", "90.1%", "正常", "正向反馈稳定"],
+        ["售后", "销售金额", "¥389万", "-6.5%", "¥416万", "预警", "生意规模走弱，需结合转化端排查"],
+        ["售后", "退货金额", "¥38.1万", "+2.4%", "¥37.2万", "正常", "售后暂未明显侵蚀利润"],
+        ["售后", "退货率", "9.8%", "-0.7pp", "10.5%", "正常", "退货整体可控"],
+        ["售后", "发货前退货率", "3.2%", "-0.3pp", "3.5%", "正常", "发货前取消可控"],
+        ["售后", "发货后退货率", "6.6%", "+0.7pp", "5.9%", "预警", "需关注收货后体验落差"],
+      ];
+
+      const badReviewRows = [
+        ["尺码偏差", "86", "31%"],
+        ["脚感不符预期", "62", "22%"],
+        ["色差", "39", "14%"],
+        ["物流慢", "28", "10%"],
+        ["客服响应慢", "18", "7%"],
+      ];
+
+      const returnRows = [
+        ["用户问题", "收到不合适", "3.1%", "¥12.4万", "286", "244", "0.8%", "2.3%"],
+        ["用户问题", "冲动消费", "2.4%", "¥9.2万", "214", "198", "1.7%", "0.7%"],
+        ["服务问题", "客服回复质量低", "0.8%", "¥3.1万", "68", "61", "0.2%", "0.6%"],
+        ["服务问题", "客服态度差", "0.4%", "¥1.6万", "35", "32", "0.1%", "0.3%"],
+        ["服务问题", "客服响应慢", "0.7%", "¥2.7万", "59", "55", "0.2%", "0.5%"],
+        ["服务问题", "售后解决方案用户不满意", "0.9%", "¥3.6万", "76", "70", "0.1%", "0.8%"],
+      ];
+
+      function statusCell(status) {
+        return badge[status] || status;
+      }
+
+      function renderTable(headers, rows) {
+        return `<div class="table-wrap"><table><thead><tr>${headers.map((header) => `<th>${header}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${statusCell(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      }
+
+      function renderMarketingTable(headers, rows) {
+        return `<div class="table-wrap marketing-table"><table><thead><tr>${headers.map((header) => `<th>${header}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${statusCell(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      }
+
+      function trendPanel(title, legends, variant = "dual", chips = []) {
+        const second = variant === "triple" ? '<polyline class="line-amber" points="6,104 52,90 98,94 144,70 190,80 236,62 282,72 328,54" />' : "";
+        return `<div class="trend-panel">
+          <div class="trend-title">
+            <div class="trend-title-row">
+              <strong>${title}</strong>
+              <div class="legend">${legends.map((item, index) => `<span><i class="${index === 1 ? "green" : index === 2 ? "amber" : ""}"></i>${item}</span>`).join("")}</div>
+            </div>
+            <div class="trend-controls">${chips.map((chip, index) => `<span class="trend-chip ${index === 0 ? "active" : ""}">${chip}</span>`).join("")}</div>
+          </div>
+          <svg class="trend-svg" viewBox="0 0 340 156" role="img" aria-label="${title}">
+            <line class="grid-line" x1="0" y1="30" x2="340" y2="30"></line>
+            <line class="grid-line" x1="0" y1="78" x2="340" y2="78"></line>
+            <line class="grid-line" x1="0" y1="126" x2="340" y2="126"></line>
+            <polyline class="line-blue" points="6,112 52,96 98,86 144,92 190,64 236,72 282,48 328,58" />
+            <polyline class="line-green" points="6,132 52,118 98,124 144,98 190,106 236,88 282,92 328,76" />
+            ${second}
+          </svg>
+          <div class="trend-caption">趋势图区分指标线与渠道/来源切换；点击 chip 切换单个渠道/来源，默认展示全部对比。</div>
+        </div>`;
+      }
+
+      function renderMarketingPage() {
+        document.querySelector("#marketing").innerHTML = `
+          <div class="marketing-summary">
+            <section class="score panel">
+              <div>
+                <p class="eyebrow">营销端健康度</p>
+                <div class="score-number">46<span>/100</span></div>
+              </div>
+              <div>${badge["异常"]}</div>
+            </section>
+            <section class="section panel" style="margin-top:0">
+              <div class="section-head"><div><h2>当前核心判断</h2><p>从投入、声量、资产厚度和更新节奏判断问题类型</p></div></div>
+              <ul class="judgement-list">
+                <li><b>内容曝光不足：</b>品牌/产品在抖音的声量不足或触达效率低。</li>
+                <li><b>内容资产少：</b>有曝光内容数偏低，当前曝光依赖少数爆文。</li>
+                <li><b>内容老化风险：</b>新发布内容占比低，缺乏持续的新鲜内容补给。</li>
+              </ul>
+            </section>
+          </div>
+
+          <section class="section panel">
+            <div class="section-head"><div><h2>核心KPI卡片（营销端健康度总览）</h2><p>先判断问题属于投入不足、数量不足、质量不足、自然声量不足还是内容老化</p></div></div>
+            <div class="kpi-grid">
+              ${marketingKpis.map(([name, value, base, change, status]) => `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>基准 ${base} · 环比变化 ${change}</p></article>`).join("")}
+            </div>
+          </section>
+
+          <section class="section panel">
+            <div class="section-head"><div><h2>内容营销投资情况</h2><p>判断钱有没有花对，识别消耗高但 ROI 低的渠道</p></div></div>
+            <div class="analysis-module">
+              ${renderMarketingTable(["渠道", "消耗金额", "消耗金额环比", "消耗金额占比", "CPM", "直接成交金额", "直接支付ROI", "ROI基准值", "状态", "建议动作"], investmentRows)}
+              ${trendPanel("各渠道消耗金额趋势", ["消耗金额", "直接成交金额"], "dual", ["内容热推", "种草通合约", "DOU+", "千川推商品"])}
+            </div>
+          </section>
+
+          <section class="section panel">
+            <div class="section-head"><div><h2>内容结构与来源分析</h2><p>判断声量从哪里来，是否过度依赖单一来源</p></div></div>
+            <div class="analysis-module">
+              ${renderMarketingTable(["来源", "曝光量", "曝光占比", "曝光基准值", "曝光状态", "互动量", "互动占比", "互动基准值", "互动状态", "有曝光内容数", "内容数占比", "内容数基准值", "内容数状态", "建议动作"], structureRows)}
+              ${trendPanel("各来源曝光量 / 互动量趋势", ["曝光量", "互动量"], "dual", ["企业号视频", "自然内容", "挑战赛", "星图达人视频", "内容热推"])}
+            </div>
+          </section>
+
+          <section class="section panel">
+            <div class="section-head"><div><h2>内容质量</h2><p>判断内容本身不行，还是内容没有被分发出去</p></div></div>
+            <div class="analysis-module">
+              ${renderMarketingTable(["来源", "篇均曝光量", "篇均曝光环比", "篇均曝光基准值", "曝光状态", "篇均互动量", "篇均互动环比", "篇均互动基准值", "互动状态", "建议动作"], qualityRows)}
+              ${trendPanel("篇均曝光量 / 篇均互动量趋势", ["篇均曝光", "篇均互动"], "dual", ["企业号视频", "自然内容", "挑战赛", "星图达人视频", "内容热推"])}
+            </div>
+          </section>
+
+          <section class="section panel">
+            <div class="section-head"><div><h2>内容老化分析</h2><p>判断近期有没有足够新内容补给，是否靠旧内容维持曝光</p></div></div>
+            <div class="analysis-module">
+              ${renderMarketingTable(["来源", "有曝光内容数", "新发布内容数", "新发布内容占比", "新发布占比基准值", "状态", "建议动作"], agingRows)}
+              ${trendPanel("各来源新发布内容数趋势", ["有曝光内容", "新发布内容", "新发布占比"], "triple", ["企业号视频", "自然内容", "挑战赛", "星图达人视频", "内容热推"])}
+            </div>
+          </section>
+
+          <section class="section panel">
+            <div class="detail-bar">
+              <div>
+                <h2>内容数据明细（默认折叠）</h2>
+                <p class="source-note">字段对齐原表“内容数据明细（用于导出/排查）”；支持导出 CSV。</p>
+              </div>
+              <div class="detail-actions">
+                <button class="secondary-button" data-detail="marketing-detail">展开查看内容明细</button>
+                <button class="primary-button" data-export="marketing-detail">导出明细</button>
+              </div>
+            </div>
+            <div class="detail" id="marketing-detail">
+              ${renderMarketingTable(["渠道", "有曝光内容数", "新发布内容数", "新发布内容数占比", "内容曝光量", "内容曝光量占比", "内容互动量", "内容互动量占比", "消耗金额", "CPM", "直接成交金额", "直接支付ROI"], detailRows)}
+            </div>
+          </section>
+        `;
+      }
+
+      function kpiGrid(items, hasDimension = false) {
+        return `<div class="kpi-grid">${items.map((item) => {
+          const name = hasDimension ? `${item[0]} · ${item[1]}` : item[0];
+          const value = hasDimension ? item[2] : item[1];
+          const change = hasDimension ? item[3] : item[3];
+          const base = hasDimension ? item[4] : item[2];
+          const status = hasDimension ? item[5] : item[4];
+          const desc = hasDimension ? item[6] : "";
+          return `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>基准 ${base} · 环比变化 ${change}${desc ? ` · ${desc}` : ""}</p></article>`;
+        }).join("")}</div>`;
+      }
+
+      function renderSearchPage() {
+        document.querySelector("#search").innerHTML = `
+          <div class="marketing-summary">
+            <section class="score panel"><div><p class="eyebrow">搜索承接健康度</p><div class="score-number">61<span>/100</span></div></div><div>${badge["预警"]}</div></section>
+            <section class="section panel" style="margin-top:0">
+              <div class="section-head"><div><h2>当前核心判断</h2><p>先判断有没有人搜，再判断搜后有没有买</p></div></div>
+              <ul class="judgement-list">
+                <li><b>搜索有基础热度：</b>产品词搜索次数正常，但看后搜和直接搜人数偏弱。</li>
+                <li><b>搜后成交效率偏低：</b>产品词搜索成交率和搜索GPMS低于基准。</li>
+                <li><b>内容引导搜索不足：</b>内容触达搜索率偏低，内容种草力或搜索引导缺失。</li>
+              </ul>
+            </section>
+          </div>
+          <section class="section panel"><div class="section-head"><div><h2>核心指标卡片（KPI概览）</h2><p>判断搜索热度、搜索承接效率和内容触达搜索效率</p></div></div>${kpiGrid(searchKpis)}</section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>搜索趋势</h2><p>观察产品词搜索次数和搜索成交金额是否同步变化</p></div></div>
+            ${trendPanel("产品词搜索次数 / 搜索成交金额趋势", ["搜索次数", "搜索成交金额"], "dual", ["产品词搜索次数", "搜索成交金额"])}
+          </section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>本系列 vs 竞品搜索心智承接情况对比</h2><p>判断搜索热度和搜索价值相对竞品的位置</p></div></div>
+            ${renderMarketingTable(["指标类别", "诊断指标", "吾跃", "竞品一", "竞品二", "竞品三", "判断"], competitorRows)}
+          </section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>TOP20 产品搜索词监控</h2><p>找出哪些词在涨，哪些词带不动成交，指导内容埋词与投放关键词策略</p></div></div>
+            <div class="analysis-module">
+              ${renderMarketingTable(["排名", "搜索词", "品牌搜索次数", "品牌搜索次数环比", "搜索人数", "成交人数", "成交金额", "成交金额环比", "搜索GPMS"], searchTermRows)}
+              ${trendPanel("TOP搜索词搜索次数 / 成交金额趋势", ["搜索次数", "成交金额"], "dual", ["李宁吾跃", "吾跃跑鞋", "轻量跑鞋", "李宁运动鞋", "吾跃系列"])}
+            </div>
+          </section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>核心搜索引流触点</h2><p>观察哪个触点引导搜索效率下降；触点是表格行，不做全局筛选</p></div></div>
+            <div class="analysis-module">
+              ${renderMarketingTable(["触点", "搜索次数", "搜索次数占比", "搜索次数基准值", "搜索次数状态", "触达-搜索率", "基准值", "触达搜索率状态", "搜索成交金额", "基准值", "搜索成交金额状态", "搜索-成交率", "基准值", "搜索-成交率状态"], touchpointRows)}
+              ${trendPanel("各触点搜索次数 / 触达搜索率趋势", ["搜索次数", "触达搜索率"], "dual", ["千川短视频", "千川直播", "企业号视频", "企业号直播", "自然内容", "挑战赛", "星图视频"])}
+            </div>
+          </section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>搜后转化分析</h2><p>定位搜索后的转化卡点：搜索结果页曝光不够，还是点了商品没买</p></div></div>
+            <div class="analysis-module">
+              ${renderMarketingTable(["渠道", "搜索内容曝光", "搜索内容曝光占比", "基准值", "搜索内容曝光状态", "搜索商品成交人数", "基准值", "成交人数状态", "搜索商品曝光率", "基准值", "曝光率状态", "搜索商品点击成交率", "基准值", "点击成交率状态"], searchConversionRows)}
+              ${trendPanel("搜后转化效率趋势", ["搜索商品曝光率", "点击成交率"], "dual", ["整体-产品相关搜索", "直播间-产品相关搜索", "商品卡-产品相关搜索", "短视频-产品相关搜索"])}
+            </div>
+          </section>
+        `;
+      }
+
+      function renderEcPage() {
+        document.querySelector("#ec").innerHTML = `
+          <div class="marketing-summary">
+            <section class="score panel"><div><p class="eyebrow">EC承接健康度</p><div class="score-number">64<span>/100</span></div></div><div>${badge["预警"]}</div></section>
+            <section class="section panel" style="margin-top:0">
+              <div class="section-head"><div><h2>当前核心判断</h2><p>先看流量规模，再看点击和购买漏斗</p></div></div>
+              <ul class="judgement-list">
+                <li><b>商品点击人数异常：</b>商品卡吸引力不足，主图/价格/标题/销量需要排查。</li>
+                <li><b>销售金额预警：</b>短视频销售额下滑更明显，需看分渠道贡献。</li>
+                <li><b>购买率稳定：</b>点击后的成交承接还可以，优先解决点击前问题。</li>
+              </ul>
+            </section>
+          </div>
+          <section class="section panel"><div class="section-head"><div><h2>核心指标卡片（EC承接端健康度总览）</h2><p>判断流量规模、种草到商品、转化漏斗和销售结果</p></div></div>${kpiGrid(ecKpis)}</section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>生意渠道贡献</h2><p>一眼看出哪个渠道/哪种带货方式拖累整体销售，指导资源重配</p></div></div>
+            <div class="analysis-module">
+              ${renderMarketingTable(["分类", "渠道", "销售额", "销售额环比", "销售额基准值", "销售额状态", "销售额占比", "商品销量", "商品件单价"], businessRows)}
+              ${trendPanel("各渠道销售额趋势", ["销售额", "商品销量"], "dual", ["直播间", "商品卡", "短视频", "自营", "达人"])}
+            </div>
+          </section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>转化漏斗分析</h2><p>定位转化卡点是整体性问题，还是某个渠道特有问题</p></div></div>
+            ${renderMarketingTable(["指标类别", "具体指标", "当前值", "环比", "基准值", "状态"], ecFunnelRows)}
+          </section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>分渠道转化漏斗</h2><p>直播间、短视频、商品卡分别拆开看曝光、点击、加购、购买</p></div></div>
+            <div class="funnel-grid">
+              ${channelFunnels.map((item) => `<div class="funnel-card"><h3>${item.title}</h3>${renderMarketingTable(["指标", "当前值", "环比", "基准值", "状态"], item.rows)}</div>`).join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function renderServicePage() {
+        document.querySelector("#service").innerHTML = `
+          <div class="marketing-summary">
+            <section class="score panel"><div><p class="eyebrow">口碑售后健康度</p><div class="score-number">82<span>/100</span></div></div><div>${badge["正常"]}</div></section>
+            <section class="section panel" style="margin-top:0">
+              <div class="section-head"><div><h2>当前核心判断</h2><p>只看评论和退货，不放渠道或内容来源</p></div></div>
+              <ul class="judgement-list">
+                <li><b>售后整体可控：</b>退货率低于基准，暂未明显侵蚀利润。</li>
+                <li><b>发货后退货需关注：</b>收货后体验落差略有上升。</li>
+                <li><b>差评集中在产品体验：</b>尺码偏差和脚感不符预期需要沉淀为改进项。</li>
+              </ul>
+            </section>
+          </div>
+          <section class="section panel"><div class="section-head"><div><h2>核心KPI卡片（口碑/售后健康度总览）</h2><p>从评论和退货两个维度诊断满意度与信任风险</p></div></div>${kpiGrid(serviceKpis, true)}</section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>差评原因分析</h2><p>把用户不满意翻译成产品/运营可改进的具体问题</p></div></div>
+            <div class="reason-layout">
+              ${renderMarketingTable(["差评标签", "出现次数", "标签占比"], badReviewRows)}
+              <div class="pie-panel"><h3>差评标签占比</h3><div class="pie"></div><div class="legend"><span><i></i>尺码偏差</span><span><i class="green"></i>脚感</span><span><i class="amber"></i>色差/物流</span></div></div>
+            </div>
+          </section>
+          <section class="section panel">
+            <div class="section-head"><div><h2>退货原因分析</h2><p>量化退货经济损失，并定位是用户问题还是服务问题</p></div></div>
+            <div class="reason-layout">
+              ${renderMarketingTable(["退货原因分类", "具体原因", "退货率", "退货金额", "退货订单数", "退货人数", "发货前退货率", "发货后退货率"], returnRows)}
+              <div class="pie-panel">
+                <h3>退货占比</h3>
+                <div class="trend-controls"><span class="trend-chip active">退货大类</span><span class="trend-chip">具体原因</span></div>
+                <div class="pie"></div>
+                <div class="legend"><span><i></i>用户问题</span><span><i class="green"></i>服务问题</span></div>
+                <div class="source-note">退货大类和具体原因是两套维度，图表通过 chip 切换，不在同一张饼图里混合展示。</div>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      function renderPage(id, config) {
+        const sections = config.sections.map((section, index) => {
+          const body = section.type === "table" ? tableBlock(section) : section.type === "bars" ? barsBlock() : section.type === "funnel" ? funnelBlock() : actionsBlock();
+          const detail = index === config.sections.length - 1 ? `<button class="detail-toggle" data-detail="${id}-${index}">明细表</button>` : "";
+          return `<section class="section panel">
+            <div class="section-head"><div><h2>${section.title}</h2><p>${section.desc}</p></div>${detail}</div>
+            ${body}
+            <div class="detail" id="${id}-${index}">
+              <div class="table-wrap"><table><thead><tr><th>日期</th><th>渠道</th><th>指标</th><th>当前值</th><th>基准值</th><th>状态</th></tr></thead><tbody>
+                <tr><td>05-18</td><td>全部</td><td>${config.kpis[0][0]}</td><td>${config.kpis[0][1]}</td><td>前4周均值</td><td>${badge[config.kpis[0][3]]}</td></tr>
+                <tr><td>05-19</td><td>全部</td><td>${config.kpis[1][0]}</td><td>${config.kpis[1][1]}</td><td>前4周均值</td><td>${badge[config.kpis[1][3]]}</td></tr>
+              </tbody></table></div>
+            </div>
+          </section>`;
+        }).join("");
+
+        document.querySelector(`#${id}`).innerHTML = `
+          <div class="hero">
+            <div class="headline panel"><div><p class="eyebrow">专题下钻</p><h1>${config.title}</h1><p class="hero-copy">${config.subtitle}</p></div></div>
+            <div class="score panel"><p class="eyebrow">当前状态</p><div class="score-number">${id === "marketing" ? "46" : id === "service" ? "82" : id === "search" ? "61" : "64"}<span>/100</span></div><div>${badge[id === "marketing" ? "异常" : id === "service" ? "正常" : "预警"]}</div></div>
+          </div>
+          <section class="section panel"><div class="section-head"><div><h2>核心 KPI 卡片</h2><p>当前值、环比、基准与状态快速扫描</p></div></div>${kpiCards(config.kpis)}</section>
+          ${sections}`;
+      }
+
+      Object.entries(pages).forEach(([id, config]) => renderPage(id, config));
+      renderMarketingPage();
+      renderSearchPage();
+      renderEcPage();
+      renderServicePage();
+
+      function activate(id) {
+        document.querySelectorAll(".page").forEach((page) => page.classList.toggle("active", page.id === id));
+        document.querySelectorAll(".nav button").forEach((button) => button.classList.toggle("active", button.dataset.page === id));
+        const titles = {
+          overview: ["系列全链路诊断总览", "先看健康度与待处理问题，再进入专题下钻"],
+          marketing: ["营销端分看板", "从投入、曝光、结构、质量和老化逐层定位声量问题"],
+          search: ["搜索心智承接分看板", "诊断内容是否带动搜索，以及搜索后是否转化"],
+          ec: ["EC承接分看板", "定位转化漏斗卡点和渠道贡献差异"],
+          service: ["口碑售后分看板", "从评论和退货原因判断体验风险"],
         };
-        const m = map[st] || map.ok;
-        return `<span class="tag ${m.cls}">${m.text}</span>`;
+        document.querySelector("#pageTitle").textContent = titles[id][0];
+        document.querySelector("#pageSubtitle").textContent = titles[id][1];
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      function bigScoreCard(label, value, status) {
-        const map = { ok: "正常", warn: "预警", crit: "异常" };
-        return `
-          <div class="score-card">
-            <div class="label">${label}</div>
-            <div class="value">${value}</div>
-            <div class="status ${status}">${map[status]}</div>
-          </div>
-        `;
+      function downloadCsv(filename, headers, rows) {
+        const escapeCell = (value) => `"${String(value).replaceAll('"', '""')}"`;
+        const csv = [headers, ...rows].map((row) => row.map(escapeCell).join(",")).join("\n");
+        const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
       }
 
-      function renderOverview() {
-        const header = `
-          <div class="topbar">
-            <div>
-              <h1>总览</h1>
-              <p>快速了解系列全链路健康度与待处理问题</p>
-            </div>
-            ${renderFilters()}
-          </div>
-        `;
-
-        const scores = `
-          <div class="score-row">
-            ${bigScoreCard("全链路健康度", "72", "warn")}
-            ${bigScoreCard("营销端", "68", "warn")}
-            ${bigScoreCard("搜索承接", "78", "ok")}
-            ${bigScoreCard("EC承接", "65", "warn")}
-          </div>
-        `;
-
-        const top5 = `
-          <div class="card">
-            <h3>待处理问题 Top 5</h3>
-            <table>
-              <thead>
-                <tr><th>优先级</th><th>指标</th><th>状态</th><th>偏离</th><th>链路</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>1</td><td>内容曝光量</td><td>${statusBadge("crit")}</td><td class="muted">-18.4%</td><td>营销端</td></tr>
-                <tr><td>2</td><td>商品点击率</td><td>${statusBadge("crit")}</td><td class="muted">-2.3pp</td><td>EC承接</td></tr>
-                <tr><td>3</td><td>退货率</td><td>${statusBadge("warn")}</td><td class="muted">+0.7pp</td><td>口碑售后</td></tr>
-                <tr><td>4</td><td>新发布内容占比</td><td>${statusBadge("warn")}</td><td class="muted">-12%</td><td>营销端</td></tr>
-                <tr><td>5</td><td>搜索商品点击成交率</td><td>${statusBadge("warn")}</td><td class="muted">-1.2pp</td><td>搜索承接</td></tr>
-              </tbody>
-            </table>
-          </div>
-        `;
-
-        const matrix = `
-          <div class="card section">
-            <h3>核心指标矩阵</h3>
-            <table>
-              <thead>
-                <tr><th>环节</th><th>关键指标</th><th>当前值</th><th>基准值</th><th>环比</th><th>状态</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>营销端</td><td>内容曝光量</td><td>1,240,000</td><td>1,520,000</td><td class="muted">-18.4%</td><td>${statusBadge("crit")}</td></tr>
-                <tr><td>营销端</td><td>有曝光内容数</td><td>86</td><td>92</td><td class="muted">-6.5%</td><td>${statusBadge("warn")}</td></tr>
-                <tr><td>搜索承接</td><td>产品词搜索量</td><td>45,200</td><td>41,800</td><td class="muted">+8.1%</td><td>${statusBadge("ok")}</td></tr>
-                <tr><td>EC承接</td><td>商品点击率</td><td>4.2%</td><td>6.5%</td><td class="muted">-2.3pp</td><td>${statusBadge("crit")}</td></tr>
-                <tr><td>口碑售后</td><td>退货率</td><td>12.3%</td><td>11.6%</td><td class="muted">+0.7pp</td><td>${statusBadge("warn")}</td></tr>
-              </tbody>
-            </table>
-          </div>
-        `;
-
-        return header + scores + top5 + matrix;
-      }
-
-      function renderMarketing() {
-        return `
-          <div class="topbar">
-            <div>
-              <h1>营销端</h1>
-              <p>内容声量、投放效率与内容质量诊断</p>
-            </div>
-            ${renderFilters()}
-          </div>
-          <div class="score-row">
-            ${bigScoreCard("营销端健康度", "68", "warn")}
-            <div class="card"><div class="label">内容曝光量</div><div class="value">124万</div><div class="status crit">异常 -18.4%</div></div>
-            <div class="card"><div class="label">有曝光内容数</div><div class="value">86</div><div class="status warn">预警 -6.5%</div></div>
-            <div class="card"><div class="label">新发布内容占比</div><div class="value">12%</div><div class="status warn">预警 -12%</div></div>
-          </div>
-          <div class="card section">
-            <h3>诊断结论</h3>
-            <p>品牌/产品在抖音的声量不足或触达效率低。建议增加投流预算、增加达人合作数量、提高发布频次。</p>
-          </div>
-          <div class="card section">
-            <h3>内容数据明细</h3>
-            <div class="empty">数据加载中...</div>
-          </div>
-        `;
-      }
-
-      function renderSearch() {
-        return `
-          <div class="topbar">
-            <div>
-              <h1>搜索承接</h1>
-              <p>搜索心智形成与搜后转化效率</p>
-            </div>
-            ${renderFilters()}
-          </div>
-          <div class="score-row">
-            ${bigScoreCard("搜索承接健康度", "78", "ok")}
-            <div class="card"><div class="label">产品词搜索量</div><div class="value">4.5万</div><div class="status ok">正常 +8.1%</div></div>
-            <div class="card"><div class="label">搜索成交金额</div><div class="value">¥89,400</div><div class="status ok">正常 +5.2%</div></div>
-            <div class="card"><div class="label">搜索商品点击成交率</div><div class="value">8.4%</div><div class="status warn">预警 -1.2pp</div></div>
-          </div>
-          <div class="card section">
-            <h3>TOP20 产品搜索词监控</h3>
-            <div class="empty">数据加载中...</div>
-          </div>
-        `;
-      }
-
-      function renderEC() {
-        return `
-          <div class="topbar">
-            <div>
-              <h1>EC承接</h1>
-              <p>商品流量与转化漏斗分析</p>
-            </div>
-            ${renderFilters()}
-          </div>
-          <div class="score-row">
-            ${bigScoreCard("EC承接健康度", "65", "warn")}
-            <div class="card"><div class="label">商品曝光量</div><div class="value">320万</div><div class="status ok">正常 +2.1%</div></div>
-            <div class="card"><div class="label">商品点击率</div><div class="value">4.2%</div><div class="status crit">异常 -2.3pp</div></div>
-            <div class="card"><div class="label">支付转化率</div><div class="value">3.8%</div><div class="status warn">预警 -0.5pp</div></div>
-          </div>
-          <div class="card section">
-            <h3>转化漏斗分析</h3>
-            <div class="empty">数据加载中...</div>
-          </div>
-        `;
-      }
-
-      function renderReputation() {
-        return `
-          <div class="topbar">
-            <div>
-              <h1>口碑售后</h1>
-              <p>用户满意度与售后质量诊断</p>
-            </div>
-            ${renderFilters()}
-          </div>
-          <div class="score-row">
-            ${bigScoreCard("口碑售后健康度", "82", "ok")}
-            <div class="card"><div class="label">好评率</div><div class="value">94.2%</div><div class="status ok">正常 +0.3pp</div></div>
-            <div class="card"><div class="label">退货率</div><div class="value">12.3%</div><div class="status warn">预警 +0.7pp</div></div>
-            <div class="card"><div class="label">差评率</div><div class="value">2.1%</div><div class="status ok">正常 -0.2pp</div></div>
-          </div>
-          <div class="grid-2 section">
-            <div class="card">
-              <h3>差评原因分析</h3>
-              <div class="empty">数据加载中...</div>
-            </div>
-            <div class="card">
-              <h3>退货原因分析</h3>
-              <div class="empty">数据加载中...</div>
-            </div>
-          </div>
-        `;
-      }
-
-      function render() {
-        const main = $("#main");
-        if (state.page === "overview") main.innerHTML = renderOverview();
-        else if (state.page === "marketing") main.innerHTML = renderMarketing();
-        else if (state.page === "search") main.innerHTML = renderSearch();
-        else if (state.page === "ec") main.innerHTML = renderEC();
-        else if (state.page === "reputation") main.innerHTML = renderReputation();
-
-        // 绑定筛选器事件
-        $("#sel-series")?.addEventListener("change", (e) => {
-          state.series = e.target.value;
-          render();
-        });
-        $("#sel-period")?.addEventListener("change", (e) => {
-          state.period = e.target.value;
-          render();
-        });
-        $("#sel-compare")?.addEventListener("change", (e) => {
-          state.compare = e.target.value;
-          render();
-        });
-      }
-
-      // 导航切换
-      $("#nav").addEventListener("click", (e) => {
-        if (e.target.tagName === "BUTTON") {
-          $("#nav .active")?.classList.remove("active");
-          e.target.classList.add("active");
-          state.page = e.target.dataset.page;
-          render();
+      document.addEventListener("click", (event) => {
+        const nav = event.target.closest("[data-page]");
+        const jump = event.target.closest("[data-jump]");
+        const issue = event.target.closest("[data-issue]");
+        const detail = event.target.closest("[data-detail]");
+        const exportButton = event.target.closest("[data-export]");
+        if (nav) activate(nav.dataset.page);
+        if (jump) activate(jump.dataset.jump);
+        if (issue) {
+          const rank = Number(issue.dataset.issue);
+          renderIssues(rank);
+          renderDiagnosis(rank);
+        }
+        if (detail) document.getElementById(detail.dataset.detail).classList.toggle("open");
+        if (exportButton && exportButton.dataset.export === "marketing-detail") {
+          downloadCsv("营销端内容数据明细.csv", ["渠道", "有曝光内容数", "新发布内容数", "新发布内容数占比", "内容曝光量", "内容曝光量占比", "内容互动量", "内容互动量占比", "消耗金额", "CPM", "直接成交金额", "直接支付ROI"], detailRows);
         }
       });
-
-      render();
     </script>
   </body>
 </html>
