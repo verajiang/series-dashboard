@@ -146,7 +146,7 @@
         top: 0;
         z-index: 20;
         display: grid;
-        grid-template-columns: minmax(280px, 1fr) repeat(3, minmax(150px, 190px));
+        grid-template-columns: minmax(280px, 1fr) repeat(4, minmax(140px, 180px));
         align-items: end;
         gap: 10px;
         padding: 16px 24px;
@@ -1054,11 +1054,21 @@
             </select>
           </div>
           <div class="filter">
+            <label for="subSeries">细分系列</label>
+            <select id="subSeries">
+              <option>全部细分系列</option>
+              <option>吾跃轻量跑鞋</option>
+              <option>吾跃通勤训练</option>
+              <option>吾跃缓震进阶</option>
+            </select>
+          </div>
+          <div class="filter">
             <label for="period">时间范围</label>
             <select id="period">
-              <option>近 7 天</option>
-              <option selected>近 30 天</option>
-              <option>近 90 天</option>
+              <option>2026-W18</option>
+              <option selected>2026-W19</option>
+              <option>2026-W20</option>
+              <option>2026-W21</option>
             </select>
           </div>
           <div class="filter">
@@ -1149,11 +1159,26 @@
 
             <section class="section panel">
               <div class="section-head"><div><h2>商品人群画像差异</h2><p>判断曝光、观看、搜索、购买是否来自同一类人群</p></div></div>
-              <div class="persona">
-                <div class="persona-box"><b>曝光人群</b><span>18-24 岁占比高，偏泛流量，价格敏感度更强。</span></div>
-                <div class="persona-box"><b>内容观看</b><span>运动兴趣标签集中，完播人群对舒适脚感更敏感。</span></div>
-                <div class="persona-box"><b>搜索人群</b><span>品牌词与产品词混合，主动意图强但权益对比明显。</span></div>
-                <div class="persona-box"><b>购买人群</b><span>25-34 岁占比更高，更关注尺码稳定和售后评价。</span></div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>人群类型</th>
+                      <th>核心年龄段</th>
+                      <th>女性占比</th>
+                      <th>高线城市占比</th>
+                      <th>核心兴趣标签</th>
+                      <th>价格敏感度</th>
+                      <th>与购买人群差异</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>曝光人群</td><td>18-24岁</td><td>46%</td><td>38%</td><td>潮流穿搭 / 泛运动</td><td>高</td><td>偏年轻、偏泛流量，购买意图弱</td></tr>
+                    <tr><td>内容观看人群</td><td>18-29岁</td><td>49%</td><td>42%</td><td>跑步训练 / 舒适脚感</td><td>中高</td><td>兴趣更集中，但对价格仍敏感</td></tr>
+                    <tr><td>搜索人群</td><td>23-34岁</td><td>43%</td><td>47%</td><td>品牌词 / 跑鞋对比 / 优惠</td><td>中</td><td>主动意图强，但权益对比明显</td></tr>
+                    <tr><td>购买人群</td><td>25-34岁</td><td>41%</td><td>52%</td><td>尺码稳定 / 售后评价 / 缓震</td><td>中低</td><td>更关注尺码稳定和售后口碑</td></tr>
+                  </tbody>
+                </table>
               </div>
             </section>
           </section>
