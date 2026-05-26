@@ -761,6 +761,11 @@
         min-width: 1320px;
       }
 
+      .persona-table .deviation-alert {
+        color: var(--red);
+        font-weight: 700;
+      }
+
       .marketing-summary {
         display: grid;
         grid-template-columns: 320px minmax(0, 1fr);
@@ -1917,6 +1922,18 @@
       renderSearchPage();
       renderEcPage();
       renderServicePage();
+
+      function markPersonaDeviations() {
+        document.querySelectorAll(".persona-table tbody tr").forEach((row) => {
+          [5, 7, 9].forEach((cellIndex) => {
+            const cell = row.querySelector(`td:nth-child(${cellIndex})`);
+            const value = cell ? Number.parseFloat(cell.textContent) : 0;
+            if (Math.abs(value) > 10) cell.classList.add("deviation-alert");
+          });
+        });
+      }
+
+      markPersonaDeviations();
 
       function activate(id) {
         document.querySelectorAll(".page").forEach((page) => page.classList.toggle("active", page.id === id));
