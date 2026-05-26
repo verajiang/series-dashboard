@@ -731,6 +731,36 @@
         line-height: 1.6;
       }
 
+      .persona-similarity {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .similarity-card {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffdf8;
+      }
+
+      .similarity-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .similarity-card b {
+        display: block;
+        margin-top: 5px;
+        font-size: 20px;
+      }
+
+      .persona-table table {
+        min-width: 1320px;
+      }
+
       .marketing-summary {
         display: grid;
         grid-template-columns: 320px minmax(0, 1fr);
@@ -985,6 +1015,7 @@
         .reason-layout,
         .grid-2,
         .diagnosis-meta,
+        .persona-similarity,
         .persona {
           grid-template-columns: 1fr;
         }
@@ -1158,8 +1189,13 @@
             </section>
 
             <section class="section panel">
-              <div class="section-head"><div><h2>商品人群画像诊断</h2><p>完整保留原表分类与标签，判断购买、曝光、观看、搜索是否来自同一类人群</p></div></div>
-              <div class="table-wrap marketing-table">
+              <div class="section-head"><div><h2>商品人群画像诊断</h2><p>用购买人群减其他链路人群占比，并通过人群相似度判断是否同一类人群</p></div></div>
+              <div class="persona-similarity">
+                <div class="similarity-card"><span>购买 vs 曝光人群相似度</span><b>97.2%</b></div>
+                <div class="similarity-card"><span>购买 vs 内容观看人群相似度</span><b>97.7%</b></div>
+                <div class="similarity-card"><span>购买 vs 搜索人群相似度</span><b>99.7%</b></div>
+              </div>
+              <div class="table-wrap persona-table">
                 <table>
                   <thead>
                     <tr>
@@ -1167,40 +1203,40 @@
                       <th>人群标签</th>
                       <th>商品购买人群</th>
                       <th>商品曝光人群</th>
-                      <th>商品全域内容观看人群</th>
-                      <th>商品搜索人群</th>
                       <th>商品购买-曝光人群差异</th>
+                      <th>商品全域内容观看人群</th>
                       <th>商品购买-内容观看人群差异</th>
+                      <th>商品搜索人群</th>
                       <th>商品购买-产品搜索人群差异</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td>性别</td><td>男性</td><td>59%</td><td>54%</td><td>51%</td><td>57%</td><td>购买男性占比 +5pp，曝光略偏女性</td><td>购买男性占比 +8pp，内容观看更泛</td><td>购买与搜索性别接近</td></tr>
-                    <tr><td>性别</td><td>女性</td><td>41%</td><td>46%</td><td>49%</td><td>43%</td><td>曝光女性占比高，转化偏弱</td><td>内容观看女性占比高，需优化女性向转化卖点</td><td>搜索女性占比接近购买</td></tr>
-                    <tr><td>年龄</td><td>18-23</td><td>12%</td><td>24%</td><td>21%</td><td>15%</td><td>曝光年轻化明显，购买承接弱</td><td>观看年轻化，需验证内容是否偏泛娱乐</td><td>搜索年轻占比回落，主动意图不足</td></tr>
-                    <tr><td>年龄</td><td>24-30</td><td>34%</td><td>31%</td><td>33%</td><td>35%</td><td>购买与曝光基本一致</td><td>购买与观看基本一致</td><td>搜索与购买基本一致</td></tr>
-                    <tr><td>年龄</td><td>31-40</td><td>38%</td><td>28%</td><td>30%</td><td>36%</td><td>购买核心人群曝光不足</td><td>内容观看对核心购买年龄覆盖不足</td><td>搜索覆盖较好，可强化搜索承接</td></tr>
-                    <tr><td>年龄</td><td>41-50</td><td>12%</td><td>12%</td><td>11%</td><td>10%</td><td>基本一致</td><td>基本一致</td><td>搜索略低</td></tr>
-                    <tr><td>年龄</td><td>50+</td><td>4%</td><td>5%</td><td>5%</td><td>4%</td><td>基本一致</td><td>基本一致</td><td>基本一致</td></tr>
-                    <tr><td>消费等级</td><td>低消费</td><td>18%</td><td>31%</td><td>29%</td><td>22%</td><td>曝光低消费人群偏高，购买转化弱</td><td>内容观看低消费偏高，需控制价格敏感流量</td><td>搜索低消费占比回落</td></tr>
-                    <tr><td>消费等级</td><td>中消费</td><td>57%</td><td>52%</td><td>54%</td><td>58%</td><td>购买与曝光接近</td><td>购买与观看接近</td><td>搜索与购买接近</td></tr>
-                    <tr><td>消费等级</td><td>高消费</td><td>25%</td><td>17%</td><td>17%</td><td>20%</td><td>高消费购买人群曝光不足</td><td>内容对高消费人群覆盖不足</td><td>搜索高消费仍低于购买</td></tr>
-                    <tr><td>地域</td><td>东北</td><td>8%</td><td>7%</td><td>7%</td><td>8%</td><td>基本一致</td><td>基本一致</td><td>基本一致</td></tr>
-                    <tr><td>地域</td><td>华北</td><td>16%</td><td>14%</td><td>15%</td><td>16%</td><td>购买略高，可补曝光</td><td>基本一致</td><td>基本一致</td></tr>
-                    <tr><td>地域</td><td>华东</td><td>28%</td><td>24%</td><td>25%</td><td>27%</td><td>购买核心区域曝光不足</td><td>内容观看覆盖略低</td><td>搜索接近购买</td></tr>
-                    <tr><td>地域</td><td>华南</td><td>18%</td><td>20%</td><td>19%</td><td>17%</td><td>曝光略高，购买承接一般</td><td>观看接近</td><td>搜索略低</td></tr>
-                    <tr><td>地域</td><td>华中</td><td>12%</td><td>13%</td><td>12%</td><td>12%</td><td>基本一致</td><td>基本一致</td><td>基本一致</td></tr>
-                    <tr><td>地域</td><td>西北</td><td>6%</td><td>7%</td><td>7%</td><td>6%</td><td>基本一致</td><td>基本一致</td><td>基本一致</td></tr>
-                    <tr><td>地域</td><td>西南</td><td>9%</td><td>11%</td><td>11%</td><td>10%</td><td>曝光略高，需看转化效率</td><td>观看略高</td><td>接近购买</td></tr>
-                    <tr><td>地域</td><td>其他</td><td>3%</td><td>4%</td><td>4%</td><td>4%</td><td>占比较低</td><td>占比较低</td><td>占比较低</td></tr>
-                    <tr><td>八大快消人群</td><td>genz</td><td>14%</td><td>26%</td><td>24%</td><td>17%</td><td>曝光偏年轻，购买承接弱</td><td>内容吸引年轻人但未充分转化</td><td>搜索回落，主动意图不足</td></tr>
-                    <tr><td>八大快消人群</td><td>都市蓝领</td><td>12%</td><td>10%</td><td>11%</td><td>12%</td><td>基本一致</td><td>基本一致</td><td>基本一致</td></tr>
-                    <tr><td>八大快消人群</td><td>都市银发</td><td>4%</td><td>5%</td><td>5%</td><td>4%</td><td>占比较低</td><td>占比较低</td><td>占比较低</td></tr>
-                    <tr><td>八大快消人群</td><td>精致妈妈</td><td>9%</td><td>7%</td><td>8%</td><td>9%</td><td>购买略高，可补内容触达</td><td>观看略低</td><td>搜索一致</td></tr>
-                    <tr><td>八大快消人群</td><td>小镇青年</td><td>13%</td><td>16%</td><td>15%</td><td>14%</td><td>曝光略高</td><td>观看略高</td><td>接近购买</td></tr>
-                    <tr><td>八大快消人群</td><td>小镇中老年</td><td>6%</td><td>7%</td><td>7%</td><td>6%</td><td>基本一致</td><td>基本一致</td><td>基本一致</td></tr>
-                    <tr><td>八大快消人群</td><td>新锐白领</td><td>24%</td><td>18%</td><td>19%</td><td>23%</td><td>高价值购买人群曝光不足</td><td>内容观看覆盖不足</td><td>搜索接近购买，可强化转化</td></tr>
-                    <tr><td>八大快消人群</td><td>资深中产</td><td>20%</td><td>11%</td><td>11%</td><td>15%</td><td>高消费购买人群曝光明显不足</td><td>内容覆盖不足，需补高品质卖点</td><td>搜索仍低于购买，需加强品牌词承接</td></tr>
+                    <tr><td>性别</td><td>男性</td><td>59%</td><td>54%</td><td>+5pp</td><td>51%</td><td>+8pp</td><td>57%</td><td>+2pp</td></tr>
+                    <tr><td>性别</td><td>女性</td><td>41%</td><td>46%</td><td>-5pp</td><td>49%</td><td>-8pp</td><td>43%</td><td>-2pp</td></tr>
+                    <tr><td>年龄</td><td>18-23</td><td>12%</td><td>24%</td><td>-12pp</td><td>21%</td><td>-9pp</td><td>15%</td><td>-3pp</td></tr>
+                    <tr><td>年龄</td><td>24-30</td><td>34%</td><td>31%</td><td>+3pp</td><td>33%</td><td>+1pp</td><td>35%</td><td>-1pp</td></tr>
+                    <tr><td>年龄</td><td>31-40</td><td>38%</td><td>28%</td><td>+10pp</td><td>30%</td><td>+8pp</td><td>36%</td><td>+2pp</td></tr>
+                    <tr><td>年龄</td><td>41-50</td><td>12%</td><td>12%</td><td>0pp</td><td>11%</td><td>+1pp</td><td>10%</td><td>+2pp</td></tr>
+                    <tr><td>年龄</td><td>50+</td><td>4%</td><td>5%</td><td>-1pp</td><td>5%</td><td>-1pp</td><td>4%</td><td>0pp</td></tr>
+                    <tr><td>消费等级</td><td>低消费</td><td>18%</td><td>31%</td><td>-13pp</td><td>29%</td><td>-11pp</td><td>22%</td><td>-4pp</td></tr>
+                    <tr><td>消费等级</td><td>中消费</td><td>57%</td><td>52%</td><td>+5pp</td><td>54%</td><td>+3pp</td><td>58%</td><td>-1pp</td></tr>
+                    <tr><td>消费等级</td><td>高消费</td><td>25%</td><td>17%</td><td>+8pp</td><td>17%</td><td>+8pp</td><td>20%</td><td>+5pp</td></tr>
+                    <tr><td>地域</td><td>东北</td><td>8%</td><td>7%</td><td>+1pp</td><td>7%</td><td>+1pp</td><td>8%</td><td>0pp</td></tr>
+                    <tr><td>地域</td><td>华北</td><td>16%</td><td>14%</td><td>+2pp</td><td>15%</td><td>+1pp</td><td>16%</td><td>0pp</td></tr>
+                    <tr><td>地域</td><td>华东</td><td>28%</td><td>24%</td><td>+4pp</td><td>25%</td><td>+3pp</td><td>27%</td><td>+1pp</td></tr>
+                    <tr><td>地域</td><td>华南</td><td>18%</td><td>20%</td><td>-2pp</td><td>19%</td><td>-1pp</td><td>17%</td><td>+1pp</td></tr>
+                    <tr><td>地域</td><td>华中</td><td>12%</td><td>13%</td><td>-1pp</td><td>12%</td><td>0pp</td><td>12%</td><td>0pp</td></tr>
+                    <tr><td>地域</td><td>西北</td><td>6%</td><td>7%</td><td>-1pp</td><td>7%</td><td>-1pp</td><td>6%</td><td>0pp</td></tr>
+                    <tr><td>地域</td><td>西南</td><td>9%</td><td>11%</td><td>-2pp</td><td>11%</td><td>-2pp</td><td>10%</td><td>-1pp</td></tr>
+                    <tr><td>地域</td><td>其他</td><td>3%</td><td>4%</td><td>-1pp</td><td>4%</td><td>-1pp</td><td>4%</td><td>-1pp</td></tr>
+                    <tr><td>八大快消人群</td><td>genz</td><td>14%</td><td>26%</td><td>-12pp</td><td>24%</td><td>-10pp</td><td>17%</td><td>-3pp</td></tr>
+                    <tr><td>八大快消人群</td><td>都市蓝领</td><td>12%</td><td>10%</td><td>+2pp</td><td>11%</td><td>+1pp</td><td>12%</td><td>0pp</td></tr>
+                    <tr><td>八大快消人群</td><td>都市银发</td><td>4%</td><td>5%</td><td>-1pp</td><td>5%</td><td>-1pp</td><td>4%</td><td>0pp</td></tr>
+                    <tr><td>八大快消人群</td><td>精致妈妈</td><td>9%</td><td>7%</td><td>+2pp</td><td>8%</td><td>+1pp</td><td>9%</td><td>0pp</td></tr>
+                    <tr><td>八大快消人群</td><td>小镇青年</td><td>13%</td><td>16%</td><td>-3pp</td><td>15%</td><td>-2pp</td><td>14%</td><td>-1pp</td></tr>
+                    <tr><td>八大快消人群</td><td>小镇中老年</td><td>6%</td><td>7%</td><td>-1pp</td><td>7%</td><td>-1pp</td><td>6%</td><td>0pp</td></tr>
+                    <tr><td>八大快消人群</td><td>新锐白领</td><td>24%</td><td>18%</td><td>+6pp</td><td>19%</td><td>+5pp</td><td>23%</td><td>+1pp</td></tr>
+                    <tr><td>八大快消人群</td><td>资深中产</td><td>20%</td><td>11%</td><td>+9pp</td><td>11%</td><td>+9pp</td><td>15%</td><td>+5pp</td></tr>
                   </tbody>
                 </table>
               </div>
