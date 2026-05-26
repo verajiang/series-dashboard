@@ -1218,12 +1218,12 @@
                   <tbody>
                     <tr><td>性别</td><td>男性</td><td>59%</td><td>54%</td><td>+5pp</td><td>51%</td><td>+8pp</td><td>57%</td><td>+2pp</td></tr>
                     <tr><td>性别</td><td>女性</td><td>41%</td><td>46%</td><td>-5pp</td><td>49%</td><td>-8pp</td><td>43%</td><td>-2pp</td></tr>
-                    <tr><td>年龄</td><td>18-23</td><td>12%</td><td>24%</td><td class="deviation-alert">-12pp</td><td>21%</td><td>-9pp</td><td>15%</td><td>-3pp</td></tr>
+                    <tr><td>年龄</td><td>18-23</td><td>12%</td><td>24%</td><td class="deviation-alert" style="color: #b93d2f; font-weight: 700;">-12pp</td><td>21%</td><td>-9pp</td><td>15%</td><td>-3pp</td></tr>
                     <tr><td>年龄</td><td>24-30</td><td>34%</td><td>31%</td><td>+3pp</td><td>33%</td><td>+1pp</td><td>35%</td><td>-1pp</td></tr>
                     <tr><td>年龄</td><td>31-40</td><td>38%</td><td>28%</td><td>+10pp</td><td>30%</td><td>+8pp</td><td>36%</td><td>+2pp</td></tr>
                     <tr><td>年龄</td><td>41-50</td><td>12%</td><td>12%</td><td>0pp</td><td>11%</td><td>+1pp</td><td>10%</td><td>+2pp</td></tr>
                     <tr><td>年龄</td><td>50+</td><td>4%</td><td>5%</td><td>-1pp</td><td>5%</td><td>-1pp</td><td>4%</td><td>0pp</td></tr>
-                    <tr><td>消费等级</td><td>低消费</td><td>18%</td><td>31%</td><td class="deviation-alert">-13pp</td><td>29%</td><td class="deviation-alert">-11pp</td><td>22%</td><td>-4pp</td></tr>
+                    <tr><td>消费等级</td><td>低消费</td><td>18%</td><td>31%</td><td class="deviation-alert" style="color: #b93d2f; font-weight: 700;">-13pp</td><td>29%</td><td class="deviation-alert" style="color: #b93d2f; font-weight: 700;">-11pp</td><td>22%</td><td>-4pp</td></tr>
                     <tr><td>消费等级</td><td>中消费</td><td>57%</td><td>52%</td><td>+5pp</td><td>54%</td><td>+3pp</td><td>58%</td><td>-1pp</td></tr>
                     <tr><td>消费等级</td><td>高消费</td><td>25%</td><td>17%</td><td>+8pp</td><td>17%</td><td>+8pp</td><td>20%</td><td>+5pp</td></tr>
                     <tr><td>地域</td><td>东北</td><td>8%</td><td>7%</td><td>+1pp</td><td>7%</td><td>+1pp</td><td>8%</td><td>0pp</td></tr>
@@ -1234,7 +1234,7 @@
                     <tr><td>地域</td><td>西北</td><td>6%</td><td>7%</td><td>-1pp</td><td>7%</td><td>-1pp</td><td>6%</td><td>0pp</td></tr>
                     <tr><td>地域</td><td>西南</td><td>9%</td><td>11%</td><td>-2pp</td><td>11%</td><td>-2pp</td><td>10%</td><td>-1pp</td></tr>
                     <tr><td>地域</td><td>其他</td><td>3%</td><td>4%</td><td>-1pp</td><td>4%</td><td>-1pp</td><td>4%</td><td>-1pp</td></tr>
-                    <tr><td>八大快消人群</td><td>genz</td><td>14%</td><td>26%</td><td class="deviation-alert">-12pp</td><td>24%</td><td>-10pp</td><td>17%</td><td>-3pp</td></tr>
+                    <tr><td>八大快消人群</td><td>genz</td><td>14%</td><td>26%</td><td class="deviation-alert" style="color: #b93d2f; font-weight: 700;">-12pp</td><td>24%</td><td>-10pp</td><td>17%</td><td>-3pp</td></tr>
                     <tr><td>八大快消人群</td><td>都市蓝领</td><td>12%</td><td>10%</td><td>+2pp</td><td>11%</td><td>+1pp</td><td>12%</td><td>0pp</td></tr>
                     <tr><td>八大快消人群</td><td>都市银发</td><td>4%</td><td>5%</td><td>-1pp</td><td>5%</td><td>-1pp</td><td>4%</td><td>0pp</td></tr>
                     <tr><td>八大快消人群</td><td>精致妈妈</td><td>9%</td><td>7%</td><td>+2pp</td><td>8%</td><td>+1pp</td><td>9%</td><td>0pp</td></tr>
@@ -1928,7 +1928,11 @@
           [5, 7, 9].forEach((cellIndex) => {
             const cell = row.querySelector(`td:nth-child(${cellIndex})`);
             const value = cell ? Number.parseFloat(cell.textContent) : 0;
-            if (Math.abs(value) > 10) cell.classList.add("deviation-alert");
+            if (Math.abs(value) > 10) {
+              cell.classList.add("deviation-alert");
+              cell.style.color = "#b93d2f";
+              cell.style.fontWeight = "700";
+            }
           });
         });
       }
