@@ -1313,6 +1313,122 @@
         font-size: 22px;
       }
 
+      .object-card {
+        background:
+          linear-gradient(180deg, rgba(47, 109, 246, 0.08), transparent 54%),
+          #ffffff;
+      }
+
+      .object-list {
+        gap: 8px;
+      }
+
+      .object-row {
+        grid-template-columns: 78px 1fr;
+        padding: 9px 0;
+        border-bottom-color: #edf0f7;
+      }
+
+      .object-row b {
+        color: #172033;
+      }
+
+      .score {
+        grid-template-columns: 270px minmax(0, 1fr);
+        align-items: center;
+      }
+
+      .score > div:first-child {
+        min-width: 0;
+      }
+
+      .score-bars {
+        padding: 14px;
+        border: 1px solid #edf0f7;
+        border-radius: 8px;
+        background: #fbfcff;
+      }
+
+      .status-grid {
+        margin: 12px 0 0;
+      }
+
+      .stage-card {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stage-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--blue);
+      }
+
+      .stage-card:has(.bad)::before {
+        background: var(--red);
+      }
+
+      .stage-card:has(.warn)::before {
+        background: var(--amber);
+      }
+
+      .stage-card:has(.ok)::before {
+        background: var(--green);
+      }
+
+      .grid-2 {
+        grid-template-columns: 0.86fr 1.14fr;
+        gap: 12px;
+      }
+
+      .issue-list {
+        gap: 8px;
+      }
+
+      .issue {
+        min-height: 64px;
+        grid-template-columns: 30px minmax(0, 1fr) 48px;
+        padding: 10px;
+      }
+
+      .rank {
+        width: 26px;
+        height: 26px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .issue strong {
+        font-size: 13px;
+      }
+
+      .issue span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .diagnosis-meta {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .diagnosis-metric {
+        border-color: #e6ebf5;
+        border-radius: 8px;
+        background: #fbfcff;
+      }
+
+      .action {
+        border-left: 0;
+        border-top: 3px solid var(--red);
+        background: #fff8f7;
+      }
+
       .badge {
         height: 22px;
         min-width: 40px;
@@ -1362,6 +1478,69 @@
       .similarity-card,
       .funnel-card {
         background: #fbfcff;
+      }
+
+      .analysis-module {
+        grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+        gap: 12px;
+      }
+
+      .trend-panel {
+        min-height: 218px;
+        padding: 12px;
+        box-shadow: none;
+      }
+
+      .trend-svg {
+        height: 132px;
+      }
+
+      .judgement-list {
+        gap: 8px;
+      }
+
+      .judgement-list li {
+        min-height: 58px;
+        border-color: #e6ebf5;
+        background: #fbfcff;
+      }
+
+      .detail-bar {
+        border-color: #dfe6f3;
+        background: #fbfcff;
+      }
+
+      .marketing-summary {
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .funnel-row {
+        grid-template-columns: 120px 1fr 74px;
+      }
+
+      .funnel-block {
+        height: 24px;
+        background: #edf3ff;
+      }
+
+      .funnel-block span {
+        background: linear-gradient(90deg, #2f6df6, #7ea5ff);
+      }
+
+      .persona-similarity {
+        gap: 12px;
+      }
+
+      .similarity-card {
+        min-height: 84px;
+        padding: 14px 16px;
+        box-shadow: none;
+      }
+
+      .similarity-card b {
+        color: #172033;
+        font-size: 28px;
       }
 
       .spark i {
