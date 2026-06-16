@@ -1,17 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>系列全链路诊断看板需求文档</title>
   <style>
     :root {
-      --bg: #f4f2ed;
-      --paper: #fffcf4;
-      --ink: #1e2723;
-      --muted: #66706a;
-      --line: #d9d2c4;
-      --shadow: 0 18px 48px rgba(47, 45, 38, 0.12);
+      --bg: #f5f6fb;
+      --paper: #ffffff;
+      --ink: #212121;
+      --muted: #6f6f6f;
+      --line: #e6e6f0;
+      --grid: #e5e6eb;
+      --blue: #2461fb;
+      --code: #f7f8fb;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -19,154 +21,138 @@
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", sans-serif;
-      line-height: 1.7;
+      font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.72;
     }
-    .nav {
+    .topbar {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 10;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 16px;
-      padding: 16px 24px;
-      background: #202c28;
-      color: #f6f1e8;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding: 16px 32px;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
     }
-    .nav-brand {
-      font-size: 16px;
-      font-weight: 700;
-    }
-    .nav a {
-      color: rgba(246, 241, 232, 0.72);
-      text-decoration: none;
-      font-size: 14px;
-    }
-    .nav a:hover { color: #fff; }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 24px;
-    }
-    h1 {
-      margin: 0 0 32px;
-      font-size: 36px;
-      border-bottom: 2px solid var(--line);
-      padding-bottom: 16px;
-    }
-    h2 {
-      margin: 48px 0 20px;
-      font-size: 24px;
-      color: #26332e;
-    }
-    h3 {
-      margin: 32px 0 16px;
-      font-size: 18px;
-      color: #3d453f;
-    }
-    p { margin: 16px 0; }
-    ul, ol { margin: 16px 0; padding-left: 28px; }
-    li { margin: 8px 0; }
-    code {
-      background: #ebe5d9;
-      padding: 2px 8px;
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .mark {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
       border-radius: 4px;
-      font-family: "SF Mono", Consolas, monospace;
-      font-size: 14px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 16px;
+    }
+    .topbar a { color: var(--blue); text-decoration: none; font-size: 14px; }
+    main {
+      width: min(1080px, calc(100% - 48px));
+      margin: 24px auto 48px;
+      padding: 32px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    h1 { margin: 0 0 28px; padding-bottom: 16px; border-bottom: 1px solid var(--line); font-size: 30px; line-height: 1.35; }
+    h2 { margin: 42px 0 16px; font-size: 22px; line-height: 1.4; }
+    h3 { margin: 28px 0 12px; font-size: 17px; line-height: 1.4; }
+    p { margin: 12px 0; }
+    ul, ol { margin: 12px 0; padding-left: 24px; }
+    li { margin: 6px 0; }
+    code {
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--code);
+      color: #474747;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
     }
     pre {
-      background: #26332e;
-      color: #f6f1e8;
-      padding: 20px;
-      border-radius: 8px;
       overflow-x: auto;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    pre code {
-      background: transparent;
-      padding: 0;
-      color: inherit;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      font-size: 14px;
-    }
-    th, td {
-      padding: 12px 16px;
+      padding: 14px 16px;
       border: 1px solid var(--line);
-      text-align: left;
+      border-radius: 8px;
+      background: #101828;
+      color: #f8fafc;
     }
-    th {
-      background: #f5efe4;
-      font-weight: 700;
-      color: #3d453f;
-    }
-    tr:nth-child(even) { background: rgba(255,252,244,0.5); }
-    blockquote {
-      margin: 20px 0;
-      padding: 16px 20px;
-      background: var(--paper);
-      border-left: 4px solid #f05b3d;
-      border-radius: 0 8px 8px 0;
-    }
-    .footer {
-      margin-top: 64px;
-      padding-top: 24px;
-      border-top: 1px solid var(--line);
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
+    pre code { padding: 0; background: transparent; color: inherit; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+    th, td { padding: 10px 12px; border: 1px solid var(--grid); text-align: left; vertical-align: top; }
+    th { background: #f7f8fb; font-weight: 700; }
+    blockquote { margin: 16px 0; padding: 10px 14px; border-left: 4px solid var(--blue); background: #f7f8fb; color: var(--muted); }
+    @media (max-width: 720px) {
+      .topbar { padding: 14px 16px; }
+      main { width: calc(100% - 24px); padding: 20px; }
+      h1 { font-size: 24px; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
     }
   </style>
 </head>
 <body>
-  <nav class="nav">
-    <span class="nav-brand">系列全链路诊断看板</span>
-    <a href="../index.html">← 返回看板演示</a>
-  </nav>
-  <div class="container">
-    <h1>系列全链路诊断看板需求文档</h1>
-
-<h2>1. 背景与目标</h2>
-<p>本看板用于诊断一个商品系列在抖音经营链路中的健康度。这里的诊断对象是"系列"，例如吾跃系列、菲林系列，而不是单个 SKU。</p>
-<p>看板目标不是复刻 Excel，而是把数据分析师整理的诊断模型产品化，让运营、投放、内容、商品团队能快速回答三个问题：</p>
+  <header class="topbar">
+    <div class="brand"><span class="mark">品</span><span>系列全链路诊断看板需求文档</span></div>
+    <a href="../index.html">查看原型</a>
+  </header>
+  <main>
+<h1 id="系列全链路诊断看板需求文档">系列全链路诊断看板需求文档</h1>
+<h2 id="1-背景与目标">1. 背景与目标</h2>
+<p>本看板用于诊断一个商品系列在抖音经营链路中的健康度。这里的诊断对象是“系列”，例如吾跃系列、菲林系列，而不是单个
+SKU。</p>
+<p>看板目标不是复刻
+Excel，而是把数据分析师整理的诊断模型产品化，让运营、投放、内容、商品团队能快速回答三个问题：</p>
 <ul>
 <li>这个系列当前全链路是否健康？</li>
 <li>问题主要出在哪个链路和哪个指标？</li>
 <li>对应的诊断结论和建议动作是什么？</li>
 </ul>
 <p>默认诊断链路为：</p>
-<blockquote>
 <p><code>营销端 → 搜索心智承接 → EC承接 → 口碑售后</code></p>
-</blockquote>
-<h2>2. 全局页面规则</h2>
-<h3>2.1 全局筛选项</h3>
-<p>顶部全局筛选区只保留三个筛选项：</p>
+<h2 id="2-全局页面规则">2. 全局页面规则</h2>
+<h3 id="21-全局筛选项">2.1 全局筛选项</h3>
+<p>顶部全局筛选区保留四个筛选项：</p>
 <ul>
 <li>系列</li>
+<li>细分系列</li>
 <li>时间范围</li>
 <li>对比口径</li>
 </ul>
-<p>不提供"渠道"和"内容类型"筛选。原因是渠道、触点、来源在各专题页中都是对比行或拆解维度，不是全局过滤条件。筛掉某个渠道会破坏横向比较。</p>
-<h3>2.2 状态枚举</h3>
-<p>所有指标状态统一为三类：</p>
+<p>不提供“渠道”和“内容类型”筛选。原因是渠道、触点、来源在各专题页中都是对比行或拆解维度，不是全局过滤条件。筛掉某个渠道会破坏横向比较。</p>
+<p>细分系列用于在大系列下继续选择子系列，例如吾跃轻量跑鞋、吾跃通勤训练、吾跃缓震进阶。该筛选只改变诊断对象范围，不代表
+SKU 下钻。</p>
+<h3 id="22-状态枚举">2.2 状态枚举</h3>
+<p>指标业务状态统一为三类：</p>
 <ul>
 <li>正常</li>
 <li>预警</li>
 <li>异常</li>
 </ul>
 <p>不使用单纯的 ✅ / ❌ 作为最终状态展示。</p>
-<h3>2.3 基准值</h3>
+<p>另外允许存在数据质量状态：</p>
+<ul>
+<li>缺失</li>
+</ul>
+<p>“缺失”不是业务健康状态，不参与健康度评分，也不进入 Top
+5。页面可在指标值位置展示
+<code>--</code>，并通过数据质量信息说明缺失原因。</p>
+<h3 id="23-时间范围与基准值">2.3 时间范围与基准值</h3>
+<p>V1 时间范围按周开发，不使用“近 7 天 / 近 30 天 / 近 90
+天”作为主筛选。</p>
+<p>时间筛选示例：</p>
+<ul>
+<li>2026-W18</li>
+<li>2026-W19</li>
+<li>2026-W20</li>
+<li>2026-W21</li>
+</ul>
+<p>周口径按自然周或业务周执行，需在数据接口中固定定义。页面只展示可选周，不在前端自行计算周范围。</p>
 <p>第一版默认基准值为：</p>
-<blockquote>
 <p><code>前 4 周平均值</code></p>
-</blockquote>
 <p>后续可以支持切换为上周期、目标值等口径，但页面状态判断必须基于当前选择的对比口径。</p>
-<h3>2.4 环比变化单位</h3>
+<h3 id="24-环比变化单位">2.4 环比变化单位</h3>
 <p>环比变化不强行统一单位，而是按指标类型展示：</p>
 <ul>
 <li>金额、人数、次数、数量类指标：使用 <code>%</code></li>
@@ -177,71 +163,128 @@
 <li>内容曝光量：<code>-18.4%</code></li>
 <li>商品点击率：<code>-2.3pp</code></li>
 <li>退货率：<code>-0.7pp</code></li>
+<li>内容曝光量占比、内容互动量占比、新发布内容占比等“占比类指标”的变化统一使用
+<code>pp</code></li>
 </ul>
-<h2>3. 健康度评分逻辑</h2>
-<h3>3.1 总体原则</h3>
+<h2 id="3-健康度评分逻辑">3. 健康度评分逻辑</h2>
+<h3 id="31-总体原则">3.1 总体原则</h3>
 <p>健康度评分用于快速表达系列或某个链路的整体风险水平。评分不是业务目标值，而是由指标状态和指标权重计算出的诊断分。</p>
 <p>评分范围：</p>
-<blockquote>
 <p><code>0 - 100</code></p>
-</blockquote>
 <p>分数越高表示越健康。</p>
-<h3>3.2 单指标得分</h3>
+<h3 id="32-单指标得分">3.2 单指标得分</h3>
 <p>每个指标先根据状态转换为单指标得分：</p>
 <table>
-<thead><tr><th>状态</th><th>单指标得分</th></tr></thead>
+<thead>
+<tr class="header">
+<th>状态</th>
+<th style="text-align: right;">单指标得分</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>正常</td><td>100</td></tr>
-<tr><td>预警</td><td>60</td></tr>
-<tr><td>异常</td><td>20</td></tr>
+<tr class="odd">
+<td>正常</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td>预警</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td>异常</td>
+<td style="text-align: right;">20</td>
+</tr>
 </tbody>
 </table>
-<p>如果指标缺失或无法计算，第一版不纳入评分，并在数据质量层标记为"缺失"。不要默认按 0 分处理，避免误伤健康度。</p>
-<h3>3.3 链路健康度得分</h3>
+<p>如果指标缺失或无法计算，第一版不纳入评分，并在数据质量层标记为“缺失”。不要默认按
+0 分处理，避免误伤健康度。</p>
+<h3 id="33-链路健康度得分">3.3 链路健康度得分</h3>
 <p>每个链路按该链路的核心指标加权计算。</p>
 <p>计算公式：</p>
-<pre><code>链路健康度 = Σ(指标得分 × 指标权重) / Σ(指标权重)</code></pre>
-<p>第一版可先使用等权重。后续如果业务确认不同指标影响不同，可按指标重要度配置权重。</p>
+<pre class="text"><code>链路健康度 = Σ(指标得分 × 指标权重) / Σ(指标权重)</code></pre>
+<p>V1
+规则：链路内部的核心指标使用等权重。后续如果业务确认不同指标影响不同，可按指标重要度配置权重。</p>
 <p>示例：</p>
 <p>营销端核心指标包括：</p>
 <ul>
 <li>营销花费</li>
+<li>千川花费占比</li>
+<li>营销ROI</li>
 <li>内容曝光量</li>
+<li>付费曝光占比</li>
 <li>有曝光内容数</li>
 <li>新发布内容占比</li>
 <li>UGC占比</li>
 <li>篇均曝光量</li>
 <li>篇均互动量</li>
 </ul>
-<p>若使用等权重，则营销端健康度为这些指标得分的平均值。</p>
-<h3>3.4 全链路健康度得分</h3>
+<p>因此 V1
+中，营销端健康度为这些指标得分的平均值。搜索心智承接、EC承接、口碑售后同理，均先按链路内部指标等权重计算。</p>
+<h3 id="34-全链路健康度得分">3.4 全链路健康度得分</h3>
 <p>全链路健康度由四个链路健康度加权计算：</p>
-<pre><code>全链路健康度 = 营销端得分 × 30%
+<pre class="text"><code>全链路健康度 = 营销端得分 × 30%
              + 搜索心智承接得分 × 25%
              + EC承接得分 × 30%
              + 口碑售后得分 × 15%</code></pre>
-<p>建议第一版权重：</p>
+<p>V1 全链路权重：</p>
 <table>
-<thead><tr><th>链路</th><th>权重</th><th>理由</th></tr></thead>
+<thead>
+<tr class="header">
+<th>链路</th>
+<th style="text-align: right;">权重</th>
+<th>理由</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>营销端</td><td>30%</td><td>前置声量决定后续搜索和成交基础</td></tr>
-<tr><td>搜索心智承接</td><td>25%</td><td>判断内容是否形成主动搜索和搜索成交</td></tr>
-<tr><td>EC承接</td><td>30%</td><td>直接影响销售转化和 GMV</td></tr>
-<tr><td>口碑售后</td><td>15%</td><td>影响长期信任和转化，但通常滞后于前链路</td></tr>
+<tr class="odd">
+<td>营销端</td>
+<td style="text-align: right;">30%</td>
+<td>前置声量决定后续搜索和成交基础</td>
+</tr>
+<tr class="even">
+<td>搜索心智承接</td>
+<td style="text-align: right;">25%</td>
+<td>判断内容是否形成主动搜索和搜索成交</td>
+</tr>
+<tr class="odd">
+<td>EC承接</td>
+<td style="text-align: right;">30%</td>
+<td>直接影响销售转化和 GMV</td>
+</tr>
+<tr class="even">
+<td>口碑售后</td>
+<td style="text-align: right;">15%</td>
+<td>影响长期信任和转化，但通常滞后于前链路</td>
+</tr>
 </tbody>
 </table>
-<p>权重后续应支持配置化。</p>
-<h3>3.5 分数对应状态</h3>
+<p>说明：V1 并不是全链路四段等权重，而是“链路内部指标等权重 + 链路之间按
+30/25/30/15 加权”。权重后续应支持配置化。</p>
+<h3 id="35-分数对应状态">3.5 分数对应状态</h3>
 <table>
-<thead><tr><th>健康度分数</th><th>状态</th></tr></thead>
+<thead>
+<tr class="header">
+<th style="text-align: right;">健康度分数</th>
+<th>状态</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>≥ 80</td><td>正常</td></tr>
-<tr><td>≥ 60 且 &lt; 80</td><td>预警</td></tr>
-<tr><td>&lt; 60</td><td>异常</td></tr>
+<tr class="odd">
+<td style="text-align: right;">≥ 80</td>
+<td>正常</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">≥ 60 且 &lt; 80</td>
+<td>预警</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">&lt; 60</td>
+<td>异常</td>
+</tr>
 </tbody>
 </table>
-<h2>4. 指标状态判断逻辑</h2>
-<h3>4.1 基础判断方式</h3>
+<h2 id="4-指标状态判断逻辑">4. 指标状态判断逻辑</h2>
+<h3 id="41-基础判断方式">4.1 基础判断方式</h3>
 <p>每个指标都需要配置：</p>
 <ul>
 <li>指标方向</li>
@@ -252,71 +295,289 @@
 </ul>
 <p>指标方向分为两类：</p>
 <ul>
-<li>正向指标：越高越好，例如内容曝光量、搜索成交金额、商品点击率、好评率</li>
+<li>正向指标：越高越好，例如内容曝光量、搜索成交金额、商品点击率、好评率、产品词搜索GPMS</li>
 <li>反向指标：越低越好，例如退货率、差评率、CPM</li>
 </ul>
-<h3>4.2 正向指标状态判断</h3>
+<h3 id="42-正向指标状态判断">4.2 正向指标状态判断</h3>
 <p>适用于越高越好的指标。</p>
-<pre><code>达成率 = 当前值 / 基准值</code></pre>
+<pre class="text"><code>达成率 = 当前值 / 基准值</code></pre>
 <p>建议第一版规则：</p>
 <table>
-<thead><tr><th>达成率</th><th>状态</th></tr></thead>
+<thead>
+<tr class="header">
+<th style="text-align: right;">达成率</th>
+<th>状态</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>≥ 100%</td><td>正常</td></tr>
-<tr><td>≥ 85% 且 &lt; 100%</td><td>预警</td></tr>
-<tr><td>&lt; 85%</td><td>异常</td></tr>
+<tr class="odd">
+<td style="text-align: right;">≥ 100%</td>
+<td>正常</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">≥ 85% 且 &lt; 100%</td>
+<td>预警</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">&lt; 85%</td>
+<td>异常</td>
+</tr>
 </tbody>
 </table>
-<h3>4.3 反向指标状态判断</h3>
+<h3 id="43-反向指标状态判断">4.3 反向指标状态判断</h3>
 <p>适用于越低越好的指标。</p>
-<pre><code>超标率 = 当前值 / 基准值</code></pre>
+<pre class="text"><code>超标率 = 当前值 / 基准值</code></pre>
 <p>建议第一版规则：</p>
 <table>
-<thead><tr><th>超标率</th><th>状态</th></tr></thead>
+<thead>
+<tr class="header">
+<th style="text-align: right;">超标率</th>
+<th>状态</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>≤ 100%</td><td>正常</td></tr>
-<tr><td>&gt; 100% 且 ≤ 115%</td><td>预警</td></tr>
-<tr><td>&gt; 115%</td><td>异常</td></tr>
+<tr class="odd">
+<td style="text-align: right;">≤ 100%</td>
+<td>正常</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">&gt; 100% 且 ≤ 115%</td>
+<td>预警</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">&gt; 115%</td>
+<td>异常</td>
+</tr>
 </tbody>
 </table>
-<h3>4.4 特殊指标</h3>
+<h3 id="44-特殊指标">4.4 特殊指标</h3>
 <p>部分指标不适合用统一阈值，需要单独配置规则，例如：</p>
 <ul>
 <li>ROI</li>
-<li>GPMS</li>
 <li>内容触达搜索率</li>
 <li>新发布内容占比</li>
 <li>搜索商品点击成交率</li>
 </ul>
-<p>这些指标仍使用"正常 / 预警 / 异常"三态，但阈值应来自指标规则库。</p>
-<h2>5. 诊断结论与建议动作</h2>
-<h3>5.1 来源</h3>
-<p>诊断结论和建议动作必须来自数据分析师原表中的诊断规则，不允许页面自行生成"低于基准"这类无行动价值的描述。</p>
-<p>示例：</p>
+<p>这些指标仍使用“正常 / 预警 / 异常”三态，但阈值应来自指标规则库。</p>
+<p>产品词搜索GPMS
+不作为特殊指标处理。它的定义是“产品词千次搜索成交金额”，属于越高越好的正向指标，直接使用
+4.2 的正向指标状态判断规则。</p>
+<p>V1 默认阈值如下，用于开发和测试验证：</p>
 <table>
-<thead><tr><th>指标</th><th>诊断结论</th><th>建议动作</th></tr></thead>
+<thead>
+<tr class="header">
+<th>特殊指标</th>
+<th>指标方向</th>
+<th>正常</th>
+<th>预警</th>
+<th>异常</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>内容曝光量</td><td>品牌/产品在抖音的声量不足或触达效率低</td><td>增加投流预算、增加达人合作数量、提高发布频次</td></tr>
-<tr><td>有曝光内容数</td><td>内容资产少，依赖少数爆文</td><td>批量生产混剪、多账号分发，每周上新 N 条</td></tr>
-<tr><td>新发布内容占比</td><td>内容老化，缺乏新鲜度</td><td>制定内容日历强制周更、蹭热点话题快速出片</td></tr>
-<tr><td>产品词搜索GPMS</td><td>搜索流量价值低</td><td>优化搜索结果页主图+优惠、投放搜索卡位</td></tr>
-<tr><td>商品点击率</td><td>商品卡吸引力差（主图/价格/标题/销量）</td><td>商品头图、标题优化；直播间话术引导商品点击或浏览购物车点击商品</td></tr>
+<tr class="odd">
+<td>直接支付ROI</td>
+<td>越高越好</td>
+<td>当前值 ≥ 基准值</td>
+<td>当前值 ≥ 基准值 × 85% 且 &lt; 基准值</td>
+<td>当前值 &lt; 基准值 × 85%</td>
+</tr>
+<tr class="even">
+<td>内容触达搜索率</td>
+<td>越高越好</td>
+<td>当前值 ≥ 基准值</td>
+<td>当前值 ≥ 基准值 × 70% 且 &lt; 基准值</td>
+<td>当前值 &lt; 基准值 × 70%</td>
+</tr>
+<tr class="odd">
+<td>新发布内容占比</td>
+<td>越高越好</td>
+<td>当前值 ≥ 基准值</td>
+<td>当前值 ≥ 基准值 × 70% 且 &lt; 基准值</td>
+<td>当前值 &lt; 基准值 × 70%</td>
+</tr>
+<tr class="even">
+<td>搜索商品点击成交率</td>
+<td>越高越好</td>
+<td>当前值 ≥ 基准值</td>
+<td>当前值 ≥ 基准值 × 85% 且 &lt; 基准值</td>
+<td>当前值 &lt; 基准值 × 85%</td>
+</tr>
+<tr class="odd">
+<td>搜索-成交率</td>
+<td>越高越好</td>
+<td>当前值 ≥ 基准值</td>
+<td>当前值 ≥ 基准值 × 85% 且 &lt; 基准值</td>
+<td>当前值 &lt; 基准值 × 85%</td>
+</tr>
 </tbody>
 </table>
-<h3>5.2 触发方式</h3>
-<p>当指标状态为"预警"或"异常"时，展示对应诊断结论和建议动作。</p>
-<p>当指标状态为"正常"时，可以展示简短说明，但不进入待处理问题列表。</p>
-<h2>6. 总览页需求</h2>
-<h3>6.1 页面目标</h3>
+<h2 id="5-诊断结论与建议动作">5. 诊断结论与建议动作</h2>
+<h3 id="51-来源">5.1 来源</h3>
+<p>诊断结论和建议动作必须来自数据分析师原表中的诊断规则，不允许页面自行生成“低于基准”这类无行动价值的描述。</p>
+<p>0614 版规则库来源：</p>
+<ul>
+<li>Excel 文件：<code>单品全链路诊断看板梳理0614版本.xlsx</code></li>
+<li>总览规则主表：<code>总看板—单品全链路诊断概览</code></li>
+<li>规则列：第 4 行表头中的
+<code>关键指标</code>、<code>诊断结论（未达标时）</code>、<code>建议动作</code></li>
+<li>规则范围：第 5 行至第 33 行的全链路核心指标</li>
+<li>分看板辅助判断：各分看板中的 <code>快速诊断</code> /
+<code>诊断结论</code> 列，用于专题页模块内的判断文案</li>
+</ul>
+<p>开发落库时应将 Excel 中的规则整理为
+<code>metricRules</code>，由接口返回给前端。前端不硬编码诊断结论和建议动作。</p>
+<p>总览核心规则示例与落库口径如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>诊断结论</th>
+<th>建议动作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>营销花费</td>
+<td>投入不足或效率低下，导致声量/曝光无法支撑转化目标</td>
+<td>增加营销花费，提升渠道效率</td>
+</tr>
+<tr class="even">
+<td>内容曝光量</td>
+<td>品牌/产品在抖音的声量不足或触达效率低</td>
+<td>增加投流预算、增加达人合作数量、提高发布频次</td>
+</tr>
+<tr class="odd">
+<td>有曝光内容数</td>
+<td>内容资产少，依赖少数爆文</td>
+<td>批量生产混剪、多账号分发，每周上新 N 条</td>
+</tr>
+<tr class="even">
+<td>新发布内容占比</td>
+<td>内容老化，缺乏新鲜度</td>
+<td>制定内容日历强制周更、蹭热点话题快速出片</td>
+</tr>
+<tr class="odd">
+<td>UGC占比</td>
+<td>自然内容占比过低，依赖付费</td>
+<td>发起UGC话题挑战、激励用户投稿、置顶优质UGC</td>
+</tr>
+<tr class="even">
+<td>篇均曝光量</td>
+<td>内容分发效率低</td>
+<td>优化前3秒完播率、修改标题/封面、增加利益点</td>
+</tr>
+<tr class="odd">
+<td>篇均互动量</td>
+<td>内容吸引力差，用户点赞/评论/转发的意愿低</td>
+<td>分析高互动竞品、重构内容钩子（悬念/槽点/福利）、增加引导CTA</td>
+</tr>
+<tr class="even">
+<td>产品词搜索次数</td>
+<td>用户主动搜索意愿低，品牌/产品心智弱</td>
+<td>视频强化小蓝词配置，评论区官旗评论引导</td>
+</tr>
+<tr class="odd">
+<td>产品词搜索成交金额</td>
+<td>搜索流量未有效转化为成交</td>
+<td>检查是搜索量不足还是转化率低</td>
+</tr>
+<tr class="even">
+<td>产品词搜索成交率</td>
+<td>搜索进店后转化差，商品页或价格缺乏竞争力</td>
+<td>优化产品主图/标题/价格/评论首屏/核心卖点</td>
+</tr>
+<tr class="odd">
+<td>产品词搜索GPMS</td>
+<td>搜索流量价值低</td>
+<td>优化搜索结果页主图+优惠、投放搜索卡位</td>
+</tr>
+<tr class="even">
+<td>内容触达搜索率</td>
+<td>看了内容的人不去搜索，内容种草力弱或引导缺失</td>
+<td>视频强化小蓝词配置，评论区官旗评论引导</td>
+</tr>
+<tr class="odd">
+<td>直播间产品讲解时长</td>
+<td>产品曝光机会不足，主播未给足产品讲解时间</td>
+<td>增加产品讲解时长占比，设置讲解提醒/考核</td>
+</tr>
+<tr class="even">
+<td>商品曝光人数</td>
+<td>商品卡片/详情页获流能力弱</td>
+<td>提升直播的讲解时长、调整商品在购物车的顺序，增加商城频道各活动板块的参与度</td>
+</tr>
+<tr class="odd">
+<td>商品点击人数</td>
+<td>商品详情页引流绝对人数不足</td>
+<td>提升曝光位置+增加内容挂载+优化点击率+广告引流</td>
+</tr>
+<tr class="even">
+<td>商品购买人数</td>
+<td>最终成交人数未达标</td>
+<td>优先解决点击人数不足，或优化详情页转化+促销+追投</td>
+</tr>
+<tr class="odd">
+<td>内容-&gt;商品曝光率</td>
+<td>看了内容的人不点商品页，商品入口埋点不足</td>
+<td>视频加商品锚点/弹窗、评论区挂链接，小蓝词维护</td>
+</tr>
+<tr class="even">
+<td>商品点击率</td>
+<td>商品卡吸引力差（主图/价格/标题/销量）</td>
+<td>商品头图、标题优化；直播间话术引导商品点击或浏览购物车点击商品</td>
+</tr>
+<tr class="odd">
+<td>商品购买率</td>
+<td>详情页信任或价格/优惠有问题</td>
+<td>重点加强用户点击后的转化行为，注意营销机制和商品库存，加强逼单话术，提升商品成交；强化价格优势，优化评论和详情页等提升用户转化</td>
+</tr>
+<tr class="even">
+<td>商品销售金额</td>
+<td>整体生意目标是否达成</td>
+<td>把握核心渠道成交的同时，渗透其他场景</td>
+</tr>
+<tr class="odd">
+<td>退货金额</td>
+<td>售后成本过高，侵蚀利润</td>
+<td>下钻到「售后看板」分析退货原因，针对性改善</td>
+</tr>
+<tr class="even">
+<td>退货率</td>
+<td>产品体验或描述不符严重</td>
+<td>优化详情页描述，避免夸大；加强品控；发货前增加确认环节</td>
+</tr>
+<tr class="odd">
+<td>评论数</td>
+<td>用户参与反馈少，缺少社交证明</td>
+<td>发起“评论抽奖”或“晒图返现”、客服主动邀请评论</td>
+</tr>
+<tr class="even">
+<td>差评率</td>
+<td>用户负面反馈多，影响转化和品牌形象</td>
+<td>优化详情页描述，避免预期落差；基于差评词云，驱动产品改进</td>
+</tr>
+</tbody>
+</table>
+<p>说明：</p>
+<ul>
+<li>0614
+总览表中部分新增计算字段只提供指标定义，未单独填写诊断结论和建议动作时，开发不得自行生成文案，应按规则库配置结果展示为空或使用同一诊断维度下已配置的规则，具体以数据规则表落库结果为准。</li>
+<li>分看板中的 <code>快速诊断</code> 是专题页模块判断文案，不等同于总览
+Top 5 的建议动作。</li>
+</ul>
+<h3 id="52-触发方式">5.2 触发方式</h3>
+<p>当指标状态为“预警”或“异常”时，展示对应诊断结论和建议动作。</p>
+<p>当指标状态为“正常”时，可以展示简短说明，但不进入待处理问题列表。</p>
+<h2 id="6-总览页需求">6. 总览页需求</h2>
+<h3 id="61-页面目标">6.1 页面目标</h3>
 <p>总览页用于回答：</p>
 <ul>
 <li>当前系列全链路是否健康？</li>
-<li>哪个链路有问题？</li>
 <li>最应该优先处理哪些问题？</li>
 </ul>
-<h3>6.2 页面模块</h3>
+<h3 id="62-页面模块">6.2 页面模块</h3>
 <p>总览页包含：</p>
-<ol>
+<ol type="1">
 <li>当前诊断对象</li>
 <li>全链路健康度评分</li>
 <li>四段链路状态</li>
@@ -325,7 +586,7 @@
 <li>核心指标矩阵</li>
 <li>商品人群画像差异</li>
 </ol>
-<h3>6.3 当前诊断对象</h3>
+<h3 id="63-当前诊断对象">6.3 当前诊断对象</h3>
 <p>仅展示：</p>
 <ul>
 <li>系列名称</li>
@@ -333,11 +594,11 @@
 <li>覆盖类目</li>
 </ul>
 <p>不展示商品图、SKU、货号、主推商品数、当前诊断周期。</p>
-<h3>6.4 待处理问题 Top 5</h3>
-<p>Top 5 只展示状态为"预警"或"异常"的指标。</p>
+<h3 id="64-待处理问题-top-5">6.4 待处理问题 Top 5</h3>
+<p>Top 5 只展示状态为“预警”或“异常”的指标。</p>
 <p>正常指标不进入 Top 5。</p>
 <p>建议排序公式：</p>
-<pre><code>问题优先级分 = 状态严重度 × 偏离程度 × 业务影响权重 × 链路前置权重</code></pre>
+<pre class="text"><code>问题优先级分 = 状态严重度 × 偏离程度 × 业务影响权重 × 链路前置权重</code></pre>
 <p>建议默认规则：</p>
 <ul>
 <li>异常优先于预警</li>
@@ -345,7 +606,7 @@
 <li>越靠前链路的问题优先级越高</li>
 <li>直接影响成交或销售的指标优先级更高</li>
 </ul>
-<h3>6.5 选中问题诊断卡</h3>
+<h3 id="65-选中问题诊断卡">6.5 选中问题诊断卡</h3>
 <p>右侧诊断卡展示当前选中的 Top 问题，不是独立信息区。</p>
 <p>展示内容：</p>
 <ul>
@@ -355,7 +616,7 @@
 <li>建议动作</li>
 <li>下钻入口</li>
 </ul>
-<h3>6.6 核心指标矩阵</h3>
+<h3 id="66-核心指标矩阵">6.6 核心指标矩阵</h3>
 <p>核心指标矩阵是总览页的全链路体检底表。</p>
 <p>字段：</p>
 <ul>
@@ -369,18 +630,90 @@
 <li>建议动作</li>
 </ul>
 <p>Top 5 从核心指标矩阵中的异常/预警项计算得出。</p>
-<h2>7. 营销端分看板需求</h2>
-<h3>7.1 页面目标</h3>
+<p>0614 版总览核心指标矩阵需补充以下营销端指标：</p>
+<ul>
+<li>千川花费占比：<code>千川花费（千川推直播间 + 千川推商品） / 营销总花费</code></li>
+<li>营销ROI：<code>商品消耗金额 / 营销花费</code></li>
+<li>付费曝光占比：<code>（除企业号视频、自然内容曝光量之和） / 内容曝光量</code></li>
+<li>UGC占比：<code>自然内容曝光量 / 总内容曝光量</code></li>
+</ul>
+<h3 id="67-商品人群画像诊断">6.7 商品人群画像诊断</h3>
+<p>该模块用于比较不同链路人群是否一致，帮助判断“曝光、全域内容观看、非自然内容观看、购买是否来自同一类人群”。V1
+不再使用自然语言逐行诊断，直接展示原始占比、购买人群与其他人群的占比差值，以及整体人群相似度。</p>
+<p>横向展示四类链路人群：</p>
+<ul>
+<li>商品购买人群</li>
+<li>商品曝光人群</li>
+<li>商品全域内容观看人群</li>
+<li>商品非自然内容观看人群</li>
+</ul>
+<p>V1 必须使用完整诊断表展示，不使用摘要卡片替代表格。字段如下：</p>
+<ul>
+<li>人群分类</li>
+<li>人群标签</li>
+<li>商品购买人群</li>
+<li>商品曝光人群</li>
+<li>商品购买-曝光人群差异</li>
+<li>商品全域内容观看人群</li>
+<li>商品购买-内容观看人群差异</li>
+<li>商品非自然内容观看人群</li>
+<li>商品购买-非自然内容观看人群差异</li>
+</ul>
+<p>差异列计算规则：</p>
+<pre class="text"><code>商品购买-曝光人群差异 = 商品购买人群占比 - 商品曝光人群占比
+商品购买-内容观看人群差异 = 商品购买人群占比 - 商品全域内容观看人群占比
+商品购买-非自然内容观看人群差异 = 商品购买人群占比 - 商品非自然内容观看人群占比</code></pre>
+<p>差异列单位统一使用 <code>pp</code>。例如：商品购买人群
+59%，商品曝光人群 54%，则商品购买-曝光人群差异为 <code>+5pp</code>。</p>
+<p>差异列展示规则：当差异绝对值大于 <code>10pp</code>
+时，页面需用红色字体高亮；<code>+10pp</code> 或 <code>-10pp</code>
+不触发高亮。</p>
+<p>人群相似度计算规则参照 Excel
+原表公式，使用购买人群占比向量与对比人群占比向量的余弦相似度：</p>
+<pre class="text"><code>人群相似度(购买, X)
+= SUMPRODUCT(购买人群占比向量, X 人群占比向量)
+  / (SQRT(SUMPRODUCT(购买人群占比向量 ^ 2)) * SQRT(SUMPRODUCT(X 人群占比向量 ^ 2)))</code></pre>
+<p>其中 <code>X</code>
+分别为商品曝光人群、商品全域内容观看人群、商品非自然内容观看人群。若分母为
+0 或计算异常，则按 Excel <code>IFERROR(..., 0)</code> 逻辑返回 0。</p>
+<p>V1 相似度展示：</p>
+<ul>
+<li>购买 vs 曝光人群相似度</li>
+<li>购买 vs 内容观看人群相似度</li>
+<li>购买 vs 非自然内容观看人群相似度</li>
+</ul>
+<p>相似度计算使用表格中的完整人群标签向量，不按单个人群分类拆开计算。</p>
+<p>数据口径：</p>
+<ul>
+<li>商品购买人群：完成购买该系列商品的人群。</li>
+<li>曝光人群：系列相关内容或商品曝光覆盖的人群。</li>
+<li>商品全域内容观看人群：系列相关内容产生有效观看的人群。</li>
+<li>商品非自然内容观看人群：商品全域内容观看人群中排除自然内容后的内容观看人群。</li>
+</ul>
+<p>人群分类与标签对齐原表，至少包含：</p>
+<ul>
+<li>性别：男性、女性</li>
+<li>年龄：18-23、24-30、31-40、41-50、50+</li>
+<li>消费等级：低消费、中消费、高消费</li>
+<li>地域：东北、华北、华东、华南、华中、西北、西南、其他</li>
+<li>八大快消人群：genz、都市蓝领、都市银发、精致妈妈、小镇青年、小镇中老年、新锐白领、资深中产</li>
+</ul>
+<p>差异解释方式：</p>
+<ul>
+<li>以商品购买人群作为目标人群基准。</li>
+<li>正值表示购买人群在该标签上的占比高于对比链路人群。</li>
+<li>负值表示购买人群在该标签上的占比低于对比链路人群。</li>
+<li>页面不再逐行生成自然语言诊断，避免结论过重；运营可根据差值和相似度判断是哪类人群出现偏差。</li>
+</ul>
+<p>V1 不做具体 SKU 下钻，仅在系列/细分系列维度展示人群差异。</p>
+<h2 id="7-营销端分看板需求">7. 营销端分看板需求</h2>
+<h3 id="71-页面目标">7.1 页面目标</h3>
 <p>营销端用于回答：</p>
-<blockquote>
 <p><code>内容声量为什么不够，问题出在投放、内容数量、内容质量，还是内容更新节奏？</code></p>
-</blockquote>
-<h3>7.2 看数路径</h3>
-<blockquote>
+<h3 id="72-看数路径">7.2 看数路径</h3>
 <p><code>核心KPI → 内容营销投资情况 → 内容结构与来源 → 内容质量 → 内容老化 → 内容数据明细</code></p>
-</blockquote>
-<h3>7.3 页面模块</h3>
-<ol>
+<h3 id="73-页面模块">7.3 页面模块</h3>
+<ol type="1">
 <li>营销端健康度</li>
 <li>当前核心判断</li>
 <li>核心 KPI 卡片</li>
@@ -390,10 +723,28 @@
 <li>内容老化分析</li>
 <li>内容数据明细</li>
 </ol>
-<h3>7.4 趋势图规则</h3>
+<p>0614
+版营销端取数说明：营销端当前无法取到细分系列，选择细分系列时使用对应大系列数据。例如吾适6
+使用吾适大系列数据，吾跃4 使用吾跃大系列数据。</p>
+<p>营销端涉及的渠道/来源行维度需对齐 0614 版原表：</p>
+<ul>
+<li>企业号视频</li>
+<li>自然内容</li>
+<li>挑战赛</li>
+<li>星图达人视频</li>
+<li>内容热推</li>
+<li>种草通合约</li>
+<li>DOU+</li>
+<li>千川推直播间-短视频</li>
+<li>千川推商品-短视频</li>
+</ul>
+<p>内容营销投资情况中，千川投放需拆分展示
+<code>千川推直播间-短视频</code> 与 <code>千川推商品-短视频</code>。</p>
+<h3 id="74-趋势图规则">7.4 趋势图规则</h3>
 <p>营销端各分析模块右侧均需要趋势图。</p>
-<p>趋势图通过 chip 切换具体渠道或来源，不提供"全部"chip，因为没有汇总线口径。</p>
-<h3>7.5 内容数据明细导出</h3>
+<p>趋势图通过 chip
+切换具体渠道或来源，不提供“全部”chip，因为没有汇总线口径。</p>
+<h3 id="75-内容数据明细导出">7.5 内容数据明细导出</h3>
 <p>内容数据明细默认折叠，支持导出 CSV。</p>
 <p>字段对齐原表：</p>
 <ul>
@@ -410,20 +761,18 @@
 <li>直接成交金额</li>
 <li>直接支付ROI</li>
 </ul>
-<h2>8. 搜索承接分看板需求</h2>
-<h3>8.1 页面目标</h3>
+<h2 id="8-搜索承接分看板需求">8. 搜索承接分看板需求</h2>
+<h3 id="81-页面目标">8.1 页面目标</h3>
 <p>搜索承接用于回答：</p>
 <ul>
 <li>用户是否看了内容后主动搜索？</li>
 <li>搜索后是否有效成交？</li>
 <li>哪些搜索词和触点带动搜索或拖累转化？</li>
 </ul>
-<h3>8.2 看数路径</h3>
-<blockquote>
+<h3 id="82-看数路径">8.2 看数路径</h3>
 <p><code>核心KPI → 搜索趋势 → 本系列 vs 竞品 → TOP搜索词 → 搜索引流触点 → 搜后转化</code></p>
-</blockquote>
-<h3>8.3 页面模块</h3>
-<ol>
+<h3 id="83-页面模块">8.3 页面模块</h3>
+<ol type="1">
 <li>搜索承接健康度</li>
 <li>当前核心判断</li>
 <li>核心 KPI 卡片</li>
@@ -433,23 +782,36 @@
 <li>核心搜索引流触点</li>
 <li>搜后转化分析</li>
 </ol>
-<h3>8.4 不应新增的内容</h3>
+<p>0614 版搜索承接取数说明：除“本系列 vs
+竞品搜索心智承接情况对比”外，其余搜索数据均取品牌自己的搜索数据。搜索承接需要按系列关键词取数，例如吾适6
+取关键词“吾适6”，吾适全部系列取关键词“吾适”。</p>
+<p>核心搜索引流触点行维度需对齐 0614 版原表：</p>
+<ul>
+<li>千川短视频（图文带货）</li>
+<li>千川直播带货</li>
+<li>企业号视频</li>
+<li>企业号直播</li>
+<li>自然内容</li>
+<li>挑战赛</li>
+<li>星图视频投放</li>
+<li>千川电商品专</li>
+<li>种草通合约</li>
+</ul>
+<h3 id="84-不应新增的内容">8.4 不应新增的内容</h3>
 <p>不增加原表没有的内容类型筛选。</p>
 <p>触点是表格行，不是全局筛选项。</p>
-<h2>9. EC承接分看板需求</h2>
-<h3>9.1 页面目标</h3>
+<h2 id="9-ec承接分看板需求">9. EC承接分看板需求</h2>
+<h3 id="91-页面目标">9.1 页面目标</h3>
 <p>EC承接用于回答：</p>
 <ul>
 <li>商品流量够不够？</li>
 <li>商品点击、加购、购买漏斗卡在哪里？</li>
 <li>是整体性问题，还是某个渠道的问题？</li>
 </ul>
-<h3>9.2 看数路径</h3>
-<blockquote>
+<h3 id="92-看数路径">9.2 看数路径</h3>
 <p><code>核心KPI → 生意渠道贡献 → 整体转化漏斗 → 分渠道转化漏斗</code></p>
-</blockquote>
-<h3>9.3 页面模块</h3>
-<ol>
+<h3 id="93-页面模块">9.3 页面模块</h3>
+<ol type="1">
 <li>EC承接健康度</li>
 <li>当前核心判断</li>
 <li>核心 KPI 卡片</li>
@@ -457,7 +819,7 @@
 <li>转化漏斗分析</li>
 <li>分渠道转化漏斗</li>
 </ol>
-<h3>9.4 分渠道转化漏斗字段</h3>
+<h3 id="94-分渠道转化漏斗字段">9.4 分渠道转化漏斗字段</h3>
 <p>分渠道转化漏斗必须展示：</p>
 <ul>
 <li>指标</li>
@@ -465,42 +827,62 @@
 <li>环比</li>
 <li>基准值</li>
 <li>状态</li>
+<li>判断</li>
 </ul>
 <p>不允许只展示指标名称，避免用户第一屏看不到数值。</p>
-<h2>10. 口碑售后分看板需求</h2>
-<h3>10.1 页面目标</h3>
+<h2 id="10-口碑售后分看板需求">10. 口碑售后分看板需求</h2>
+<h3 id="101-页面目标">10.1 页面目标</h3>
 <p>口碑售后用于回答：</p>
 <ul>
 <li>用户是否满意？</li>
 <li>售后是否侵蚀利润？</li>
 <li>退货主要发生在哪个阶段和原因？</li>
 </ul>
-<h3>10.2 看数路径</h3>
-<blockquote>
+<h3 id="102-看数路径">10.2 看数路径</h3>
 <p><code>核心KPI → 差评原因 → 退货原因</code></p>
-</blockquote>
-<h3>10.3 页面模块</h3>
-<ol>
+<h3 id="103-页面模块">10.3 页面模块</h3>
+<ol type="1">
 <li>口碑售后健康度</li>
 <li>当前核心判断</li>
 <li>核心 KPI 卡片</li>
 <li>差评原因分析</li>
 <li>退货原因分析</li>
 </ol>
-<h3>10.4 维度限制</h3>
+<p>0614
+版口碑售后取数说明：评论数据来自抖音罗盘的口碑监控/用户原声；退货原因分析来自抖音罗盘商品列表中对应
+SPU 系列详情里的退款及体验。</p>
+<p>核心 KPI 卡片中，<code>评论数</code> 为 0614
+版新增字段，用于判断用户愿不愿意发声。</p>
+<h3 id="104-维度限制">10.4 维度限制</h3>
 <p>口碑售后只使用原表中的评论、差评标签、退货原因分类、具体原因等字段。</p>
 <p>不新增渠道、内容来源、触点等维度。</p>
-<h3>10.5 退货原因图表</h3>
+<h3 id="105-退货原因图表">10.5 退货原因图表</h3>
 <p>退货大类和具体原因是两套不同维度，不能混在同一张饼图。</p>
 <p>图表需要提供 chip 切换：</p>
 <ul>
 <li>退货大类</li>
 <li>具体原因</li>
 </ul>
-<p>默认展示"退货大类"。</p>
-<h2>11. 交互需求</h2>
-<h3>11.1 导航</h3>
-<p>左侧导航包含：</p>
+<p>默认展示“退货大类”。</p>
+<p>退货原因明细字段需展示：</p>
+<ul>
+<li>退货原因分类</li>
+<li>具体原因</li>
+<li>退货率</li>
+<li>退货金额</li>
+<li>退货订单数</li>
+<li>退货人数</li>
+<li>发货前退货率</li>
+<li>发货后退货率</li>
+</ul>
+<p>0614 版示例原因口径包括：</p>
+<ul>
+<li>用户问题：收到不合适、冲动消费</li>
+<li>服务问题：客服回复质量低、客服态度差、客服响应慢、售后解决方案用户不满意</li>
+</ul>
+<h2 id="11-交互需求">11. 交互需求</h2>
+<h3 id="111-导航">11.1 导航</h3>
+<p>主导航包含：</p>
 <ul>
 <li>总览</li>
 <li>营销端</li>
@@ -509,18 +891,25 @@
 <li>口碑售后</li>
 </ul>
 <p>点击导航后，顶部标题和副标题同步切换。</p>
-<h3>11.2 下钻</h3>
+<p>V1
+原型使用顶部横向导航。若技术实现为左侧导航或顶部导航均可，但必须满足：</p>
+<ul>
+<li>当前选中页有明确高亮状态。</li>
+<li>选中态下主标题和辅助小字都必须可读，不能出现灰字低对比度问题。</li>
+<li>导航切换不改变全局筛选项的当前选择。</li>
+</ul>
+<h3 id="112-下钻">11.2 下钻</h3>
 <p>总览页中的链路卡片和 Top 问题支持点击进入对应专题页。</p>
-<h3>11.3 趋势图 chip</h3>
+<h3 id="113-趋势图-chip">11.3 趋势图 chip</h3>
 <p>趋势图 chip 用于切换具体渠道、来源、触点、搜索词或漏斗口径。</p>
-<p>没有汇总数据时，不展示"全部"chip。</p>
-<h3>11.4 明细导出</h3>
+<p>没有汇总数据时，不展示“全部”chip。</p>
+<p>页面不展示“点击 chip
+切换”“不展示全部”等实现说明文案。是否有“全部”选项由数据是否提供汇总口径决定。</p>
+<h3 id="114-明细导出">11.4 明细导出</h3>
 <p>营销端内容数据明细支持导出 CSV。</p>
 <p>导出文件名：</p>
-<blockquote>
 <p><code>营销端内容数据明细.csv</code></p>
-</blockquote>
-<h2>12. 数据与规则配置建议</h2>
+<h2 id="12-数据与规则配置建议">12. 数据与规则配置建议</h2>
 <p>建议后续将诊断模型配置化，至少包含：</p>
 <ul>
 <li>指标编码</li>
@@ -536,12 +925,394 @@
 <li>诊断结论</li>
 <li>建议动作</li>
 <li>下钻页面</li>
+<li>规则来源 sheet</li>
+<li>规则来源行号</li>
+<li>规则版本</li>
 </ul>
 <p>这样数据更新后，系统可以自动输出健康度、状态、Top问题、诊断结论和建议动作。</p>
+<p>0614 版 Excel
+已提供第一版规则库，不需要另行等待业务补充。开发时需要做的是把该 Excel
+中的规则表结构化落库，并保留来源
+sheet、行号和版本，便于后续数据分析师更新规则时追踪差异。</p>
+<h2 id="13-开发交付必须补齐的数据契约">13.
+开发交付必须补齐的数据契约</h2>
+<h3 id="131-总体数据结构">13.1 总体数据结构</h3>
+<p>前端不应自行推导业务结论。接口或数据层需要返回以下结构，前端负责展示和交互：</p>
+<pre class="text"><code>dashboardData = {
+  filters,
+  overview,
+  marketing,
+  search,
+  ec,
+  service,
+  metricRules,
+  dataQuality
+}</code></pre>
+<p>每个指标对象至少包含：</p>
+<pre class="text"><code>metric = {
+  metricCode,        // 稳定编码
+  metricName,        // 展示名称
+  link,              // 所属链路：marketing/search/ec/service
+  module,            // 所属模块
+  currentValue,      // 当前值，原始数值
+  currentDisplay,    // 当前值展示文本
+  baselineValue,     // 基准值，原始数值
+  baselineDisplay,   // 基准值展示文本
+  changeValue,       // 环比或差值，原始数值
+  changeDisplay,     // 展示文本，% 或 pp
+  direction,         // positive / negative / custom
+  status,            // 正常 / 预警 / 异常；数据缺失时为缺失
+  diagnosis,         // 诊断结论，来自规则库
+  action,            // 建议动作，来自规则库
+  drilldownPage      // 可下钻页面
+}</code></pre>
+<h3 id="132-计算责任边界">13.2 计算责任边界</h3>
+<p>推荐后端或数据服务完成以下计算：</p>
+<ul>
+<li>当前值、基准值、环比变化</li>
+<li>指标状态</li>
+<li>单指标得分</li>
+<li>链路健康度</li>
+<li>全链路健康度</li>
+<li>Top 5 待处理问题排序</li>
+<li>人群相似度</li>
+</ul>
+<p>前端可以在本地做展示态计算，例如格式化、排序后的渲染、chip
+切换和表格横向滚动，但不应在前端硬编码业务阈值和诊断结论。</p>
+<h3 id="133-缺失值0-基准值和异常值处理">13.3 缺失值、0
+基准值和异常值处理</h3>
+<p>为避免开发时出现各端口径不一致，V1 统一按以下规则处理：</p>
+<ul>
+<li><code>currentValue</code>
+缺失：指标状态为“缺失”，不进入健康度评分，不进入 Top 5。</li>
+<li><code>baselineValue</code>
+缺失：指标状态为“缺失”，不进入健康度评分，不进入 Top 5。</li>
+<li><code>baselineValue = 0</code> 且没有单独指标规则：不做当前值 /
+基准值计算，状态为“缺失”。</li>
+<li><code>currentValue = 0</code> 且
+<code>baselineValue &gt; 0</code>：按正常正向/反向指标规则计算。</li>
+<li>分母为 0 的人群相似度：按 Excel <code>IFERROR(..., 0)</code> 返回
+0。</li>
+<li>页面展示缺失值时使用
+<code>--</code>，并在数据质量字段中返回缺失原因。</li>
+</ul>
+<h3 id="134-数据质量字段">13.4 数据质量字段</h3>
+<p>接口需要提供数据质量信息，至少包含：</p>
+<pre class="text"><code>dataQuality = {
+  missingMetrics: [],
+  staleMetrics: [],
+  lastUpdatedAt,
+  warnings: []
+}</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>missingMetrics</code>：缺失指标列表。</li>
+<li><code>staleMetrics</code>：数据未按当前周更新的指标列表。</li>
+<li><code>lastUpdatedAt</code>：数据更新时间。</li>
+<li><code>warnings</code>：例如“营销端细分系列使用大系列数据”等口径提示。</li>
+</ul>
+<p>口径提示只用于必要的数据说明，不展示实现说明型文案。</p>
+<h2 id="14-核心指标清单与方向">14. 核心指标清单与方向</h2>
+<p>以下清单用于 V1 开发配置，后续可在规则库中维护。</p>
+<h3 id="141-营销端核心指标">14.1 营销端核心指标</h3>
+<table>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>方向</th>
+<th>变化单位</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>营销花费</td>
+<td>正向</td>
+<td>%</td>
+<td>投入规模</td>
+</tr>
+<tr class="even">
+<td>千川花费占比</td>
+<td>自定义</td>
+<td>pp</td>
+<td>投放结构指标，阈值需配置</td>
+</tr>
+<tr class="odd">
+<td>营销ROI</td>
+<td>正向</td>
+<td>%</td>
+<td>商品消耗金额 / 营销花费</td>
+</tr>
+<tr class="even">
+<td>内容曝光量</td>
+<td>正向</td>
+<td>%</td>
+<td>内容声量规模</td>
+</tr>
+<tr class="odd">
+<td>付费曝光占比</td>
+<td>自定义</td>
+<td>pp</td>
+<td>除企业号视频、自然内容外的曝光占比</td>
+</tr>
+<tr class="even">
+<td>有曝光内容数</td>
+<td>正向</td>
+<td>%</td>
+<td>有实际曝光的内容资产量</td>
+</tr>
+<tr class="odd">
+<td>新发布内容占比</td>
+<td>正向特殊</td>
+<td>pp</td>
+<td>使用 70% 预警阈值</td>
+</tr>
+<tr class="even">
+<td>UGC占比</td>
+<td>正向</td>
+<td>pp</td>
+<td>自然内容曝光量 / 总内容曝光量</td>
+</tr>
+<tr class="odd">
+<td>篇均曝光量</td>
+<td>正向</td>
+<td>%</td>
+<td>内容分发效率</td>
+</tr>
+<tr class="even">
+<td>篇均互动量</td>
+<td>正向</td>
+<td>%</td>
+<td>内容互动质量</td>
+</tr>
+</tbody>
+</table>
+<h3 id="142-搜索承接核心指标">14.2 搜索承接核心指标</h3>
+<table>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>方向</th>
+<th>变化单位</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>产品词搜索次数</td>
+<td>正向</td>
+<td>%</td>
+<td>搜索热度</td>
+</tr>
+<tr class="even">
+<td>看后搜搜索人数</td>
+<td>正向</td>
+<td>%</td>
+<td>内容触达后的主动搜索</td>
+</tr>
+<tr class="odd">
+<td>直接搜搜索人数</td>
+<td>正向</td>
+<td>%</td>
+<td>用户主动搜索心智</td>
+</tr>
+<tr class="even">
+<td>产品词搜索成交金额</td>
+<td>正向</td>
+<td>%</td>
+<td>搜索带来的成交规模</td>
+</tr>
+<tr class="odd">
+<td>产品词搜索客单价</td>
+<td>正向</td>
+<td>%</td>
+<td>搜索成交价值</td>
+</tr>
+<tr class="even">
+<td>产品词搜索转化率</td>
+<td>正向</td>
+<td>pp</td>
+<td>搜后成交效率</td>
+</tr>
+<tr class="odd">
+<td>产品词搜索GPMS</td>
+<td>正向</td>
+<td>%</td>
+<td>产品词千次搜索成交金额</td>
+</tr>
+<tr class="even">
+<td>内容触达搜索率</td>
+<td>正向特殊</td>
+<td>pp</td>
+<td>使用 70% 预警阈值</td>
+</tr>
+</tbody>
+</table>
+<h3 id="143-ec承接核心指标">14.3 EC承接核心指标</h3>
+<table>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>方向</th>
+<th>变化单位</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>直播间产品讲解时长</td>
+<td>正向</td>
+<td>%</td>
+<td>直播商品承接基础</td>
+</tr>
+<tr class="even">
+<td>商品曝光人数</td>
+<td>正向</td>
+<td>%</td>
+<td>商品流量规模</td>
+</tr>
+<tr class="odd">
+<td>商品点击人数</td>
+<td>正向</td>
+<td>%</td>
+<td>商品卡点击规模</td>
+</tr>
+<tr class="even">
+<td>商品购买人数</td>
+<td>正向</td>
+<td>%</td>
+<td>购买规模</td>
+</tr>
+<tr class="odd">
+<td>内容到商品曝光转化率</td>
+<td>正向</td>
+<td>pp</td>
+<td>内容曝光到商品曝光的承接效率</td>
+</tr>
+<tr class="even">
+<td>商品点击率</td>
+<td>正向</td>
+<td>pp</td>
+<td>商品卡吸引力</td>
+</tr>
+<tr class="odd">
+<td>商品购买率</td>
+<td>正向</td>
+<td>pp</td>
+<td>点击后的成交效率</td>
+</tr>
+<tr class="even">
+<td>商品销售金额</td>
+<td>正向</td>
+<td>%</td>
+<td>EC销售结果</td>
+</tr>
+</tbody>
+</table>
+<h3 id="144-口碑售后核心指标">14.4 口碑售后核心指标</h3>
+<table>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>方向</th>
+<th>变化单位</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>评论数</td>
+<td>正向</td>
+<td>%</td>
+<td>用户愿意发声程度</td>
+</tr>
+<tr class="even">
+<td>好评率</td>
+<td>正向</td>
+<td>pp</td>
+<td>用户满意度</td>
+</tr>
+<tr class="odd">
+<td>差评率</td>
+<td>反向</td>
+<td>pp</td>
+<td>负向体验风险</td>
+</tr>
+<tr class="even">
+<td>销售金额</td>
+<td>正向</td>
+<td>%</td>
+<td>生意规模背景</td>
+</tr>
+<tr class="odd">
+<td>退货金额</td>
+<td>反向</td>
+<td>%</td>
+<td>售后侵蚀规模</td>
+</tr>
+<tr class="even">
+<td>退货率</td>
+<td>反向</td>
+<td>pp</td>
+<td>整体退货风险</td>
+</tr>
+<tr class="odd">
+<td>发货前退货率</td>
+<td>反向</td>
+<td>pp</td>
+<td>发货前取消风险</td>
+</tr>
+<tr class="even">
+<td>发货后退货率</td>
+<td>反向</td>
+<td>pp</td>
+<td>收货后体验落差</td>
+</tr>
+</tbody>
+</table>
+<h2 id="15-页面展示验收标准">15. 页面展示验收标准</h2>
+<h3 id="151-全局验收">15.1 全局验收</h3>
+<ul>
+<li>全局筛选只包含系列、细分系列、时间范围、对比口径。</li>
+<li>不出现全局渠道筛选、内容类型筛选。</li>
+<li>时间范围按周展示。</li>
+<li>指标业务状态只使用正常、预警、异常；数据质量状态允许缺失。</li>
+<li>正常指标不进入待处理问题 Top 5。</li>
+<li>诊断结论和建议动作必须来自规则库，不展示“低于基准”“高于基准”这类无行动价值描述。</li>
+</ul>
+<h3 id="152-总览页验收">15.2 总览页验收</h3>
+<ul>
+<li>当前诊断对象只展示系列名称、商品数、覆盖类目。</li>
+<li>核心指标矩阵包含当前值、基准值、环比、状态、诊断结论、建议动作。</li>
+<li>Top 5 从核心指标矩阵的预警/异常项中生成。</li>
+<li>点击 Top 5 问题后，右侧诊断卡同步切换。</li>
+<li>点击下钻入口后进入对应专题页。</li>
+<li>人群画像差异列按 <code>购买人群占比 - 对比人群占比</code>
+展示，单位为 <code>pp</code>。</li>
+<li>人群差异绝对值 <code>&gt; 10pp</code>
+时红色高亮，<code>= 10pp</code> 不高亮。</li>
+<li>人群相似度按完整标签向量计算，不按单个人群分类拆开计算。</li>
+</ul>
+<h3 id="153-分看板验收">15.3 分看板验收</h3>
+<ul>
+<li>营销端按
+<code>核心KPI → 投资结构 → 内容结构与来源 → 内容质量 → 内容老化 → 明细</code>
+展示。</li>
+<li>营销端内容明细支持 CSV 导出。</li>
+<li>搜索承接不新增渠道或内容类型筛选，触点作为表格行展示。</li>
+<li>产品词搜索GPMS 按正向指标处理。</li>
+<li>EC
+分渠道转化漏斗必须展示指标、当前值、环比、基准值、状态、判断。</li>
+<li>口碑售后退货大类和具体原因通过 chip 切换，不在同一张图混合。</li>
+<li>无汇总数据时，趋势图不展示“全部”chip。</li>
+</ul>
+<h3 id="154-文案验收">15.4 文案验收</h3>
+<ul>
+<li>页面文案面向品牌方阅读，不展示实现说明。</li>
+<li>不展示“点击 chip 切换”“页面只负责”“字段对齐原表”等内部说明。</li>
+<li>需要说明数据口径时，只展示对业务理解有帮助的说明，例如“营销端细分系列使用大系列数据”。</li>
+</ul>
 
-    <div class="footer">
-      <p>系列全链路诊断看板 · 需求文档</p>
-    </div>
-  </div>
+  </main>
 </body>
 </html>
