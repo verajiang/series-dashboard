@@ -200,66 +200,62 @@ SKU 下钻。</p>
 0 分处理，避免误伤健康度。</p>
 <h3 id="33-链路健康度得分">3.3 链路健康度得分</h3>
 <p>每个链路按该链路的核心指标加权计算。</p>
-<p>计算公式：</p>
-<pre class="text"><code>链路健康度 = Σ(指标得分 × 指标权重) / Σ(指标权重)</code></pre>
-<p>V1
-规则：链路内部的核心指标使用等权重。后续如果业务确认不同指标影响不同，可按指标重要度配置权重。</p>
-<p>示例：</p>
-<p>营销端核心指标包括：</p>
+<p>本版健康分权重来源：</p>
 <ul>
-<li>营销花费</li>
-<li>千川花费占比</li>
-<li>营销ROI</li>
-<li>内容曝光量</li>
-<li>付费曝光占比</li>
-<li>有曝光内容数</li>
-<li>新发布内容占比</li>
-<li>UGC占比</li>
-<li>篇均曝光量</li>
-<li>篇均互动量</li>
+<li>Excel 文件：<code>26年上半年跑步鞋核心单品复盘.xlsx</code></li>
+<li>Sheet：<code>单品全链路诊断</code></li>
+<li>表头行：第 7 行</li>
+<li>指标权重列：<code>权重</code></li>
+<li>环节权重行：<code>环节健康分</code></li>
 </ul>
-<p>因此 V1
-中，营销端健康度为这些指标得分的平均值。搜索心智承接、EC承接、口碑售后同理，均先按链路内部指标等权重计算。</p>
+<p>计算公式：</p>
+<pre class="text"><code>链路健康度 = Σ(指标得分 × 指标健康分权重) / Σ(参与评分的指标健康分权重)</code></pre>
+<p>权重为 <code>中性</code> 的指标只用于解释诊断，不参与健康分计算。</p>
+<p>链路内部不再使用等权重。开发实现时必须按 <code>单品全链路诊断</code>
+sheet 中每个指标的权重配置计算，并保留来源
+sheet、来源行号和规则版本。</p>
 <h3 id="34-全链路健康度得分">3.4 全链路健康度得分</h3>
-<p>全链路健康度由四个链路健康度加权计算：</p>
-<pre class="text"><code>全链路健康度 = 营销端得分 × 30%
-             + 搜索心智承接得分 × 25%
-             + EC承接得分 × 30%
-             + 口碑售后得分 × 15%</code></pre>
-<p>V1 全链路权重：</p>
+<p>全链路健康度由四个链路健康度加权计算，链路权重来自
+<code>26年上半年跑步鞋核心单品复盘.xlsx</code> 的
+<code>单品全链路诊断</code> sheet：</p>
+<pre class="text"><code>全链路健康度 = 营销端得分 × 35%
+             + 搜索心智承接得分 × 20%
+             + EC承接得分 × 40%
+             + 口碑售后得分 × 5%</code></pre>
+<p>本版全链路权重：</p>
 <table>
 <thead>
 <tr class="header">
 <th>链路</th>
 <th style="text-align: right;">权重</th>
-<th>理由</th>
+<th>来源</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>营销端</td>
-<td style="text-align: right;">30%</td>
-<td>前置声量决定后续搜索和成交基础</td>
+<td style="text-align: right;">35%</td>
+<td><code>单品全链路诊断</code> 第 16 行</td>
 </tr>
 <tr class="even">
 <td>搜索心智承接</td>
-<td style="text-align: right;">25%</td>
-<td>判断内容是否形成主动搜索和搜索成交</td>
+<td style="text-align: right;">20%</td>
+<td><code>单品全链路诊断</code> 第 23 行</td>
 </tr>
 <tr class="odd">
 <td>EC承接</td>
-<td style="text-align: right;">30%</td>
-<td>直接影响销售转化和 GMV</td>
+<td style="text-align: right;">40%</td>
+<td><code>单品全链路诊断</code> 第 35 行</td>
 </tr>
 <tr class="even">
 <td>口碑售后</td>
-<td style="text-align: right;">15%</td>
-<td>影响长期信任和转化，但通常滞后于前链路</td>
+<td style="text-align: right;">5%</td>
+<td><code>单品全链路诊断</code> 第 39 行</td>
 </tr>
 </tbody>
 </table>
-<p>说明：V1 并不是全链路四段等权重，而是“链路内部指标等权重 + 链路之间按
-30/25/30/15 加权”。权重后续应支持配置化。</p>
+<p>说明：本版不是链路内部等权重，也不是旧版 30/25/30/15
+链路权重。权重后续应支持配置化，但默认值必须以本版 Excel 为准。</p>
 <h3 id="35-分数对应状态">3.5 分数对应状态</h3>
 <table>
 <thead>
@@ -421,8 +417,8 @@ SKU 下钻。</p>
 <li>规则列：第 4 行表头中的
 <code>关键指标</code>、<code>诊断结论（未达标时）</code>、<code>建议动作</code></li>
 <li>规则范围：第 5 行至第 33 行的全链路核心指标</li>
-<li>分看板辅助判断：各分看板中的 <code>快速诊断</code> /
-<code>诊断结论</code> 列，用于专题页模块内的判断文案</li>
+<li>分看板辅助判断：仅用于各分看板首屏核心 KPI
+和当前核心判断，不用于后续拆解表格</li>
 </ul>
 <p>开发落库时应将 Excel 中的规则整理为
 <code>metricRules</code>，由接口返回给前端。前端不硬编码诊断结论和建议动作。</p>
@@ -460,16 +456,6 @@ SKU 下钻。</p>
 <td>UGC占比</td>
 <td>自然内容占比过低，依赖付费</td>
 <td>发起UGC话题挑战、激励用户投稿、置顶优质UGC</td>
-</tr>
-<tr class="even">
-<td>篇均曝光量</td>
-<td>内容分发效率低</td>
-<td>优化前3秒完播率、修改标题/封面、增加利益点</td>
-</tr>
-<tr class="odd">
-<td>篇均互动量</td>
-<td>内容吸引力差，用户点赞/评论/转发的意愿低</td>
-<td>分析高互动竞品、重构内容钩子（悬念/槽点/福利）、增加引导CTA</td>
 </tr>
 <tr class="even">
 <td>产品词搜索次数</td>
@@ -537,6 +523,16 @@ SKU 下钻。</p>
 <td>把握核心渠道成交的同时，渗透其他场景</td>
 </tr>
 <tr class="odd">
+<td>商品销量</td>
+<td>按规则库配置</td>
+<td>按规则库配置</td>
+</tr>
+<tr class="even">
+<td>商品件单价</td>
+<td>中性解释指标</td>
+<td>不参与健康分，仅用于解释销售金额变化</td>
+</tr>
+<tr class="odd">
 <td>退货金额</td>
 <td>售后成本过高，侵蚀利润</td>
 <td>下钻到「售后看板」分析退货原因，针对性改善</td>
@@ -546,28 +542,21 @@ SKU 下钻。</p>
 <td>产品体验或描述不符严重</td>
 <td>优化详情页描述，避免夸大；加强品控；发货前增加确认环节</td>
 </tr>
-<tr class="odd">
-<td>评论数</td>
-<td>用户参与反馈少，缺少社交证明</td>
-<td>发起“评论抽奖”或“晒图返现”、客服主动邀请评论</td>
-</tr>
-<tr class="even">
-<td>差评率</td>
-<td>用户负面反馈多，影响转化和品牌形象</td>
-<td>优化详情页描述，避免预期落差；基于差评词云，驱动产品改进</td>
-</tr>
 </tbody>
 </table>
 <p>说明：</p>
 <ul>
-<li>0614
-总览表中部分新增计算字段只提供指标定义，未单独填写诊断结论和建议动作时，开发不得自行生成文案，应按规则库配置结果展示为空或使用同一诊断维度下已配置的规则，具体以数据规则表落库结果为准。</li>
-<li>分看板中的 <code>快速诊断</code> 是专题页模块判断文案，不等同于总览
-Top 5 的建议动作。</li>
+<li>2026 上半年复盘 Excel 决定总览核心 KPI 和健康分权重；0614
+版规则库继续作为诊断结论和建议动作来源。</li>
+<li>部分新增或中性指标只提供指标定义，未单独填写诊断结论和建议动作时，开发不得自行生成文案，应按规则库配置结果展示为空或使用同一诊断维度下已配置的规则，具体以数据规则表落库结果为准。</li>
+<li>分看板中的 <code>快速诊断</code> 只服务于首屏核心
+KPI，不下放到渠道、来源、触点、漏斗、退货原因等拆解表格。</li>
 </ul>
 <h3 id="52-触发方式">5.2 触发方式</h3>
-<p>当指标状态为“预警”或“异常”时，展示对应诊断结论和建议动作。</p>
+<p>当总览核心指标或分看板首屏核心 KPI
+状态为“预警”或“异常”时，展示对应诊断结论和建议动作。</p>
 <p>当指标状态为“正常”时，可以展示简短说明，但不进入待处理问题列表。</p>
+<p>渠道、来源、触点、漏斗、退货原因等非核心拆解表格只展示数据和状态，不展示快速诊断、诊断结论或建议动作字段。</p>
 <h2 id="6-总览页需求">6. 总览页需求</h2>
 <h3 id="61-页面目标">6.1 页面目标</h3>
 <p>总览页用于回答：</p>
@@ -621,7 +610,9 @@ Top 5 的建议动作。</li>
 <p>字段：</p>
 <ul>
 <li>环节</li>
+<li>诊断维度</li>
 <li>关键指标</li>
+<li>健康分权重</li>
 <li>当前值</li>
 <li>基准值</li>
 <li>环比变化</li>
@@ -630,13 +621,19 @@ Top 5 的建议动作。</li>
 <li>建议动作</li>
 </ul>
 <p>Top 5 从核心指标矩阵中的异常/预警项计算得出。</p>
-<p>0614 版总览核心指标矩阵需补充以下营销端指标：</p>
+<p>本版总览核心指标矩阵需包含
+<code>26年上半年跑步鞋核心单品复盘.xlsx</code> /
+<code>单品全链路诊断</code> sheet 中列出的核心
+KPI，并展示健康分权重：</p>
 <ul>
 <li>千川花费占比：<code>千川花费（千川推直播间 + 千川推商品） / 营销总花费</code></li>
 <li>营销ROI：<code>商品消耗金额 / 营销花费</code></li>
-<li>付费曝光占比：<code>（除企业号视频、自然内容曝光量之和） / 内容曝光量</code></li>
+<li>付费曝光量占比：<code>（除企业号视频、自然内容曝光量之和） / 内容曝光量</code></li>
 <li>UGC占比：<code>自然内容曝光量 / 总内容曝光量</code></li>
 </ul>
+<p>各下钻看板首屏核心 KPI 卡片必须和总览中对应环节的核心 KPI
+保持一致。专题页可在后续模块继续展示渠道、来源、触点、退货原因等拆解指标，但这些拆解指标不进入首屏核心
+KPI，除非同步进入总览核心指标矩阵。</p>
 <h3 id="67-商品人群画像诊断">6.7 商品人群画像诊断</h3>
 <p>该模块用于比较不同链路人群是否一致，帮助判断“曝光、全域内容观看、非自然内容观看、购买是否来自同一类人群”。V1
 不再使用自然语言逐行诊断，直接展示原始占比、购买人群与其他人群的占比差值，以及整体人群相似度。</p>
@@ -744,6 +741,23 @@ Top 5 的建议动作。</li>
 <p>营销端各分析模块右侧均需要趋势图。</p>
 <p>趋势图通过 chip
 切换具体渠道或来源，不提供“全部”chip，因为没有汇总线口径。</p>
+<p>趋势图展示当前筛选时间范围所在自然年的全年自然周走势。例如筛选
+<code>2026-W19</code> 时，趋势图横轴对应 2026 年的 <code>W01</code> 至
+<code>W52/W53</code>，每个点代表一个自然周的统计值，并高亮
+<code>W19</code>。图表不是占位图，需要包含：</p>
+<ul>
+<li>标题</li>
+<li>指标图例</li>
+<li>渠道/来源/触点 chip</li>
+<li>全年自然周横轴</li>
+<li>纵轴刻度</li>
+<li>当前筛选周高亮</li>
+<li>折线末端数值标签</li>
+<li>折线末端数值标签代表末周值，需要样式轻量可读，不能使用过粗描边</li>
+<li>hover 提示，展示周号、该自然周日期区间和该周各指标值</li>
+<li>chip 切换，切换后折线和点位同步更新</li>
+</ul>
+<p>当前筛选周只在图上方或高亮区展示一次，不在横轴刻度中重复展示，避免横坐标重叠。</p>
 <h3 id="75-内容数据明细导出">7.5 内容数据明细导出</h3>
 <p>内容数据明细默认折叠，支持导出 CSV。</p>
 <p>字段对齐原表：</p>
@@ -827,7 +841,6 @@ Top 5 的建议动作。</li>
 <li>环比</li>
 <li>基准值</li>
 <li>状态</li>
-<li>判断</li>
 </ul>
 <p>不允许只展示指标名称，避免用户第一屏看不到数值。</p>
 <h2 id="10-口碑售后分看板需求">10. 口碑售后分看板需求</h2>
@@ -851,8 +864,9 @@ Top 5 的建议动作。</li>
 <p>0614
 版口碑售后取数说明：评论数据来自抖音罗盘的口碑监控/用户原声；退货原因分析来自抖音罗盘商品列表中对应
 SPU 系列详情里的退款及体验。</p>
-<p>核心 KPI 卡片中，<code>评论数</code> 为 0614
-版新增字段，用于判断用户愿不愿意发声。</p>
+<p>本版口碑售后首屏核心 KPI 与总览一致，只展示 <code>退货金额</code> 和
+<code>退货率</code>。评论数、差评标签、好评/差评相关指标可以放在差评原因分析或评论分析模块中，但不作为本版总览核心
+KPI，也不参与健康分。</p>
 <h3 id="104-维度限制">10.4 维度限制</h3>
 <p>口碑售后只使用原表中的评论、差评标签、退货原因分类、具体原因等字段。</p>
 <p>不新增渠道、内容来源、触点等维度。</p>
@@ -905,6 +919,11 @@ SPU 系列详情里的退款及体验。</p>
 <p>没有汇总数据时，不展示“全部”chip。</p>
 <p>页面不展示“点击 chip
 切换”“不展示全部”等实现说明文案。是否有“全部”选项由数据是否提供汇总口径决定。</p>
+<p>趋势图默认展示当前筛选时间范围所在自然年的完整自然周趋势，并在图中标出当前筛选周。横轴实际点位为全年自然周，页面可只展示部分周刻度以保证可读性；hover
+时展示完整周号和该周数值。若自然年存在
+<code>W53</code>，横轴和数据点需要同步扩展到 53 周。</p>
+<p>时间范围筛选使用周选择器样式，展示格式为
+<code>YYYY年WW周</code>。展开态以日历形式展示该自然周所在月份，并高亮该周的日期区间。</p>
 <h3 id="114-明细导出">11.4 明细导出</h3>
 <p>营销端内容数据明细支持导出 CSV。</p>
 <p>导出文件名：</p>
@@ -921,7 +940,9 @@ SPU 系列详情里的退款及体验。</p>
 <li>基准口径</li>
 <li>预警阈值</li>
 <li>异常阈值</li>
-<li>权重</li>
+<li>指标健康分权重</li>
+<li>链路健康分权重</li>
+<li>是否中性指标</li>
 <li>诊断结论</li>
 <li>建议动作</li>
 <li>下钻页面</li>
@@ -931,9 +952,9 @@ SPU 系列详情里的退款及体验。</p>
 </ul>
 <p>这样数据更新后，系统可以自动输出健康度、状态、Top问题、诊断结论和建议动作。</p>
 <p>0614 版 Excel
-已提供第一版规则库，不需要另行等待业务补充。开发时需要做的是把该 Excel
-中的规则表结构化落库，并保留来源
-sheet、行号和版本，便于后续数据分析师更新规则时追踪差异。</p>
+已提供第一版诊断结论/建议动作规则库，不需要另行等待业务补充。2026
+上半年复盘 Excel 已提供本版总览核心 KPI
+和健康分权重。开发时需要把两类来源结构化落库，并分别保留来源文件、sheet、行号和版本，便于后续数据分析师更新规则时追踪差异。</p>
 <h2 id="13-开发交付必须补齐的数据契约">13.
 开发交付必须补齐的数据契约</h2>
 <h3 id="131-总体数据结构">13.1 总体数据结构</h3>
@@ -954,6 +975,10 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
   metricName,        // 展示名称
   link,              // 所属链路：marketing/search/ec/service
   module,            // 所属模块
+  dimension,         // 诊断维度，例如投资金额、搜索效率、转化漏斗
+  metricWeight,      // 指标健康分权重；中性指标可为空或 null
+  linkWeight,        // 链路健康分权重，例如 marketing=0.35
+  isNeutralMetric,   // true 时只展示和解释，不参与健康分
   currentValue,      // 当前值，原始数值
   currentDisplay,    // 当前值展示文本
   baselineValue,     // 基准值，原始数值
@@ -963,7 +988,7 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
   direction,         // positive / negative / custom
   status,            // 正常 / 预警 / 异常；数据缺失时为缺失
   diagnosis,         // 诊断结论，来自规则库
-  action,            // 建议动作，来自规则库
+  action,            // 建议动作，来自规则库；非核心拆解指标可为空
   drilldownPage      // 可下钻页面
 }</code></pre>
 <h3 id="132-计算责任边界">13.2 计算责任边界</h3>
@@ -974,6 +999,7 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 <li>单指标得分</li>
 <li>链路健康度</li>
 <li>全链路健康度</li>
+<li>中性指标剔除评分</li>
 <li>Top 5 待处理问题排序</li>
 <li>人群相似度</li>
 </ul>
@@ -1013,12 +1039,19 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 </ul>
 <p>口径提示只用于必要的数据说明，不展示实现说明型文案。</p>
 <h2 id="14-核心指标清单与方向">14. 核心指标清单与方向</h2>
-<p>以下清单用于 V1 开发配置，后续可在规则库中维护。</p>
+<p>以下清单用于 V1 开发配置，指标和权重来自
+<code>26年上半年跑步鞋核心单品复盘.xlsx</code> 的
+<code>单品全链路诊断</code>
+sheet。总览页核心指标矩阵和各下钻看板首屏核心 KPI
+必须使用同一份清单；专题页后续的渠道、触点、退货原因等模块可以继续展示拆解维度，但不能把拆解维度当成首屏核心
+KPI。</p>
 <h3 id="141-营销端核心指标">14.1 营销端核心指标</h3>
 <table>
 <thead>
 <tr class="header">
 <th>指标</th>
+<th>诊断维度</th>
+<th style="text-align: right;">健康分权重</th>
 <th>方向</th>
 <th>变化单位</th>
 <th>说明</th>
@@ -1027,63 +1060,67 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 <tbody>
 <tr class="odd">
 <td>营销花费</td>
-<td>正向</td>
+<td>投资金额</td>
+<td style="text-align: right;">中性</td>
+<td>中性</td>
 <td>%</td>
-<td>投入规模</td>
+<td>投入规模，只解释不计分</td>
 </tr>
 <tr class="even">
 <td>千川花费占比</td>
+<td>投资金额</td>
+<td style="text-align: right;">20</td>
 <td>自定义</td>
 <td>pp</td>
-<td>投放结构指标，阈值需配置</td>
+<td>Excel 备注：35%-50% 为优秀</td>
 </tr>
 <tr class="odd">
 <td>营销ROI</td>
+<td>投资效率</td>
+<td style="text-align: right;">10</td>
 <td>正向</td>
 <td>%</td>
 <td>商品消耗金额 / 营销花费</td>
 </tr>
 <tr class="even">
 <td>内容曝光量</td>
+<td>内容声量</td>
+<td style="text-align: right;">20</td>
 <td>正向</td>
 <td>%</td>
 <td>内容声量规模</td>
 </tr>
 <tr class="odd">
-<td>付费曝光占比</td>
+<td>付费曝光量占比</td>
+<td>内容声量</td>
+<td style="text-align: right;">20</td>
 <td>自定义</td>
 <td>pp</td>
-<td>除企业号视频、自然内容外的曝光占比</td>
+<td>Excel 备注：50%-70% 为优秀</td>
 </tr>
 <tr class="even">
 <td>有曝光内容数</td>
+<td>内容声量</td>
+<td style="text-align: right;">5</td>
 <td>正向</td>
 <td>%</td>
 <td>有实际曝光的内容资产量</td>
 </tr>
 <tr class="odd">
 <td>新发布内容占比</td>
+<td>内容声量</td>
+<td style="text-align: right;">5</td>
 <td>正向特殊</td>
 <td>pp</td>
-<td>使用 70% 预警阈值</td>
+<td>使用特殊阈值配置</td>
 </tr>
 <tr class="even">
 <td>UGC占比</td>
+<td>内容声量</td>
+<td style="text-align: right;">20</td>
 <td>正向</td>
 <td>pp</td>
-<td>自然内容曝光量 / 总内容曝光量</td>
-</tr>
-<tr class="odd">
-<td>篇均曝光量</td>
-<td>正向</td>
-<td>%</td>
-<td>内容分发效率</td>
-</tr>
-<tr class="even">
-<td>篇均互动量</td>
-<td>正向</td>
-<td>%</td>
-<td>内容互动质量</td>
+<td>UGC 曝光量 / 总内容曝光量</td>
 </tr>
 </tbody>
 </table>
@@ -1092,6 +1129,8 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 <thead>
 <tr class="header">
 <th>指标</th>
+<th>诊断维度</th>
+<th style="text-align: right;">健康分权重</th>
 <th>方向</th>
 <th>变化单位</th>
 <th>说明</th>
@@ -1100,51 +1139,43 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 <tbody>
 <tr class="odd">
 <td>产品词搜索次数</td>
+<td>搜索热度</td>
+<td style="text-align: right;">20</td>
 <td>正向</td>
 <td>%</td>
 <td>搜索热度</td>
 </tr>
 <tr class="even">
-<td>看后搜搜索人数</td>
-<td>正向</td>
-<td>%</td>
-<td>内容触达后的主动搜索</td>
-</tr>
-<tr class="odd">
-<td>直接搜搜索人数</td>
-<td>正向</td>
-<td>%</td>
-<td>用户主动搜索心智</td>
-</tr>
-<tr class="even">
 <td>产品词搜索成交金额</td>
+<td>搜索效率</td>
+<td style="text-align: right;">20</td>
 <td>正向</td>
 <td>%</td>
 <td>搜索带来的成交规模</td>
 </tr>
 <tr class="odd">
-<td>产品词搜索客单价</td>
-<td>正向</td>
-<td>%</td>
-<td>搜索成交价值</td>
-</tr>
-<tr class="even">
-<td>产品词搜索转化率</td>
+<td>产品词搜索成交率</td>
+<td>搜索效率</td>
+<td style="text-align: right;">20</td>
 <td>正向</td>
 <td>pp</td>
 <td>搜后成交效率</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>产品词搜索GPMS</td>
+<td>搜索效率</td>
+<td style="text-align: right;">30</td>
 <td>正向</td>
 <td>%</td>
 <td>产品词千次搜索成交金额</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>内容触达搜索率</td>
+<td>种草-搜索效率</td>
+<td style="text-align: right;">10</td>
 <td>正向特殊</td>
 <td>pp</td>
-<td>使用 70% 预警阈值</td>
+<td>内容触达后的主动搜索效率</td>
 </tr>
 </tbody>
 </table>
@@ -1153,6 +1184,8 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 <thead>
 <tr class="header">
 <th>指标</th>
+<th>诊断维度</th>
+<th style="text-align: right;">健康分权重</th>
 <th>方向</th>
 <th>变化单位</th>
 <th>说明</th>
@@ -1161,51 +1194,83 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 <tbody>
 <tr class="odd">
 <td>直播间产品讲解时长</td>
+<td>流量规模</td>
+<td style="text-align: right;">10</td>
 <td>正向</td>
 <td>%</td>
 <td>直播商品承接基础</td>
 </tr>
 <tr class="even">
 <td>商品曝光人数</td>
+<td>流量规模</td>
+<td style="text-align: right;">5</td>
 <td>正向</td>
 <td>%</td>
 <td>商品流量规模</td>
 </tr>
 <tr class="odd">
 <td>商品点击人数</td>
+<td>流量规模</td>
+<td style="text-align: right;">5</td>
 <td>正向</td>
 <td>%</td>
 <td>商品卡点击规模</td>
 </tr>
 <tr class="even">
 <td>商品购买人数</td>
+<td>流量规模</td>
+<td style="text-align: right;">5</td>
 <td>正向</td>
 <td>%</td>
 <td>购买规模</td>
 </tr>
 <tr class="odd">
-<td>内容到商品曝光转化率</td>
+<td>内容-&gt;商品曝光率</td>
+<td>种草-商品效率</td>
+<td style="text-align: right;">10</td>
 <td>正向</td>
 <td>pp</td>
 <td>内容曝光到商品曝光的承接效率</td>
 </tr>
 <tr class="even">
 <td>商品点击率</td>
+<td>转化漏斗</td>
+<td style="text-align: right;">10</td>
 <td>正向</td>
 <td>pp</td>
 <td>商品卡吸引力</td>
 </tr>
 <tr class="odd">
 <td>商品购买率</td>
+<td>转化漏斗</td>
+<td style="text-align: right;">15</td>
 <td>正向</td>
 <td>pp</td>
 <td>点击后的成交效率</td>
 </tr>
 <tr class="even">
 <td>商品销售金额</td>
+<td>销售结果</td>
+<td style="text-align: right;">30</td>
 <td>正向</td>
 <td>%</td>
-<td>EC销售结果</td>
+<td>EC 销售结果</td>
+</tr>
+<tr class="odd">
+<td>商品销量</td>
+<td>销售结果</td>
+<td style="text-align: right;">10</td>
+<td>正向</td>
+<td>%</td>
+<td>商品成交件数</td>
+</tr>
+<tr class="even">
+<td>商品件单价</td>
+<td>销售结果</td>
+<td style="text-align: right;">中性</td>
+<td>中性</td>
+<td>%</td>
+<td>销售金额解释指标，只解释不计分</td>
 </tr>
 </tbody>
 </table>
@@ -1214,6 +1279,8 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 <thead>
 <tr class="header">
 <th>指标</th>
+<th>诊断维度</th>
+<th style="text-align: right;">健康分权重</th>
 <th>方向</th>
 <th>变化单位</th>
 <th>说明</th>
@@ -1221,52 +1288,20 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 </thead>
 <tbody>
 <tr class="odd">
-<td>评论数</td>
-<td>正向</td>
-<td>%</td>
-<td>用户愿意发声程度</td>
-</tr>
-<tr class="even">
-<td>好评率</td>
-<td>正向</td>
-<td>pp</td>
-<td>用户满意度</td>
-</tr>
-<tr class="odd">
-<td>差评率</td>
-<td>反向</td>
-<td>pp</td>
-<td>负向体验风险</td>
-</tr>
-<tr class="even">
-<td>销售金额</td>
-<td>正向</td>
-<td>%</td>
-<td>生意规模背景</td>
-</tr>
-<tr class="odd">
 <td>退货金额</td>
-<td>反向</td>
+<td>运营检视</td>
+<td style="text-align: right;">中性</td>
+<td>中性</td>
 <td>%</td>
-<td>售后侵蚀规模</td>
+<td>售后成本规模，只解释不计分</td>
 </tr>
 <tr class="even">
 <td>退货率</td>
+<td>运营检视</td>
+<td style="text-align: right;">100</td>
 <td>反向</td>
 <td>pp</td>
-<td>整体退货风险</td>
-</tr>
-<tr class="odd">
-<td>发货前退货率</td>
-<td>反向</td>
-<td>pp</td>
-<td>发货前取消风险</td>
-</tr>
-<tr class="even">
-<td>发货后退货率</td>
-<td>反向</td>
-<td>pp</td>
-<td>收货后体验落差</td>
+<td>整体退货风险；Excel 备注：小于均值为优秀</td>
 </tr>
 </tbody>
 </table>
@@ -1301,8 +1336,9 @@ sheet、行号和版本，便于后续数据分析师更新规则时追踪差异
 <li>营销端内容明细支持 CSV 导出。</li>
 <li>搜索承接不新增渠道或内容类型筛选，触点作为表格行展示。</li>
 <li>产品词搜索GPMS 按正向指标处理。</li>
-<li>EC
-分渠道转化漏斗必须展示指标、当前值、环比、基准值、状态、判断。</li>
+<li>各分看板首屏核心 KPI 必须与总览中该环节的核心 KPI 一致。</li>
+<li>非核心拆解模块不展示建议动作或快速诊断字段，只展示指标值、基准、环比、占比、状态等数据字段。</li>
+<li>EC 分渠道转化漏斗必须展示指标、当前值、环比、基准值、状态。</li>
 <li>口碑售后退货大类和具体原因通过 chip 切换，不在同一张图混合。</li>
 <li>无汇总数据时，趋势图不展示“全部”chip。</li>
 </ul>
