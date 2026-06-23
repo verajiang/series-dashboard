@@ -864,9 +864,11 @@ KPI，除非同步进入总览核心指标矩阵。</p>
 <p>0614
 版口碑售后取数说明：评论数据来自抖音罗盘的口碑监控/用户原声；退货原因分析来自抖音罗盘商品列表中对应
 SPU 系列详情里的退款及体验。</p>
-<p>本版口碑售后首屏核心 KPI 与总览一致，只展示 <code>退货金额</code> 和
-<code>退货率</code>。评论数、差评标签、好评/差评相关指标可以放在差评原因分析或评论分析模块中，但不作为本版总览核心
-KPI，也不参与健康分。</p>
+<p>本版口碑售后首屏核心 KPI 与总览一致，展示
+<code>退货金额</code>、<code>退货率</code>、<code>评论数</code>、<code>差评率</code>。其中
+<code>退货金额</code>
+为中性解释指标，不参与健康分；<code>退货率</code>、<code>评论数</code>、<code>差评率</code>
+参与健康分，权重分别为 50%、15%、35%。</p>
 <h3 id="104-维度限制">10.4 维度限制</h3>
 <p>口碑售后只使用原表中的评论、差评标签、退货原因分类、具体原因等字段。</p>
 <p>不新增渠道、内容来源、触点等维度。</p>
@@ -979,6 +981,7 @@ KPI，也不参与健康分。</p>
   metricWeight,      // 指标健康分权重；中性指标可为空或 null
   linkWeight,        // 链路健康分权重，例如 marketing=0.35
   isNeutralMetric,   // true 时只展示和解释，不参与健康分
+  isDisplayOnlyMetric, // true 时可出现在分看板核心 KPI 卡片，但不参与健康分
   currentValue,      // 当前值，原始数值
   currentDisplay,    // 当前值展示文本
   baselineValue,     // 基准值，原始数值
@@ -1039,12 +1042,12 @@ KPI，也不参与健康分。</p>
 </ul>
 <p>口径提示只用于必要的数据说明，不展示实现说明型文案。</p>
 <h2 id="14-核心指标清单与方向">14. 核心指标清单与方向</h2>
-<p>以下清单用于 V1 开发配置，指标和权重来自
+<p>以下清单用于 V1 开发配置，指标和权重主要来自
 <code>26年上半年跑步鞋核心单品复盘.xlsx</code> 的
 <code>单品全链路诊断</code>
-sheet。总览页核心指标矩阵和各下钻看板首屏核心 KPI
-必须使用同一份清单；专题页后续的渠道、触点、退货原因等模块可以继续展示拆解维度，但不能把拆解维度当成首屏核心
-KPI。</p>
+sheet，并结合本轮原型确认项调整。总览页核心指标矩阵和各下钻看板首屏核心
+KPI 的计分指标必须保持一致；分看板首屏核心 KPI
+卡片可以补充展示指标，但必须明确标注“不参与健康分”。</p>
 <h3 id="141-营销端核心指标">14.1 营销端核心指标</h3>
 <table>
 <thead>
@@ -1122,6 +1125,22 @@ KPI。</p>
 <td>pp</td>
 <td>UGC 曝光量 / 总内容曝光量</td>
 </tr>
+<tr class="odd">
+<td>篇均曝光量</td>
+<td>内容质量</td>
+<td style="text-align: right;">展示不计分</td>
+<td>正向</td>
+<td>%</td>
+<td>仅在营销端核心 KPI 卡片展示，不参与健康分</td>
+</tr>
+<tr class="even">
+<td>篇均互动量</td>
+<td>内容质量</td>
+<td style="text-align: right;">展示不计分</td>
+<td>正向</td>
+<td>%</td>
+<td>仅在营销端核心 KPI 卡片展示，不参与健康分</td>
+</tr>
 </tbody>
 </table>
 <h3 id="142-搜索承接核心指标">14.2 搜索承接核心指标</h3>
@@ -1176,6 +1195,22 @@ KPI。</p>
 <td>正向特殊</td>
 <td>pp</td>
 <td>内容触达后的主动搜索效率</td>
+</tr>
+<tr class="even">
+<td>看后搜搜索人数</td>
+<td>搜索热度</td>
+<td style="text-align: right;">展示不计分</td>
+<td>正向</td>
+<td>%</td>
+<td>仅在搜索承接核心 KPI 卡片展示，不参与健康分</td>
+</tr>
+<tr class="odd">
+<td>直接搜搜索人数</td>
+<td>搜索热度</td>
+<td style="text-align: right;">展示不计分</td>
+<td>正向</td>
+<td>%</td>
+<td>仅在搜索承接核心 KPI 卡片展示，不参与健康分</td>
 </tr>
 </tbody>
 </table>
@@ -1298,10 +1333,26 @@ KPI。</p>
 <tr class="even">
 <td>退货率</td>
 <td>运营检视</td>
-<td style="text-align: right;">100</td>
+<td style="text-align: right;">50</td>
 <td>反向</td>
 <td>pp</td>
 <td>整体退货风险；Excel 备注：小于均值为优秀</td>
+</tr>
+<tr class="odd">
+<td>评论数</td>
+<td>运营检视</td>
+<td style="text-align: right;">15</td>
+<td>正向</td>
+<td>%</td>
+<td>评论供给规模</td>
+</tr>
+<tr class="even">
+<td>差评率</td>
+<td>运营检视</td>
+<td style="text-align: right;">35</td>
+<td>反向</td>
+<td>pp</td>
+<td>负向体验风险</td>
 </tr>
 </tbody>
 </table>
@@ -1336,7 +1387,8 @@ KPI。</p>
 <li>营销端内容明细支持 CSV 导出。</li>
 <li>搜索承接不新增渠道或内容类型筛选，触点作为表格行展示。</li>
 <li>产品词搜索GPMS 按正向指标处理。</li>
-<li>各分看板首屏核心 KPI 必须与总览中该环节的核心 KPI 一致。</li>
+<li>各分看板首屏核心 KPI
+的计分指标必须与总览中该环节的计分指标一致；补充展示指标必须标注“不参与健康分”。</li>
 <li>非核心拆解模块不展示建议动作或快速诊断字段，只展示指标值、基准、环比、占比、状态等数据字段。</li>
 <li>EC 分渠道转化漏斗必须展示指标、当前值、环比、基准值、状态。</li>
 <li>口碑售后退货大类和具体原因通过 chip 切换，不在同一张图混合。</li>

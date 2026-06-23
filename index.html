@@ -2365,14 +2365,14 @@
               <div class="score panel">
                 <div>
                   <p class="eyebrow">全链路健康度评分</p>
-                  <div class="score-number">67<span>/100</span></div>
+                  <div class="score-number">66<span>/100</span></div>
                   <p class="hero-copy">主要风险集中在营销声量、搜索成交效率和商品点击效率。建议先处理前置链路的内容曝光，再检查搜索结果页与商品卡承接。</p>
                 </div>
                 <div class="score-bars">
                   <div class="score-bar"><span>营销端 · 权重35%</span><div class="track"><div class="fill warn" style="width: 58%"></div></div><b>58</b></div>
                   <div class="score-bar"><span>搜索 · 权重20%</span><div class="track"><div class="fill warn" style="width: 56%"></div></div><b>56</b></div>
                   <div class="score-bar"><span>EC承接 · 权重40%</span><div class="track"><div class="fill warn" style="width: 76%"></div></div><b>76</b></div>
-                  <div class="score-bar"><span>售后 · 权重5%</span><div class="track"><div class="fill" style="width: 100%"></div></div><b>100</b></div>
+                  <div class="score-bar"><span>售后 · 权重5%</span><div class="track"><div class="fill" style="width: 86%"></div></div><b>86</b></div>
                 </div>
               </div>
             </div>
@@ -2519,7 +2519,9 @@
         ["EC承接", "销售结果", "商品销量", "10", "1.22万", "1.34万", "-8.6%", "预警", "—", "—"],
         ["EC承接", "销售结果", "商品件单价", "中性", "¥319", "¥310", "+2.9%", "正常", "—", "—"],
         ["口碑售后", "运营检视", "退货金额", "中性", "¥38.1万", "¥37.2万", "+2.4%", "正常", "售后成本过高，侵蚀利润", "下钻到「售后看板」分析退货原因，针对性改善"],
-        ["口碑售后", "运营检视", "退货率", "100", "9.8%", "10.5%", "-0.7pp", "正常", "产品体验或描述不符问题暂未扩大", "继续按退货原因监控详情页描述和品控"],
+        ["口碑售后", "运营检视", "退货率", "50", "9.8%", "10.5%", "-0.7pp", "正常", "产品体验或描述不符问题暂未扩大", "继续按退货原因监控详情页描述和品控"],
+        ["口碑售后", "运营检视", "评论数", "15", "2,184", "2,045", "+6.8%", "正常", "评论供给充足", "持续沉淀有效评论，结合差评标签跟踪体验风险"],
+        ["口碑售后", "运营检视", "差评率", "35", "3.6%", "3.2%", "+0.4pp", "预警", "用户负面反馈多，影响转化和品牌形象", "优化详情页描述，避免预期落差；基于差评词云驱动产品改进"],
       ];
 
       const issues = [
@@ -2598,6 +2600,8 @@
             ["有曝光内容数", "126条", "-22.1%", "异常"],
             ["新发布内容占比", "24%", "-8.0pp", "预警"],
             ["UGC占比", "18%", "-5.2pp", "预警"],
+            ["篇均曝光量", "2.27万", "+6.1%", "正常"],
+            ["篇均互动量", "412", "-12.6%", "预警"],
           ],
           sections: [
             { title: "内容营销投资情况", desc: "看每一分钱花在哪个渠道，以及 ROI 是否达标。", type: "table", rows: [["内容热推", "¥12.4万", "29%", "¥32", "¥42.8万", "3.45", "正常"], ["种草通合约", "¥8.6万", "20%", "¥46", "¥18.1万", "2.10", "异常"], ["DOU+", "¥5.8万", "14%", "¥28", "¥13.4万", "2.31", "预警"], ["千川推商品", "¥15.8万", "37%", "¥35", "¥62.2万", "3.94", "正常"]], headers: ["渠道", "消耗金额", "占比", "CPM", "直接成交金额", "ROI", "状态"] },
@@ -2615,6 +2619,8 @@
             ["产品词搜索成交率", "2.8%", "-0.6pp", "预警"],
             ["产品词搜索GPMS", "653", "-9.8%", "异常"],
             ["内容触达搜索率", "0.42%", "-0.09pp", "预警"],
+            ["看后搜搜索人数", "3,180", "-15.9%", "预警"],
+            ["直接搜搜索人数", "6,420", "-7.0%", "预警"],
           ],
           sections: [
             { title: "搜索趋势", desc: "同时看搜索次数与搜索成交金额。", type: "bars" },
@@ -2651,6 +2657,8 @@
           kpis: [
             ["退货金额", "¥38.1万", "+2.4%", "正常"],
             ["退货率", "9.8%", "+0.4pp", "正常"],
+            ["评论数", "2,184", "+6.8%", "正常"],
+            ["差评率", "3.6%", "+0.4pp", "预警"],
           ],
           sections: [
             { title: "差评原因分析", desc: "把不满意翻译成产品和运营可改进的问题。", type: "table", rows: [["尺码偏差", "86", "31%", "预警"], ["脚感不符预期", "62", "22%", "预警"], ["色差", "39", "14%", "正常"], ["物流慢", "28", "10%", "正常"]], headers: ["差评标签", "出现次数", "标签占比", "状态"] },
@@ -2695,7 +2703,7 @@
       renderDiagnosis();
 
       function kpiCards(items) {
-        return `<div class="kpi-grid">${items.map(([name, value, change, status]) => `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>环比 ${change} · 基准：前 4 周均值</p></article>`).join("")}</div>`;
+        return `<div class="kpi-grid">${items.map(([name, value, change, status, note]) => `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>环比 ${change} · 基准：前 4 周均值${note ? ` · ${note}` : ""}</p></article>`).join("")}</div>`;
       }
 
       function tableBlock(section) {
@@ -2731,6 +2739,8 @@
         ["有曝光内容数", "126条", "168条", "-22.1%", "异常"],
         ["新发布内容占比", "24%", "32%", "-8.0pp", "预警"],
         ["UGC占比", "18%", "24%", "-6.0pp", "预警"],
+        ["篇均曝光量", "2.27万", "2.14万", "+6.1%", "正常", "展示指标，不计分"],
+        ["篇均互动量", "412", "520", "-12.6%", "预警", "展示指标，不计分"],
       ];
 
       const investmentRows = [
@@ -2795,6 +2805,8 @@
         ["产品词搜索成交率", "2.8%", "3.6%", "-0.8pp", "预警"],
         ["产品词搜索GPMS", "653", "820", "-20.4%", "异常"],
         ["内容触达搜索率", "0.42%", "0.58%", "-0.16pp", "预警"],
+        ["看后搜搜索人数", "3,180", "3,780", "-15.9%", "预警", "展示指标，不计分"],
+        ["直接搜搜索人数", "6,420", "6,900", "-7.0%", "预警", "展示指标，不计分"],
       ];
 
       const competitorRows = [
@@ -2881,6 +2893,8 @@
       const serviceKpis = [
         ["售后", "退货金额", "¥38.1万", "+2.4%", "¥37.2万", "正常", "售后暂未明显侵蚀利润"],
         ["售后", "退货率", "9.8%", "-0.7pp", "10.5%", "正常", "退货整体可控"],
+        ["评论", "评论数", "2,184", "+6.8%", "2,045", "正常", "用户反馈供给充足"],
+        ["评论", "差评率", "3.6%", "+0.4pp", "3.2%", "预警", "负向反馈略高，需关注差评标签"],
       ];
 
       const badReviewRows = [
@@ -2985,7 +2999,7 @@
           <section class="section panel">
             <div class="section-head"><div><h2>核心KPI卡片（营销端健康度总览）</h2><p>先判断问题属于投入不足、数量不足、质量不足、自然声量不足还是内容老化</p></div></div>
             <div class="kpi-grid">
-              ${marketingKpis.map(([name, value, base, change, status]) => `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>基准 ${base} · 环比变化 ${change}</p></article>`).join("")}
+              ${marketingKpis.map(([name, value, base, change, status, note]) => `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>基准 ${base} · 环比变化 ${change}${note ? ` · ${note}` : ""}</p></article>`).join("")}
             </div>
           </section>
 
@@ -3134,17 +3148,17 @@
       function renderServicePage() {
         document.querySelector("#service").innerHTML = `
           <div class="marketing-summary">
-            <section class="score panel"><div><p class="eyebrow">口碑售后健康度</p><div class="score-number">100<span>/100</span></div></div><div>${badge["正常"]}</div></section>
+            <section class="score panel"><div><p class="eyebrow">口碑售后健康度</p><div class="score-number">86<span>/100</span></div></div><div>${badge["正常"]}</div></section>
             <section class="section panel" style="margin-top:0">
-              <div class="section-head"><div><h2>当前核心判断</h2><p>核心 KPI 只看退货金额和退货率，评论与退货原因放在下方拆解</p></div></div>
+              <div class="section-head"><div><h2>当前核心判断</h2><p>核心 KPI 看退货率、评论数和差评率，退货金额作为中性解释指标</p></div></div>
               <ul class="judgement-list">
                 <li><b>售后整体可控：</b>退货率低于基准，暂未明显侵蚀利润。</li>
-                <li><b>退货金额同步观察：</b>退货金额作为中性解释指标展示，不参与健康分。</li>
+                <li><b>评论供给充足：</b>评论量能够支撑口碑判断，但差评率略高，需要下钻差评标签。</li>
                 <li><b>差评集中在产品体验：</b>尺码偏差和脚感不符预期需要沉淀为改进项。</li>
               </ul>
             </section>
           </div>
-          <section class="section panel"><div class="section-head"><div><h2>核心KPI卡片（口碑/售后健康度总览）</h2><p>与总览保持一致：退货金额用于解释，退货率参与健康分</p></div></div>${kpiGrid(serviceKpis, true)}</section>
+          <section class="section panel"><div class="section-head"><div><h2>核心KPI卡片（口碑/售后健康度总览）</h2><p>与总览保持一致：退货率、评论数、差评率参与健康分，退货金额用于解释</p></div></div>${kpiGrid(serviceKpis, true)}</section>
           <section class="section panel">
             <div class="section-head"><div><h2>差评原因分析</h2><p>把用户不满意翻译成产品/运营可改进的具体问题</p></div></div>
             <div class="reason-layout">
@@ -3186,7 +3200,7 @@
         document.querySelector(`#${id}`).innerHTML = `
           <div class="hero">
             <div class="headline panel"><div><p class="eyebrow">专题下钻</p><h1>${config.title}</h1><p class="hero-copy">${config.subtitle}</p></div></div>
-            <div class="score panel"><p class="eyebrow">当前状态</p><div class="score-number">${id === "marketing" ? "58" : id === "service" ? "100" : id === "search" ? "56" : "76"}<span>/100</span></div><div>${badge[id === "service" ? "正常" : "预警"]}</div></div>
+            <div class="score panel"><p class="eyebrow">当前状态</p><div class="score-number">${id === "marketing" ? "58" : id === "service" ? "86" : id === "search" ? "56" : "76"}<span>/100</span></div><div>${badge[id === "service" ? "正常" : "预警"]}</div></div>
           </div>
           <section class="section panel"><div class="section-head"><div><h2>核心 KPI 卡片</h2><p>当前值、环比、基准与状态快速扫描</p></div></div>${kpiCards(config.kpis)}</section>
           ${sections}`;
