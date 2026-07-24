@@ -655,6 +655,40 @@
         white-space: nowrap;
       }
 
+      .direction-tag {
+        display: inline-flex;
+        align-items: center;
+        margin-left: 6px;
+        padding: 2px 6px;
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1.2;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+
+      .direction-positive {
+        color: #18794e;
+        background: #eaf7ef;
+      }
+
+      .direction-negative {
+        color: #b42318;
+        background: #fff0ed;
+      }
+
+      .direction-neutral {
+        color: #667085;
+        background: #f2f4f7;
+      }
+
+      .direction-custom {
+        color: #9a6700;
+        background: #fff7d6;
+      }
+
       .marketing-table td:last-child,
       .marketing-table th:last-child {
         min-width: 220px;
@@ -2364,14 +2398,14 @@
               </div>
               <div class="score panel">
                 <div>
-                  <p class="eyebrow">全链路健康度评分</p>
-                  <div class="score-number">66<span>/100</span></div>
-                  <p class="hero-copy">主要风险集中在营销声量、搜索成交效率和商品点击效率。建议先处理前置链路的内容曝光，再检查搜索结果页与商品卡承接。</p>
+                  <p class="eyebrow">全链路健康度评分 <span class="direction-tag direction-positive">正向</span></p>
+                  <div class="score-number">60<span>/100</span></div>
+                  <p class="hero-copy">主要风险集中在千川投入结构、营销声量、搜索成交效率和商品点击规模。建议先控制低效千川消耗并补充内容供给，再检查搜索结果页与商品卡承接。</p>
                 </div>
                 <div class="score-bars">
-                  <div class="score-bar"><span>营销端 · 权重35%</span><div class="track"><div class="fill warn" style="width: 58%"></div></div><b>58</b></div>
+                  <div class="score-bar"><span>营销端 · 权重35%</span><div class="track"><div class="fill bad" style="width: 50%"></div></div><b>50</b></div>
                   <div class="score-bar"><span>搜索 · 权重20%</span><div class="track"><div class="fill warn" style="width: 56%"></div></div><b>56</b></div>
-                  <div class="score-bar"><span>EC承接 · 权重40%</span><div class="track"><div class="fill warn" style="width: 76%"></div></div><b>76</b></div>
+                  <div class="score-bar"><span>EC承接 · 权重40%</span><div class="track"><div class="fill warn" style="width: 68%"></div></div><b>68</b></div>
                   <div class="score-bar"><span>售后 · 权重5%</span><div class="track"><div class="fill" style="width: 86%"></div></div><b>86</b></div>
                 </div>
               </div>
@@ -2380,7 +2414,7 @@
             <div class="status-grid">
               <article class="stage-card" data-jump="marketing">
                 <div class="topline"><h3>营销端</h3><span class="badge bad">异常</span></div>
-                <p>品牌/产品在抖音的声量不足或触达效率低，内容资产厚度不足。</p>
+                <p>千川投入占比超出优秀区间，同时内容声量和内容资产厚度不足。</p>
               </article>
               <article class="stage-card" data-jump="search">
                 <div class="topline"><h3>搜索心智承接</h3><span class="badge warn">预警</span></div>
@@ -2406,7 +2440,7 @@
 
               <section class="section panel">
                 <div class="section-head">
-                  <div><h2>选中问题诊断卡</h2><p>诊断结论和建议动作来自原表规则</p></div>
+                  <div><h2>选中问题诊断卡</h2><p>诊断结论和建议动作来自可追溯规则库</p></div>
                 </div>
                 <div class="diagnosis-card" id="diagnosisCard"></div>
               </section>
@@ -2427,9 +2461,9 @@
             <section class="section panel">
               <div class="section-head"><div><h2>商品人群画像诊断</h2><p>用购买人群减其他链路人群占比，并通过人群相似度判断是否同一类人群</p></div></div>
               <div class="persona-similarity">
-                <div class="similarity-card"><span>购买 vs 曝光人群相似度</span><b>97.2%</b></div>
-                <div class="similarity-card"><span>购买 vs 内容观看人群相似度</span><b>97.7%</b></div>
-                <div class="similarity-card"><span>购买 vs 非自然内容观看人群相似度</span><b>99.7%</b></div>
+                <div class="similarity-card"><span>购买 vs 曝光人群相似度 <span class="direction-tag direction-positive">正向</span></span><b>97.2%</b></div>
+                <div class="similarity-card"><span>购买 vs 内容观看人群相似度 <span class="direction-tag direction-positive">正向</span></span><b>97.7%</b></div>
+                <div class="similarity-card"><span>购买 vs 非自然内容观看人群相似度 <span class="direction-tag direction-positive">正向</span></span><b>99.7%</b></div>
               </div>
               <div class="table-wrap persona-table">
                 <table>
@@ -2437,13 +2471,13 @@
                     <tr>
                       <th>人群分类</th>
                       <th>人群标签</th>
-                      <th>商品购买人群</th>
-                      <th>商品曝光人群</th>
-                      <th>商品购买-曝光人群差异</th>
-                      <th>商品全域内容观看人群</th>
-                      <th>商品购买-内容观看人群差异</th>
-                      <th>商品非自然内容观看人群</th>
-                      <th>商品购买-非自然内容观看人群差异</th>
+                      <th>商品购买人群 <span class="direction-tag direction-neutral">中性</span></th>
+                      <th>商品曝光人群 <span class="direction-tag direction-neutral">中性</span></th>
+                      <th>商品购买-曝光人群差异 <span class="direction-tag direction-custom">区间型</span></th>
+                      <th>商品全域内容观看人群 <span class="direction-tag direction-neutral">中性</span></th>
+                      <th>商品购买-内容观看人群差异 <span class="direction-tag direction-custom">区间型</span></th>
+                      <th>商品非自然内容观看人群 <span class="direction-tag direction-neutral">中性</span></th>
+                      <th>商品购买-非自然内容观看人群差异 <span class="direction-tag direction-custom">区间型</span></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -2496,10 +2530,10 @@
 
       const matrix = [
         ["营销端", "投资金额", "营销花费", "中性", "¥42.6万", "¥40.0万", "+6.8%", "正常", "—", "—"],
-        ["营销端", "投资金额", "千川花费占比", "20", "60%", "58%", "+2.0pp", "正常", "千川投入结构稳定", "持续观察千川推直播间与千川推商品的效率差异"],
+        ["营销端", "投资金额", "千川花费占比", "20", "60%", "58%", "+2.0pp", "异常", "千川投入占比超出35%-50%优秀区间，营销声量对千川流量依赖偏高", "检查千川投放ROI及直播间、商品投放效率，压降低效消耗，并提升企业号、自然内容和达人内容的非千川曝光贡献"],
         ["营销端", "投资效率", "营销ROI", "10", "3.08", "3.20", "-3.8%", "预警", "投入不足或效率低下，导致声量/曝光无法支撑转化目标", "增加营销花费，提升渠道效率"],
         ["营销端", "内容声量", "内容曝光量", "20", "286万", "360万", "-18.4%", "异常", "品牌/产品在抖音的声量不足或触达效率低", "增加投流预算、增加达人合作数量、提高发布频次"],
-        ["营销端", "内容声量", "付费曝光量占比", "20", "58%", "52%", "+6.0pp", "预警", "自然内容占比过低，依赖付费", "发起UGC话题挑战、激励用户投稿、置顶优质UGC"],
+        ["营销端", "内容声量", "付费曝光量占比", "20", "58%", "52%", "+6.0pp", "正常", "付费曝光量占比处于50%-70%优秀区间", "—"],
         ["营销端", "内容声量", "有曝光内容数", "5", "126条", "168条", "-22.1%", "异常", "内容资产少，依赖少数爆文", "批量生产混剪、多账号分发，每周上新N条"],
         ["营销端", "内容声量", "新发布内容占比", "5", "24%", "32%", "-8.0pp", "预警", "内容老化，缺乏新鲜度", "制定内容日历强制周更、蹭热点话题快速出片"],
         ["营销端", "内容声量", "UGC占比", "20", "18%", "24%", "-6.0pp", "预警", "自然内容占比过低，依赖付费", "发起UGC话题挑战、激励用户投稿、置顶优质UGC"],
@@ -2540,6 +2574,18 @@
         {
           rank: 2,
           page: "marketing",
+          title: "千川投入占比偏高",
+          metric: "千川花费占比",
+          current: "60%",
+          baseline: "35%-50%优秀区间",
+          change: "+2.0pp",
+          status: "异常",
+          diagnosis: "千川投入占比超出35%-50%优秀区间，营销声量对千川流量依赖偏高",
+          action: "检查千川投放ROI及直播间、商品投放效率，压降低效消耗，并提升企业号、自然内容和达人内容的非千川曝光贡献",
+        },
+        {
+          rank: 3,
+          page: "marketing",
           title: "有曝光内容数不足",
           metric: "有曝光内容数",
           current: "126条",
@@ -2550,7 +2596,7 @@
           action: "批量生产混剪、多账号分发，每周上新N条",
         },
         {
-          rank: 3,
+          rank: 4,
           page: "search",
           title: "搜索流量价值低",
           metric: "产品词搜索GPMS",
@@ -2562,28 +2608,16 @@
           action: "优化搜索结果页主图+优惠、投放搜索卡位",
         },
         {
-          rank: 4,
+          rank: 5,
           page: "ec",
-          title: "商品点击率低",
-          metric: "商品点击率",
-          current: "8.1%",
-          baseline: "10.4%",
-          change: "-2.3pp",
-          status: "预警",
+          title: "商品点击人数不足",
+          metric: "商品点击人数",
+          current: "7.8万",
+          baseline: "9.5万",
+          change: "-18.1%",
+          status: "异常",
           diagnosis: "商品卡吸引力差（主图/价格/标题/销量）",
           action: "商品头图、标题优化；直播间话术引导商品点击或浏览购物车点击商品",
-        },
-        {
-          rank: 5,
-          page: "search",
-          title: "内容触达搜索率低",
-          metric: "内容触达搜索率",
-          current: "0.42%",
-          baseline: "0.58%",
-          change: "-0.16pp",
-          status: "预警",
-          diagnosis: "看了内容的人不去搜索，内容种草力弱或引导缺失",
-          action: "视频强化小蓝词配置，评论区官旗评论引导",
         },
       ];
 
@@ -2593,10 +2627,10 @@
           subtitle: "从投入、曝光、质量、结构、老化逐层定位声量问题。",
           kpis: [
             ["营销花费", "¥42.6万", "+6.8%", "正常"],
-            ["千川花费占比", "60%", "+2.0pp", "正常"],
+            ["千川花费占比", "60%", "+2.0pp", "异常"],
             ["营销ROI", "3.08", "-3.8%", "预警"],
             ["内容曝光量", "286万", "-18.4%", "异常"],
-            ["付费曝光量占比", "58%", "+6.0pp", "预警"],
+            ["付费曝光量占比", "58%", "+6.0pp", "正常"],
             ["有曝光内容数", "126条", "-22.1%", "异常"],
             ["新发布内容占比", "24%", "-8.0pp", "预警"],
             ["UGC占比", "18%", "-5.2pp", "预警"],
@@ -2668,7 +2702,10 @@
       };
 
       const overviewBody = document.querySelector("#overviewMatrix");
-      overviewBody.innerHTML = matrix.map((row) => `<tr>${row.map((cell, index) => `<td>${index === 7 ? badge[cell] : cell}</td>`).join("")}</tr>`).join("");
+
+      function renderOverviewMatrix() {
+        overviewBody.innerHTML = matrix.map((row) => `<tr>${row.map((cell, index) => `<td>${index === 2 ? metricHeader(cell) : index === 7 ? badge[cell] : cell}</td>`).join("")}</tr>`).join("");
+      }
 
       const issueList = document.querySelector("#issueList");
       const diagnosisCard = document.querySelector("#diagnosisCard");
@@ -2679,7 +2716,7 @@
             <div class="rank">${issue.rank}</div>
             <div>
               <strong>${issue.title}</strong>
-              <span>${issue.metric}：当前 ${issue.current} / 基准 ${issue.baseline} / ${issue.change}</span>
+              <span>${issue.metric}${directionTag(issue.metric)}：当前 ${issue.current} / 基准 ${issue.baseline} / ${issue.change}</span>
             </div>
             ${badge[issue.status]}
           </div>
@@ -2690,7 +2727,7 @@
         const issue = issues.find((item) => item.rank === rank) || issues[0];
         diagnosisCard.innerHTML = `
           <div class="diagnosis-meta">
-            <div class="diagnosis-metric"><span>异常指标</span><b>${issue.metric}</b></div>
+            <div class="diagnosis-metric"><span>异常指标</span><b>${issue.metric}${directionTag(issue.metric)}</b></div>
             <div class="diagnosis-metric"><span>当前 vs 基准</span><b>${issue.current} / ${issue.baseline}</b></div>
           </div>
           <div class="action"><strong>诊断结论</strong><span>${issue.diagnosis}</span></div>
@@ -2699,15 +2736,12 @@
         `;
       }
 
-      renderIssues();
-      renderDiagnosis();
-
       function kpiCards(items) {
         return `<div class="kpi-grid">${items.map(([name, value, change, status, note]) => `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>环比 ${change} · 基准：前 4 周均值${note ? ` · ${note}` : ""}</p></article>`).join("")}</div>`;
       }
 
       function tableBlock(section) {
-        return `<div class="table-wrap"><table><thead><tr>${section.headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${section.rows.map((row) => `<tr>${row.map((cell, i) => `<td>${i === row.length - 1 && badge[cell] ? badge[cell] : cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+        return `<div class="table-wrap"><table><thead><tr>${section.headers.map((h) => `<th>${metricHeader(h)}</th>`).join("")}</tr></thead><tbody>${section.rows.map((row) => `<tr>${row.map((cell, i) => `<td>${i === row.length - 1 && badge[cell] ? badge[cell] : metricDirections[cell] ? metricHeader(cell) : cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
       }
 
       function barsBlock() {
@@ -2716,9 +2750,9 @@
 
       function funnelBlock() {
         return `<div class="funnel">
-          <div class="funnel-row"><b>商品曝光</b><div class="funnel-block"><span style="width:100%"></span></div><span>96.2万</span></div>
-          <div class="funnel-row"><b>商品点击</b><div class="funnel-block"><span style="width:58%"></span></div><span>7.8万</span></div>
-          <div class="funnel-row"><b>商品购买</b><div class="funnel-block"><span style="width:31%"></span></div><span>1.22万</span></div>
+          <div class="funnel-row"><b>商品曝光${directionTag("商品曝光")}</b><div class="funnel-block"><span style="width:100%"></span></div><span>96.2万</span></div>
+          <div class="funnel-row"><b>商品点击${directionTag("商品点击")}</b><div class="funnel-block"><span style="width:58%"></span></div><span>7.8万</span></div>
+          <div class="funnel-row"><b>商品购买${directionTag("商品购买")}</b><div class="funnel-block"><span style="width:31%"></span></div><span>1.22万</span></div>
         </div>`;
       }
 
@@ -2732,10 +2766,10 @@
 
       const marketingKpis = [
         ["营销花费", "¥42.6万", "¥40.0万", "+6.8%", "正常"],
-        ["千川花费占比", "60%", "58%", "+2.0pp", "正常"],
+        ["千川花费占比", "60%", "58%", "+2.0pp", "异常", "优秀区间35%-50%"],
         ["营销ROI", "3.08", "3.20", "-3.8%", "预警"],
         ["内容曝光量", "286万", "360万", "-18.4%", "异常"],
-        ["付费曝光量占比", "58%", "52%", "+6.0pp", "预警"],
+        ["付费曝光量占比", "58%", "52%", "+6.0pp", "正常", "优秀区间50%-70%"],
         ["有曝光内容数", "126条", "168条", "-22.1%", "异常"],
         ["新发布内容占比", "24%", "32%", "-8.0pp", "预警"],
         ["UGC占比", "18%", "24%", "-6.0pp", "预警"],
@@ -2915,15 +2949,143 @@
       ];
 
       function statusCell(status) {
-        return badge[status] || status;
+        return badge[status] || (metricDirections[status] ? metricHeader(status) : status);
       }
 
+      // 指标方向以 requirements.md 第 4、14 节为核心依据；拆解指标按同一业务口径继承。
+      // 占比仅描述渠道/来源构成时不具备单调好坏关系，标为中性；有明确优秀区间时标为区间型。
+      const metricDirections = {
+        "健康度评分": "正向",
+        "营销花费": "中性",
+        "千川花费占比": "区间型",
+        "营销ROI": "正向",
+        "内容曝光量": "正向",
+        "内容互动量": "正向",
+        "付费曝光量占比": "区间型",
+        "有曝光内容数": "正向",
+        "新发布内容占比": "正向",
+        "篇均曝光量": "正向",
+        "篇均互动量": "正向",
+        "篇均曝光": "正向",
+        "篇均互动": "正向",
+        "UGC占比": "正向",
+        "消耗金额": "中性",
+        "消耗金额占比": "中性",
+        "CPM": "反向",
+        "直接成交金额": "正向",
+        "直接支付ROI": "正向",
+        "曝光量": "正向",
+        "曝光占比": "中性",
+        "互动量": "正向",
+        "互动占比": "中性",
+        "内容数占比": "中性",
+        "新发布内容数": "正向",
+        "新发布内容数占比": "正向",
+        "内容曝光量占比": "中性",
+        "内容互动量占比": "中性",
+        "产品词搜索次数": "正向",
+        "产品词搜索成交金额": "正向",
+        "产品词搜索成交率": "正向",
+        "产品词搜索GPMS": "正向",
+        "内容触达搜索率": "正向",
+        "看后搜搜索人数": "正向",
+        "直接搜搜索人数": "正向",
+        "搜索次数": "正向",
+        "搜索人数": "正向",
+        "搜索成交金额": "正向",
+        "搜索成交客单价": "中性",
+        "搜索成交率": "正向",
+        "搜索GPMS": "正向",
+        "品牌搜索次数": "正向",
+        "搜索人数": "正向",
+        "成交人数": "正向",
+        "成交金额": "正向",
+        "搜索次数占比": "中性",
+        "触达-搜索率": "正向",
+        "搜索-成交率": "正向",
+        "搜索内容曝光": "正向",
+        "搜索内容曝光占比": "中性",
+        "搜索商品成交人数": "正向",
+        "搜索商品曝光率": "正向",
+        "搜索商品点击成交率": "正向",
+        "直播间产品讲解时长": "正向",
+        "直播讲解时长": "正向",
+        "商品曝光人数": "正向",
+        "商品点击人数": "正向",
+        "商品加购人数": "正向",
+        "商品购买人数": "正向",
+        "商品曝光": "正向",
+        "商品点击": "正向",
+        "商品购买": "正向",
+        "内容->商品曝光率": "正向",
+        "商品点击率": "正向",
+        "商品购买率": "正向",
+        "商品销售金额": "正向",
+        "商品销量": "正向",
+        "商品件单价": "中性",
+        "销售额": "正向",
+        "销售额占比": "中性",
+        "销量": "正向",
+        "件单价": "中性",
+        "商品曝光点击率": "正向",
+        "商品点击加购率": "正向",
+        "商品点击购买率": "正向",
+        "直播间商品曝光占比": "中性",
+        "短视频商品曝光占比": "中性",
+        "商品卡商品曝光占比": "中性",
+        "直播商品曝光人数": "正向",
+        "短视频商品曝光人数": "正向",
+        "商品卡商品曝光人数": "正向",
+        "直播间点击率": "正向",
+        "直播间加购率": "正向",
+        "直播间点击购买转化率": "正向",
+        "短视频点击率": "正向",
+        "短视频加购率": "正向",
+        "短视频点击购买转化率": "正向",
+        "商品卡点击率": "正向",
+        "商品卡加购率": "正向",
+        "商品卡点击购买转化率": "正向",
+        "退货金额": "中性",
+        "退货率": "反向",
+        "评论数": "正向",
+        "差评率": "反向",
+        "出现次数": "反向",
+        "标签占比": "中性",
+        "差评标签占比": "中性",
+        "退货占比": "中性",
+        "退货订单数": "反向",
+        "退货人数": "反向",
+        "发货前退货率": "反向",
+        "发货后退货率": "反向",
+      };
+
+      const directionClasses = {
+        "正向": "direction-positive",
+        "反向": "direction-negative",
+        "中性": "direction-neutral",
+        "区间型": "direction-custom",
+      };
+
+      function directionTag(metric) {
+        const direction = metricDirections[metric];
+        if (!direction) return "";
+        return `<span class="direction-tag ${directionClasses[direction]}">${direction}</span>`;
+      }
+
+      function metricHeader(header) {
+        return `${header}${directionTag(header)}`;
+      }
+
+      renderOverviewMatrix();
+      renderIssues();
+      renderDiagnosis();
+
       function renderTable(headers, rows) {
-        return `<div class="table-wrap"><table><thead><tr>${headers.map((header) => `<th>${header}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${statusCell(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+        return `<div class="table-wrap"><table><thead><tr>${headers.map((header) => `<th>${metricHeader(header)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${statusCell(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
       }
 
       function renderMarketingTable(headers, rows) {
-        return `<div class="table-wrap marketing-table"><table><thead><tr>${headers.map((header) => `<th>${header}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${statusCell(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+        return `<div class="table-wrap marketing-table"><table><thead><tr>${headers.map((header) => `<th>${metricHeader(header)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${statusCell(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
       }
 
       function trendPanel(title, legends, variant = "dual", chips = []) {
@@ -2953,7 +3115,7 @@
                 <strong>${title}</strong>
                 <span class="trend-meta">2026 全年自然周 · 当前筛选 2026-W19 · 右侧为末周值</span>
               </div>
-              <div class="legend">${legends.map((item, index) => `<span><i class="${index === 1 ? "green" : index === 2 ? "amber" : ""}"></i>${item}</span>`).join("")}</div>
+              <div class="legend">${legends.map((item, index) => `<span data-metric="${item}"><i class="${index === 1 ? "green" : index === 2 ? "amber" : ""}"></i>${item}${directionTag(item)}</span>`).join("")}</div>
             </div>
             <div class="trend-controls">${chips.map((chip, index) => `<button type="button" class="trend-chip ${index === 0 ? "active" : ""}" data-chip-index="${index}">${chip}</button>`).join("")}</div>
           </div>
@@ -2981,14 +3143,15 @@
           <div class="marketing-summary">
             <section class="score panel">
               <div>
-                <p class="eyebrow">营销端健康度</p>
-                <div class="score-number">58<span>/100</span></div>
+                <p class="eyebrow">营销端健康度 ${directionTag("健康度评分")}</p>
+                <div class="score-number">50<span>/100</span></div>
               </div>
               <div>${badge["异常"]}</div>
             </section>
             <section class="section panel" style="margin-top:0">
               <div class="section-head"><div><h2>当前核心判断</h2><p>从投入、声量、资产厚度和更新节奏判断问题类型</p></div></div>
               <ul class="judgement-list">
+                <li><b>千川投入占比偏高：</b>当前值 60%，超过35%-50%优秀区间及57.5%预警上界。</li>
                 <li><b>内容曝光不足：</b>品牌/产品在抖音的声量不足或触达效率低。</li>
                 <li><b>内容资产少：</b>有曝光内容数偏低，当前曝光依赖少数爆文。</li>
                 <li><b>内容老化风险：</b>新发布内容占比低，缺乏持续的新鲜内容补给。</li>
@@ -2999,7 +3162,7 @@
           <section class="section panel">
             <div class="section-head"><div><h2>核心KPI卡片（营销端健康度总览）</h2><p>先判断问题属于投入不足、数量不足、质量不足、自然声量不足还是内容老化</p></div></div>
             <div class="kpi-grid">
-              ${marketingKpis.map(([name, value, base, change, status, note]) => `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>基准 ${base} · 环比变化 ${change}${note ? ` · ${note}` : ""}</p></article>`).join("")}
+              ${marketingKpis.map(([name, value, base, change, status, note]) => `<article class="kpi"><label>${name}${directionTag(name)}${badge[status]}</label><strong>${value}</strong><p>基准 ${base} · 环比变化 ${change}${note ? ` · ${note}` : ""}</p></article>`).join("")}
             </div>
           </section>
 
@@ -3061,14 +3224,14 @@
           const base = hasDimension ? item[4] : item[2];
           const status = hasDimension ? item[5] : item[4];
           const desc = hasDimension ? item[6] : "";
-          return `<article class="kpi"><label>${name}${badge[status]}</label><strong>${value}</strong><p>基准 ${base} · 环比变化 ${change}${desc ? ` · ${desc}` : ""}</p></article>`;
+          return `<article class="kpi"><label>${name}${directionTag(hasDimension ? item[1] : item[0])}${badge[status]}</label><strong>${value}</strong><p>基准 ${base} · 环比变化 ${change}${desc ? ` · ${desc}` : ""}</p></article>`;
         }).join("")}</div>`;
       }
 
       function renderSearchPage() {
         document.querySelector("#search").innerHTML = `
           <div class="marketing-summary">
-            <section class="score panel"><div><p class="eyebrow">搜索承接健康度</p><div class="score-number">56<span>/100</span></div></div><div>${badge["预警"]}</div></section>
+            <section class="score panel"><div><p class="eyebrow">搜索承接健康度 ${directionTag("健康度评分")}</p><div class="score-number">56<span>/100</span></div></div><div>${badge["预警"]}</div></section>
             <section class="section panel" style="margin-top:0">
               <div class="section-head"><div><h2>当前核心判断</h2><p>先判断有没有人搜，再判断搜后有没有买</p></div></div>
               <ul class="judgement-list">
@@ -3114,7 +3277,7 @@
       function renderEcPage() {
         document.querySelector("#ec").innerHTML = `
           <div class="marketing-summary">
-            <section class="score panel"><div><p class="eyebrow">EC承接健康度</p><div class="score-number">76<span>/100</span></div></div><div>${badge["预警"]}</div></section>
+            <section class="score panel"><div><p class="eyebrow">EC承接健康度 ${directionTag("健康度评分")}</p><div class="score-number">68<span>/100</span></div></div><div>${badge["预警"]}</div></section>
             <section class="section panel" style="margin-top:0">
               <div class="section-head"><div><h2>当前核心判断</h2><p>先看流量规模，再看点击和购买漏斗</p></div></div>
               <ul class="judgement-list">
@@ -3148,7 +3311,7 @@
       function renderServicePage() {
         document.querySelector("#service").innerHTML = `
           <div class="marketing-summary">
-            <section class="score panel"><div><p class="eyebrow">口碑售后健康度</p><div class="score-number">86<span>/100</span></div></div><div>${badge["正常"]}</div></section>
+            <section class="score panel"><div><p class="eyebrow">口碑售后健康度 ${directionTag("健康度评分")}</p><div class="score-number">86<span>/100</span></div></div><div>${badge["正常"]}</div></section>
             <section class="section panel" style="margin-top:0">
               <div class="section-head"><div><h2>当前核心判断</h2><p>核心 KPI 看退货率、评论数和差评率，退货金额作为中性解释指标</p></div></div>
               <ul class="judgement-list">
@@ -3163,7 +3326,7 @@
             <div class="section-head"><div><h2>差评原因分析</h2><p>把用户不满意翻译成产品/运营可改进的具体问题</p></div></div>
             <div class="reason-layout">
               ${renderMarketingTable(["差评标签", "出现次数", "标签占比"], badReviewRows)}
-              <div class="pie-panel"><h3>差评标签占比</h3><div class="pie"></div><div class="legend"><span><i></i>尺码偏差</span><span><i class="green"></i>脚感</span><span><i class="amber"></i>色差/物流</span></div></div>
+              <div class="pie-panel"><h3>差评标签占比${directionTag("差评标签占比")}</h3><div class="pie"></div><div class="legend"><span><i></i>尺码偏差</span><span><i class="green"></i>脚感</span><span><i class="amber"></i>色差/物流</span></div></div>
             </div>
           </section>
           <section class="section panel">
@@ -3171,7 +3334,7 @@
             <div class="reason-layout">
               ${renderMarketingTable(["退货原因分类", "具体原因", "退货率", "退货金额", "退货订单数", "退货人数", "发货前退货率", "发货后退货率"], returnRows)}
               <div class="pie-panel">
-                <h3>退货占比</h3>
+                <h3>退货占比${directionTag("退货占比")}</h3>
                 <div class="trend-controls"><span class="trend-chip active">退货大类</span><span class="trend-chip">具体原因</span></div>
                 <div class="pie"></div>
                 <div class="legend"><span><i></i>用户问题</span><span><i class="green"></i>服务问题</span></div>
@@ -3200,7 +3363,7 @@
         document.querySelector(`#${id}`).innerHTML = `
           <div class="hero">
             <div class="headline panel"><div><p class="eyebrow">专题下钻</p><h1>${config.title}</h1><p class="hero-copy">${config.subtitle}</p></div></div>
-            <div class="score panel"><p class="eyebrow">当前状态</p><div class="score-number">${id === "marketing" ? "58" : id === "service" ? "86" : id === "search" ? "56" : "76"}<span>/100</span></div><div>${badge[id === "service" ? "正常" : "预警"]}</div></div>
+            <div class="score panel"><p class="eyebrow">当前状态</p><div class="score-number">${id === "marketing" ? "50" : id === "service" ? "86" : id === "search" ? "56" : "68"}<span>/100</span></div><div>${badge[id === "service" ? "正常" : id === "marketing" ? "异常" : "预警"]}</div></div>
           </div>
           <section class="section panel"><div class="section-head"><div><h2>核心 KPI 卡片</h2><p>当前值、环比、基准与状态快速扫描</p></div></div>${kpiCards(config.kpis)}</section>
           ${sections}`;
@@ -3257,7 +3420,7 @@
       function showTrendTooltip(panel, weekIndex, target) {
         const chipIndex = Number(panel.querySelector(".trend-chip.active")?.dataset.chipIndex || 0);
         const count = Number(panel.dataset.seriesCount || 2);
-        const labels = Array.from(panel.querySelectorAll(".legend span")).slice(0, count).map((item) => item.textContent.trim());
+        const labels = Array.from(panel.querySelectorAll(".legend span")).slice(0, count).map((item) => item.dataset.metric || item.textContent.trim());
         const week = `W${String(weekIndex + 1).padStart(2, "0")}`;
         const range = isoWeekRange(2026, weekIndex + 1);
         const values = labels.map((label, seriesIndex) => `${label}: ${weeklyTrendValues(seriesIndex, chipIndex)[weekIndex]}`).join("<br>");
